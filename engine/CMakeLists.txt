@@ -1,0 +1,8 @@
+set(ENGINE_DIR ${CMAKE_CURRENT_LIST_DIR})
+
+file(GLOB ENGINE_SOURCES
+    ${ENGINE_DIR}/*.h 
+    ${ENGINE_DIR}/*.cpp 
+    ) 
+target_sources(${CMAKE_PROJECT_NAME} PUBLIC ${ENGINE_SOURCES})
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${ENGINE_DIR})

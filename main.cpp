@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    /*
+    
     QCoreApplication a(argc, argv);
 
     QTranslator translator;
@@ -19,11 +19,8 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    */
-
+    
     engine* Engine = new engine();
-    if(Engine->CoreShouldClose)
-        return -1;
-
-    return 0;
+    
+    return a.exec();
 }

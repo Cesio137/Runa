@@ -23,7 +23,7 @@ add_subdirectory(engine)
 add_subdirectory(thirdparty)
 
 #link static libraries
-target_link_libraries(Lumen Qt${QT_VERSION_MAJOR}::Core imgui glfw glad SDL2-static)
+target_link_libraries(Lumen Qt${QT_VERSION_MAJOR}::Core imgui glfw glad)
 
 #Create QT translate files
 if(COMMAND qt_create_translation)

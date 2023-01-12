@@ -2,3 +2,7 @@
 	path = thirdparty/imgui
 	url = https://github.com/ocornut/imgui.git
 	tag = v1.89.2
+[submodule "thirdparty/glfw3"]
+	path = thirdparty/glfw3
+	url = https://github.com/glfw/glfw.git
+	tag = 3.3.8

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.23)
 project(Lumen)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -12,6 +12,7 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(Lumen main.cpp)
+include(config.cmake)
 target_link_libraries(Lumen
         Qt::Core
         )

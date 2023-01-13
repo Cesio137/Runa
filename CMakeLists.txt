@@ -15,6 +15,9 @@ add_executable(Lumen main.cpp)
 include(config.cmake)
 target_link_libraries(Lumen
         Qt::Core
+        glfw
+        glad
+        imgui
         )
 
 if (WIN32)

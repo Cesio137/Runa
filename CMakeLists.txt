@@ -17,14 +17,12 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         Qt::Core
         glfw
         glad
-        imgui
+        imgui-static
+        Bullet3Dynamics
+        Bullet3Collision
+        BulletSoftBody
+        LinearMath
         )
-
-
-
-add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Qt6::Core> $<TARGET_FILE:${CMAKE_PROJECT_NAME}>/../
-)
 
 #[[
 if (WIN32)

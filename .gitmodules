@@ -6,3 +6,6 @@
 	path = thirdparty/glfw3
 	url = https://github.com/glfw/glfw.git
 	tag = 3.3.8
+[submodule "thirdparty/bullet3"]
+	path = thirdparty/bullet3
+	url = https://github.com/bulletphysics/bullet3.git

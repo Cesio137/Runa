@@ -11,15 +11,22 @@ find_package(Qt6 COMPONENTS
         Core
         REQUIRED)
 
-add_executable(Lumen main.cpp)
+add_executable(${CMAKE_PROJECT_NAME} main.cpp)
 include(config.cmake)
-target_link_libraries(Lumen
+target_link_libraries(${CMAKE_PROJECT_NAME}
         Qt::Core
         glfw
         glad
         imgui
         )
 
+
+
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Qt6::Core> $<TARGET_FILE:${CMAKE_PROJECT_NAME}>/../
+)
+
+#[[
 if (WIN32)
     set(DEBUG_SUFFIX)
     if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")
@@ -48,3 +55,4 @@ if (WIN32)
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
 endif ()
+]]

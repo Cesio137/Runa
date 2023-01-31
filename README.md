@@ -20,7 +20,7 @@
 
 - [Git](https://git-scm.com)
 
-- [CMake 3.23 or above](https://cmake.org/download/)
+- [CMake 3.22 or above](https://cmake.org/download/)
 
 - [Visual Studio 2019/2022](https://visualstudio.microsoft.com/downloads/) `Windows only`
 
@@ -60,7 +60,7 @@ git clone https://github.com/Cesio137/Lumen.git
       ```
 * Run the `GenerateProject.bat` to create the soluction.
 * Go to `build` folder and open the VS soluction.
-* to generate project using command line just create a `build` folder and open terminal inside then type `cmake .. -G -DBUILD_SHARED_LIBS:BOOL="0" -DUSE_DOUBLE_PRECISION:BOOL="1" -DINSTALL_CMAKE_FILES:BOOL="0" -DGLFW_VULKAN_STATIC:BOOL="1" -DGLFW_USE_HYBRID_HPG:BOOL="1" -DBUILD_PYBULLET:BOOL="0" "Visual Studio XX XXXX"`
+* to generate project using command line just create a `build` folder and open terminal inside then type `cmake .. -G -DINSTALL_CMAKE_FILES:BOOL="0" -DGLFW_INSTALL:BOOL="0" -DBGFX_LIBRARY_TYPE:STRING="STATIC" -DBUILD_EXAMPLES:BOOL="0" -DGLFW_BUILD_TESTS:BOOL="0" -DGLFW_USE_HYBRID_HPG:BOOL="1" -DBUILD_UNIT_TESTS:BOOL="0" -DOPENCL_LIB_DIR:PATH="/lib" -DUSE_DOUBLE_PRECISION:BOOL="1" -DBUILD_CPU_DEMOS:BOOL="0" -DGLFW_BUILD_DOCS:BOOL="0" -DOPENCL_INCLUDE_DIR:PATH="/include" -DBUILD_OPENGL3_DEMOS:BOOL="0" -DBUILD_BULLET2_DEMOS:BOOL="0" -DGLFW_BUILD_EXAMPLES:BOOL="0" -DCMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING="" -DBUILD_DOCS:BOOL="0" -DGLFW_VULKAN_STATIC:BOOL="1" -DBUILD_TESTING:BOOL="0" "Visual Studio XX XXXX"`
 
 #### Linux | MAC
 * Setup QT  
@@ -71,4 +71,4 @@ git clone https://github.com/Cesio137/Lumen.git
     * ```
       <Path to Qt>/6.2.4/<your build tool>/lib
       ```.
-* To generate project using command line just create a `build` folder and open terminal inside then type `cmake .. -DBUILD_SHARED_LIBS:BOOL="0" -DUSE_DOUBLE_PRECISION:BOOL="1" -DINSTALL_CMAKE_FILES:BOOL="0" -DGLFW_VULKAN_STATIC:BOOL="1" -DGLFW_USE_HYBRID_HPG:BOOL="1" -DBUILD_PYBULLET:BOOL="0"`
+* To generate project using command line just create a `build` folder and open terminal inside then type `cmake .. -DINSTALL_CMAKE_FILES:BOOL="0" -DGLFW_INSTALL:BOOL="0" -DBGFX_LIBRARY_TYPE:STRING="STATIC" -DBUILD_EXAMPLES:BOOL="0" -DGLFW_BUILD_TESTS:BOOL="0" -DGLFW_USE_HYBRID_HPG:BOOL="1" -DBUILD_UNIT_TESTS:BOOL="0" -DOPENCL_LIB_DIR:PATH="/lib" -DUSE_DOUBLE_PRECISION:BOOL="1" -DBUILD_CPU_DEMOS:BOOL="0" -DGLFW_BUILD_DOCS:BOOL="0" -DOPENCL_INCLUDE_DIR:PATH="/include" -DBUILD_OPENGL3_DEMOS:BOOL="0" -DBUILD_BULLET2_DEMOS:BOOL="0" -DGLFW_BUILD_EXAMPLES:BOOL="0" -DCMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING="" -DBUILD_DOCS:BOOL="0" -DGLFW_VULKAN_STATIC:BOOL="1" -DBUILD_TESTING:BOOL="0"`

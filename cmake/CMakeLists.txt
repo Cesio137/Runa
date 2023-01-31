@@ -1,7 +1,12 @@
-set(THIRDPARTY_DIR ${CMAKE_CURRENT_LIST_DIR})
+include(FetchContent)
+#set(FETCHCONTENT_BASE_DIR ${THIRDPARTY_DIR})
 
-#Configure glad library
-include(${THIRDPARTY_DIR}/glad/glad.cmake)
+file(GLOB_RECURSE cmake_files "*.cmake")
+foreach(file ${cmake_files})
+  #... calculate ${i} to get the test name
+  add_test(validate_${i}, "validator", ${file})
+  include(${file})
+endforeach()
 
 #Set folder and group all thirdparty projects
 

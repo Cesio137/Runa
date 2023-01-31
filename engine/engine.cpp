@@ -1,7 +1,7 @@
 #include "engine.h"
 
-Engine::Engine(QObject *parent)
+QEngine::QEngine(QObject *parent)
     : QObject{parent}
 {
-
+    QRHI* rhi = new QRHI();
 }

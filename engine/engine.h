@@ -1,19 +1,22 @@
-#ifndef ENGINE_H
-#define ENGINE_H
+#ifndef QENGINE_H
+#define QENGINE_H
 
 #include <QObject>
-#include "glad/glad.h"
-#define GLFW_INCLUDE_NONE
-#include "GLFW/glfw3.h"
+#include <QDebug>
+#include "Backend/rhi.h"
 
-class Engine : public QObject
+using namespace std;
+
+class QEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit Engine(QObject *parent = nullptr);
+    QEngine(QObject *parent);
 
 signals:
 
+private:
+
 };
 
-#endif // ENGINE_H
+#endif // QENGINE_H

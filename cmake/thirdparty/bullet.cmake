@@ -3,7 +3,7 @@ if(NOT Bullet_POPULATED)
     FetchContent_Declare(
         Bullet
         GIT_REPOSITORY https://github.com/bulletphysics/bullet3.git
-        GIT_TAG        7dee3436e747958e7088dfdcea0e4ae031ce619e # 3.2.4
+        GIT_TAG        2c204c49e56ed15ec5fcfa71d199ab6d6570b3f5 # 3.2.5
       )
   
     FetchContent_MakeAvailable(Bullet)

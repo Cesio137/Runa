@@ -2,7 +2,7 @@
 #define QRHI_H
 
 #include <QObject>
-#include <Backend/ogl.h>
+#include "OpenGL/qopengl.h"
 
 class QRHI : public QObject
 {

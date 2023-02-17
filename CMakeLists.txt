@@ -15,14 +15,21 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core LinguistTools)
 set(TS_FILES Lumen_en_001.ts)
 
 add_executable(${CMAKE_PROJECT_NAME}
-  src/main.cpp
+  Source/main.cpp
   ${TS_FILES}
 )
 
 include(config.cmake)
 
-target_link_libraries(${CMAKE_PROJECT_NAME} 
+target_link_libraries(${CMAKE_PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::Core
+    Rendering
+    glfw
+    glad
+    #[[
+    Rendering
+    bgfx
+    bx
     glfw
     glad
     imgui-static
@@ -31,6 +38,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     BulletSoftBody
     LinearMath
     OpenCL
+    ]]
 )
 
 if(COMMAND qt_create_translation)

@@ -1,7 +1,7 @@
-#include "rhi.h"
+#include "RHI.h"
 
 QRHI::QRHI(QObject *parent)
     : QObject{parent}
 {
-    OGL* opengl = new OGL();
+    QOpenGL* ogl = new QOpenGL();
 }

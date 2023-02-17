@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <engine.h>
+#include <RHI/RHI.h>
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +16,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-
-    QEngine* engine = new QEngine(nullptr);
+    QRHI* rhi = new QRHI();
 
     return a.exec();
 }

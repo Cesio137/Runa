@@ -2,7 +2,7 @@
 #define QRHI_H
 
 #include <QObject>
-#include "OpenGL/qopengl.h"
+#include <OpenGL/qopengl.h>
 
 class QRHI : public QObject
 {
@@ -10,7 +10,13 @@ class QRHI : public QObject
 public:
     explicit QRHI(QObject *parent = nullptr);
 
+public slots:
+    void QBeginPlay();
+    void QTick(float DeltaTime);
+
 signals:
+    void BeginPlay();
+    void Tick(float DeltaTime);
 
 };
 

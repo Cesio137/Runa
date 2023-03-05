@@ -3,6 +3,9 @@ set(THIRDPARTY_DIR ${CMAKE_CURRENT_LIST_DIR})
 #Configure glad library
 include(${THIRDPARTY_DIR}/glad/glad.cmake)
 
+#Configure tclap library
+include(${THIRDPARTY_DIR}/tclap/tclap.cmake)
+
 #Set folder and group all thirdparty projects
 
 function(get_all_targets var)

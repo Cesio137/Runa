@@ -7,6 +7,10 @@ target_link_libraries(Source_Interface
         Qt${QT_VERSION_MAJOR}::Core
         glfw
         glad
+        imgui-static
+        Engine
+        Rendering
 )
 
 include(${SOURCE_DIR}/Rendering/Rendering.cmake)
+include(${SOURCE_DIR}/Engine/Engine.cmake)

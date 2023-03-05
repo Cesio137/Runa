@@ -23,9 +23,11 @@ include(config.cmake)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::Core
+    Engine
     Rendering
     glfw
     glad
+    imgui-static
     #[[
     Rendering
     bgfx

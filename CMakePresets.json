@@ -1,0 +1,160 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": 
+    {
+      "major": 3,
+      "minor": 22,
+      "patch": 0
+    },
+    "configurePresets": 
+    [
+        {
+            "name": "VS2022",
+            "displayName": "Visual Studio 2022",
+            "description": "Default build using VS 2022",
+            "generator": "Visual Studio 17 2022",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "GLFW_BUILD_TESTS":"0",
+                "GLFW_VULKAN_STATIC":"1",
+                "GLFW_BUILD_EXAMPLES":"0",
+                "GLFW_INSTALL":"0",
+                "GLFW_USE_HYBRID_HPG":"1",
+                "GLFW_BUILD_DOCS":"0"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2022_Clang",
+            "displayName": "Visual Studio 2022 and Clang",
+            "description": "Default build using VS 2022 with Clang",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "GLFW_BUILD_TESTS":"0",
+                "GLFW_VULKAN_STATIC":"1",
+                "GLFW_BUILD_EXAMPLES":"0",
+                "GLFW_INSTALL":"0",
+                "GLFW_USE_HYBRID_HPG":"1",
+                "GLFW_BUILD_DOCS":"0"
+            },
+            "generator": "Visual Studio 17 2022",
+            "toolset": "clangcl",
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2019",
+            "displayName": "Visual Studio 2019",
+            "description": "Default build using VS 2029",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "GLFW_BUILD_TESTS":"0",
+                "GLFW_VULKAN_STATIC":"1",
+                "GLFW_BUILD_EXAMPLES":"0",
+                "GLFW_INSTALL":"0",
+                "GLFW_USE_HYBRID_HPG":"1",
+                "GLFW_BUILD_DOCS":"0"
+            },
+            "generator": "Visual Studio 16 2019",
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2019_Clang",
+            "displayName": "Visual Studio 2019 and Clang",
+            "description": "Default build using VS 2019 and Clang",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "GLFW_BUILD_TESTS":"0",
+                "GLFW_VULKAN_STATIC":"1",
+                "GLFW_BUILD_EXAMPLES":"0",
+                "GLFW_INSTALL":"0",
+                "GLFW_USE_HYBRID_HPG":"1",
+                "GLFW_BUILD_DOCS":"0"
+            },
+            "generator": "Visual Studio 16 2019",
+            "toolset": "clangcl",
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+
+        {
+            "name": "Unix",
+            "displayName": "Unix Makefiles",
+            "description": "Default build using Unix Makefiles",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "GLFW_BUILD_TESTS":"0",
+                "GLFW_VULKAN_STATIC":"1",
+                "GLFW_BUILD_EXAMPLES":"0",
+                "GLFW_INSTALL":"0",
+                "GLFW_USE_HYBRID_HPG":"1",
+                "GLFW_BUILD_DOCS":"0"
+            },
+            "generator": "Unix Makefiles"
+        },
+        {
+            "name": "Unix_Clang",
+            "displayName": "Unix Makefiles",
+            "description": "Default build using Unix Makefiles and Clang",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "LLVM_ENABLE_PROJECTS":"clang",
+                "CMAKE_C_COMPILER":"clang",
+                "CMAKE_CXX_COMPILER":"clang++",
+                "GLFW_BUILD_TESTS":"0",
+                "GLFW_VULKAN_STATIC":"1",
+                "GLFW_BUILD_EXAMPLES":"0",
+                "GLFW_INSTALL":"0",
+                "GLFW_USE_HYBRID_HPG":"1",
+                "GLFW_BUILD_DOCS":"0"
+            },
+            "generator": "Unix Makefiles"
+        },
+
+        {
+            "name": "XCode",
+            "displayName": "XCode",
+            "description": "Default build using XCode",
+            "cacheVariables": 
+            {
+                "GLFW_BUILD_TESTS":"0",
+                "GLFW_VULKAN_STATIC":"1",
+                "GLFW_BUILD_EXAMPLES":"0",
+                "GLFW_INSTALL":"0",
+                "GLFW_USE_HYBRID_HPG":"1",
+                "GLFW_BUILD_DOCS":"0"
+            },
+            "generator": "XCode",
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        }
+    ]
+  }

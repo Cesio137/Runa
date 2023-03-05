@@ -67,14 +67,16 @@ QOpenGL::QOpenGL(QObject *parent)
 	// Swap the back buffer with the front buffer
 	glfwSwapBuffers(window);
 
+    //Render Hardware Interface
+    QRHI* RHI = qobject_cast<QRHI*>(parent);
     // Begin Play
-    emit BeginPlay();
+    RHI->QBeginPlay();
     // Start a timer count
     deltaTime.start();
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-        emit Tick(float(deltaTime.elapsed() / 1000));
+        RHI->QTick(float(deltaTime.elapsed() / 1000));
         deltaTime.restart();
 
         glfwWaitEvents();
@@ -85,6 +87,11 @@ QOpenGL::QOpenGL(QObject *parent)
 	// Terminate GLFW before ending the program
 	glfwTerminate();
     return;
+}
+
+void QOpenGL::SetWindowTitle(QString title)
+{
+    glfwSetWindowTitle(window, title.toUtf8());
 }
 
 void QOpenGL::window_size_callback(GLFWwindow* window, int width, int height)

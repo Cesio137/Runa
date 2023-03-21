@@ -2,18 +2,25 @@
 #define QOPENGL_H
 
 #include <QObject>
+#include <QThread>
 #include <QDebug>
 #include <QElapsedTimer>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
-#include <RHI/RHI.h>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #ifndef OPENGL_MAJOR_MIN
-#define OPENGL_MAJOR_MIN 3
+	#define OPENGL_MAJOR_MIN 3
 #endif
 #ifndef OPENGL_MINOR_MIN
-#define OPENGL_MINOR_MIN 3
+	#define OPENGL_MINOR_MIN 3
+#endif
+
+#ifndef MAX_FRAME_RATE
+	#define MAX_FRAME_RATE 30
 #endif
 
 class QOpenGL : public QObject
@@ -22,6 +29,7 @@ class QOpenGL : public QObject
 public:
     explicit QOpenGL(QObject *parent = nullptr);
     void SetWindowTitle(QString title);
+    GLFWwindow* GetWindow();
 
 private:
     GLFWwindow* window;
@@ -29,9 +37,12 @@ private:
     static void error_callback(int error, const char* description);
     QElapsedTimer deltaTime;
 
+    void FrameRate_Lock();
+
 signals:
     void BeginPlay();
     void Tick(float DeltaTimne);
+    void ConstructInterface();
     
 };
 

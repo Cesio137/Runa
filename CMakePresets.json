@@ -1,5 +1,5 @@
 {
-    "version": 6,
+    "version": 5,
     "cmakeMinimumRequired": 
     {
       "major": 3,
@@ -21,7 +21,8 @@
                 "GLFW_BUILD_EXAMPLES":"0",
                 "GLFW_INSTALL":"0",
                 "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0"
+                "GLFW_BUILD_DOCS":"0",
+                "LUABRIDGE_CXX17":"1"
             },
             "condition":
             {
@@ -42,7 +43,8 @@
                 "GLFW_BUILD_EXAMPLES":"0",
                 "GLFW_INSTALL":"0",
                 "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0"
+                "GLFW_BUILD_DOCS":"0",
+                "LUABRIDGE_CXX17":"1"
             },
             "generator": "Visual Studio 17 2022",
             "toolset": "clangcl",
@@ -65,7 +67,8 @@
                 "GLFW_BUILD_EXAMPLES":"0",
                 "GLFW_INSTALL":"0",
                 "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0"
+                "GLFW_BUILD_DOCS":"0",
+                "LUABRIDGE_CXX17":"1"
             },
             "generator": "Visual Studio 16 2019",
             "condition":
@@ -87,7 +90,8 @@
                 "GLFW_BUILD_EXAMPLES":"0",
                 "GLFW_INSTALL":"0",
                 "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0"
+                "GLFW_BUILD_DOCS":"0",
+                "LUABRIDGE_CXX17":"1"
             },
             "generator": "Visual Studio 16 2019",
             "toolset": "clangcl",
@@ -111,9 +115,16 @@
                 "GLFW_BUILD_EXAMPLES":"0",
                 "GLFW_INSTALL":"0",
                 "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0"
+                "GLFW_BUILD_DOCS":"0",
+                "LUABRIDGE_CXX17":"1"
             },
-            "generator": "Unix Makefiles"
+          "generator": "Unix Makefiles",
+          "condition":
+            {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
         },
         {
             "name": "Unix_Clang",
@@ -130,9 +141,16 @@
                 "GLFW_BUILD_EXAMPLES":"0",
                 "GLFW_INSTALL":"0",
                 "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0"
+                "GLFW_BUILD_DOCS":"0",
+                "LUABRIDGE_CXX17":"1"
             },
-            "generator": "Unix Makefiles"
+            "generator": "Unix Makefiles",
+            "condition":
+            {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
         },
 
         {
@@ -146,7 +164,8 @@
                 "GLFW_BUILD_EXAMPLES":"0",
                 "GLFW_INSTALL":"0",
                 "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0"
+                "GLFW_BUILD_DOCS":"0",
+                "LUABRIDGE_CXX17":"1"
             },
             "generator": "XCode",
             "condition":

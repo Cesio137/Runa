@@ -28,6 +28,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     glfw
     glad
     imgui-static
+    lua
     #[[
     Rendering
     bgfx

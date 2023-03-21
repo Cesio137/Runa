@@ -8,6 +8,8 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+using namespace std;
+
 class QProjectManager : public QObject
 {
 Q_OBJECT
@@ -17,6 +19,12 @@ public:
 public slots:
     void BeginPlay();
     void Tick(float DeltaTime);
+    void ConstructInterface();
+
+private:
+    QRHI* RHI;
+    float fps;
+    void SetupDockSpace();
 
 signals:
 

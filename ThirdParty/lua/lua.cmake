@@ -1,0 +1,5 @@
+set(LUA_DIR ${CMAKE_CURRENT_LIST_DIR})
+file(GLOB_RECURSE lua_src "${LUA_DIR}/src/*.h" "${LUA_DIR}/src/*.c")
+project(lua)
+add_library(lua ${lua_src})
+target_include_directories(lua PUBLIC ${LUA_DIR}/src/)

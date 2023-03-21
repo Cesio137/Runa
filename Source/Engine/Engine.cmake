@@ -9,7 +9,7 @@ target_include_directories(Engine
         PRIVATE
         "${Engine_DIR}/Private"
         INTERFACE
-        "${Engine_DIR}/Private"
+        "${Engine_DIR}/Public"
         )
 target_link_libraries(Engine
         PRIVATE

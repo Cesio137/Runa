@@ -1,17 +1,20 @@
 #include "qopengl.h"
 
-#define RENDER_WIDTH  1280
-#define RENDER_HEIGHT 720
-
 QOpenGL::QOpenGL(QObject *parent)
     : QObject{parent}
 {
+    connect(this, SIGNAL(BeginPlay()), parent, SLOT(QBeginPlay()));
+    connect(this, SIGNAL(Tick(float)), parent, SLOT(QTick(float)));
+    connect(this, SIGNAL(ConstructInterface()), parent, SLOT(QConstructInterface()));
+
     //Set error callback
     glfwSetErrorCallback(error_callback);   
 
     // Initialize GLFW
     if (!glfwInit())
         return;
+
+    QString ogl_version;
 
     QList<QPair<int, int>> glfwVersion = 
     {
@@ -42,11 +45,13 @@ QOpenGL::QOpenGL(QObject *parent)
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glfwVersion.at(i).second);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         // Create a GLFW window
-        window = glfwCreateWindow(RENDER_WIDTH, RENDER_HEIGHT, "Lumen", nullptr, nullptr);
+        window = glfwCreateWindow(1024, 576, "Lumen", nullptr, nullptr);
         if (window)
         {
+            ogl_version = QString::number(glfwVersion.at(i).first) + QString::number(glfwVersion.at(i).second) + "0";
             // Make the window's context current
             glfwMakeContextCurrent(window);
+            glfwMaximizeWindow(window);
             break;
         }
     }
@@ -58,7 +63,7 @@ QOpenGL::QOpenGL(QObject *parent)
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
-	glViewport(0, 0, RENDER_WIDTH, RENDER_HEIGHT);
+	glViewport(0, 0, 1024, 576);
 
 	// Specify the color of the background
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
@@ -66,22 +71,48 @@ QOpenGL::QOpenGL(QObject *parent)
 	glClear(GL_COLOR_BUFFER_BIT);
 	// Swap the back buffer with the front buffer
 	glfwSwapBuffers(window);
+    //Remove framerate limit
+    glfwSwapInterval(0);
 
-    //Render Hardware Interface
-    QRHI* RHI = qobject_cast<QRHI*>(parent);
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version " + ogl_version.toUtf8());
+
     // Begin Play
-    RHI->QBeginPlay();
+    emit BeginPlay();
     // Start a timer count
     deltaTime.start();
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-        RHI->QTick(float(deltaTime.elapsed() / 1000));
+        emit Tick(float(deltaTime.elapsed()) / 1000.0f);
         deltaTime.restart();
 
-        glfwWaitEvents();
-    }
+        // Specify the color of the background
+        glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+        // Clean the back buffer and assign the new color to it
+        glClear(GL_COLOR_BUFFER_BIT);
 
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        emit ConstructInterface();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        
+        glfwSwapBuffers(window);
+        glfwWaitEvents();
+        FrameRate_Lock();
+    }
+    
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     // Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
@@ -92,6 +123,11 @@ QOpenGL::QOpenGL(QObject *parent)
 void QOpenGL::SetWindowTitle(QString title)
 {
     glfwSetWindowTitle(window, title.toUtf8());
+}
+
+GLFWwindow* QOpenGL::GetWindow()
+{
+	return window;
 }
 
 void QOpenGL::window_size_callback(GLFWwindow* window, int width, int height)
@@ -105,4 +141,14 @@ void QOpenGL::window_size_callback(GLFWwindow* window, int width, int height)
 void QOpenGL::error_callback(int error, const char *description)
 {
     qDebug() << "Error " << error << ":" << description;
+}
+
+void QOpenGL::FrameRate_Lock()
+{
+    if( MAX_FRAME_RATE == 0 || float(deltaTime.elapsed()) / 1000.0f >  1.0f/float(MAX_FRAME_RATE) )
+    {
+        return;
+    }
+    float sleep = ( 1.0f/float(MAX_FRAME_RATE) * 1000.0f ) - float(deltaTime.elapsed());
+    QThread::msleep(sleep);
 }

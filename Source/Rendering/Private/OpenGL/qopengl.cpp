@@ -76,10 +76,23 @@ QOpenGL::QOpenGL(QObject *parent)
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version " + ogl_version.toUtf8());
+
+    // Set up docking support
+    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    //io.ConfigDockingWithShift = false;
+
+    // Ative o suporte a ancoragem do ImGui
+    ImGui::StyleColorsDark();
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowRounding = 0.0f;
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    viewport->Flags |= ImGuiViewportFlags_NoDecoration;
+    viewport->Flags |= ImGuiViewportFlags_NoTaskBarIcon;
+    viewport->Flags |= ImGuiViewportFlags_NoFocusOnAppearing;
 
     // Begin Play
     emit BeginPlay();
@@ -117,6 +130,7 @@ QOpenGL::QOpenGL(QObject *parent)
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
 	glfwTerminate();
+    return;
     return;
 }
 

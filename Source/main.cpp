@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <ProjectManager/projectmanager.h>
+#include <Core/qcore.h>
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    QProjectManager* projectManager = new QProjectManager();
-
+    //QProjectManager* rhi = new QProjectManager();
+    QCore *core = new QCore();
     return a.exec();
 }

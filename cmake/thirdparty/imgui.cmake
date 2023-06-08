@@ -2,12 +2,17 @@ if(NOT Vulkan_FOUND)
     include(thirdparty/vulkan.cmake)
 endif()
 
+FetchContent_GetProperties(sdl2)
+if(NOT sdl2_POPULATED)
+    include(thirdparty/sdl2.cmake)
+endif()
+
 FetchContent_GetProperties(imgui)
 if(NOT imgui_POPULATED)
     FetchContent_Declare(
         imgui
         GIT_REPOSITORY https://github.com/ocornut/imgui.git
-        GIT_TAG        9e30fb0ec1b44dc1b041db6bdd53b130b2a18509 # 1.89.4 docking
+        GIT_TAG        5319d1cffafd5045c4742892c38c9e5cfa23d195 # 1.89.6 docking
       )
   
     FetchContent_MakeAvailable(imgui)
@@ -31,8 +36,10 @@ if (WIN32)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_dx12.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.h
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
@@ -47,8 +54,10 @@ elseif(UNIX)
 
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.h
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
@@ -69,8 +78,10 @@ else()
             ${imgui_SOURCE_DIR}/backends/imgui_impl_metal.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.h
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
@@ -84,4 +95,4 @@ endif ()
 
 project(imgui-static)
 add_library(imgui-static ${imgui_sources})
-target_include_directories(imgui-static PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends ${glfw_SOURCE_DIR}/include ${Vulkan_INCLUDE_DIRS})
+target_include_directories(imgui-static PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends PRIVATE ${sdl2_SOURCE_DIR}/include ${Vulkan_INCLUDE_DIRS})

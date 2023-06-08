@@ -6,44 +6,73 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
+#include <SDL.h>
 #include <imgui.h>
-#include <imgui_impl_glfw.h>
+#include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 
-#ifndef OPENGL_MAJOR_MIN
-	#define OPENGL_MAJOR_MIN 3
+#ifndef OPENGL_MAJOR_VERSION
+#define OPENGL_MAJOR_VERSION 3
 #endif
-#ifndef OPENGL_MINOR_MIN
-	#define OPENGL_MINOR_MIN 3
+#ifndef OPENGL_MINOR_VERSION
+#define OPENGL_MINOR_VERSION 3
 #endif
 
-#ifndef MAX_FRAME_RATE
-	#define MAX_FRAME_RATE 30
+#ifndef GRAPHICS_API_OPENGL
+#define GRAPHICS_API_OPENGL
 #endif
 
 class QOpenGL : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
     explicit QOpenGL(QObject *parent = nullptr);
-    void SetWindowTitle(QString title);
-    GLFWwindow* GetWindow();
+    ~QOpenGL();
+    void Initialize();
+
+    /* Variables */
+    /* Events */
+    bool WaitForEvents = true;
+    /* Display */
+    void SetMaxFrameRate(int framerate);
+
+    /* Imgui */
+    ImGuiIO &GetIO();
 
 private:
-    GLFWwindow* window;
-    static void window_size_callback(GLFWwindow* window, int width, int height);
-    static void error_callback(int error, const char* description);
-    QElapsedTimer deltaTime;
+    /* Variables */
+    /* Static Reference */
+    static QOpenGL* opengl;
 
-    void FrameRate_Lock();
+    /* OpenGL Window */
+    bool WindowShouldClose = false;
+    QPair<int, int> OpenGL_Version;
+    SDL_Renderer* Renderer;
+    SDL_GLContext Context;
+    SDL_Window* Window;
+    QPair<int, int> viewportSize;
+
+    /* Imgui */
+    ImGuiIO *IO;
+    QString glsl_Version;
+
+    /* Performance */
+    int MaxFrameRate;
+    QElapsedTimer Time;
+
+    /* Functions */
+    /* Events */
+    void EventHandle();
+    static int WindowEventWatcher(void* data, SDL_Event* event);
+    void Render();
+
+    /* Performance */
+    void FrameRateLock();
 
 signals:
-    void BeginPlay();
-    void Tick(float DeltaTimne);
-    void ConstructInterface();
-    
+    void Ready(ImGuiIO& io);
+    void RenderInterface(float DeltaTime);
+    void Tick(float DeltaTime);
 };
 
 #endif // QOPENGL_H

@@ -5,9 +5,10 @@ add_library(Source_Interface INTERFACE)
 target_link_libraries(Source_Interface 
         INTERFACE 
         Qt${QT_VERSION_MAJOR}::Core
-        Engine
         Rendering
-        glfw
+        Engine
+        SDL2main
+        SDL2-static
         glad
         imgui-static
         lua

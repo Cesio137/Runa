@@ -23,25 +23,13 @@ include(config.cmake)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::Core
-    Engine
     Rendering
-    glfw
+    Engine
+    SDL2main
+    SDL2-static
     glad
     imgui-static
     lua
-    #[[
-    Rendering
-    bgfx
-    bx
-    glfw
-    glad
-    imgui-static
-    Bullet3Dynamics
-    Bullet3Collision
-    BulletSoftBody
-    LinearMath
-    OpenCL
-    ]]
 )
 
 if(COMMAND qt_create_translation)

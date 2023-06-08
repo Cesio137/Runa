@@ -1,5 +1,5 @@
 {
-    "version": 5,
+    "version": 3,
     "cmakeMinimumRequired": 
     {
       "major": 3,
@@ -9,19 +9,20 @@
     "configurePresets": 
     [
         {
-            "name": "VS2022",
-            "displayName": "Visual Studio 2022",
-            "description": "Default build using VS 2022",
+            "name": "VS2022_Debug",
+            "displayName": "Visual Studio 2022 Debug",
+            "description": "Default build using VS 2022 Debug",
             "generator": "Visual Studio 17 2022",
             "architecture":{ "value": "x64", "strategy": "external" },
             "cacheVariables": 
             {
-                "GLFW_BUILD_TESTS":"0",
-                "GLFW_VULKAN_STATIC":"1",
-                "GLFW_BUILD_EXAMPLES":"0",
-                "GLFW_INSTALL":"0",
-                "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0",
+                "CMAKE_BUILD_TYPE":"Debug",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
                 "LUABRIDGE_CXX17":"1"
             },
             "condition":
@@ -32,22 +33,47 @@
             }
         },
         {
-            "name": "VS2022_Clang",
-            "displayName": "Visual Studio 2022 and Clang",
-            "description": "Default build using VS 2022 with Clang",
+            "name": "VS2022_Release",
+            "displayName": "Visual Studio 2022 Release",
+            "description": "Default build using VS 2022 Release",
+            "generator": "Visual Studio 17 2022",
             "architecture":{ "value": "x64", "strategy": "external" },
             "cacheVariables": 
             {
-                "GLFW_BUILD_TESTS":"0",
-                "GLFW_VULKAN_STATIC":"1",
-                "GLFW_BUILD_EXAMPLES":"0",
-                "GLFW_INSTALL":"0",
-                "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0",
+                "CMAKE_BUILD_TYPE":"Release",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
                 "LUABRIDGE_CXX17":"1"
             },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2022_Clang_Debug",
+            "displayName": "Visual Studio 2022 and Clang Debug",
+            "description": "Default build using VS 2022 with Clang Debug",
             "generator": "Visual Studio 17 2022",
             "toolset": "clangcl",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "LUABRIDGE_CXX17":"1"
+            },
             "condition":
             {
                 "type": "equals",
@@ -56,21 +82,47 @@
             }
         },
         {
-            "name": "VS2019",
-            "displayName": "Visual Studio 2019",
-            "description": "Default build using VS 2029",
+            "name": "VS2022_Clang_Release",
+            "displayName": "Visual Studio 2022 and Clang Release",
+            "description": "Default build using VS 2022 with Clang Release",
+            "generator": "Visual Studio 17 2022",
+            "toolset": "clangcl",
             "architecture":{ "value": "x64", "strategy": "external" },
             "cacheVariables": 
             {
-                "GLFW_BUILD_TESTS":"0",
-                "GLFW_VULKAN_STATIC":"1",
-                "GLFW_BUILD_EXAMPLES":"0",
-                "GLFW_INSTALL":"0",
-                "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0",
+                "CMAKE_BUILD_TYPE":"Release",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
                 "LUABRIDGE_CXX17":"1"
             },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2019_Debug",
+            "displayName": "Visual Studio 2019 Debug",
+            "description": "Default build using VS 2019 Debug",
             "generator": "Visual Studio 16 2019",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "LUABRIDGE_CXX17":"1"
+            },
             "condition":
             {
                 "type": "equals",
@@ -79,22 +131,72 @@
             }
         },
         {
-            "name": "VS2019_Clang",
-            "displayName": "Visual Studio 2019 and Clang",
-            "description": "Default build using VS 2019 and Clang",
+            "name": "VS2019_Release",
+            "displayName": "Visual Studio 2019 Release",
+            "description": "Default build using VS 2019 Release",
+            "generator": "Visual Studio 16 2019",
             "architecture":{ "value": "x64", "strategy": "external" },
             "cacheVariables": 
             {
-                "GLFW_BUILD_TESTS":"0",
-                "GLFW_VULKAN_STATIC":"1",
-                "GLFW_BUILD_EXAMPLES":"0",
-                "GLFW_INSTALL":"0",
-                "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0",
+                "CMAKE_BUILD_TYPE":"Release",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
                 "LUABRIDGE_CXX17":"1"
             },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2019_Clang_Debug",
+            "displayName": "Visual Studio 2019 and Clang Debug",
+            "description": "Default build using VS 2019 and Clang Debug",
             "generator": "Visual Studio 16 2019",
             "toolset": "clangcl",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "LUABRIDGE_CXX17":"1"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2019_Clang_Release",
+            "displayName": "Visual Studio 2019 and Clang Release",
+            "description": "Default build using VS 2019 and Clang Release",
+            "generator": "Visual Studio 16 2019",
+            "toolset": "clangcl",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Release",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "LUABRIDGE_CXX17":"1"
+            },
             "condition":
             {
                 "type": "equals",
@@ -104,22 +206,23 @@
         },
 
         {
-            "name": "Unix",
-            "displayName": "Unix Makefiles",
-            "description": "Default build using Unix Makefiles",
+            "name": "Unix_Debug",
+            "displayName": "Unix Makefiles Debug",
+            "description": "Default build using Unix Makefiles Debug",
+            "generator": "Unix Makefiles",
             "architecture":{ "value": "x64", "strategy": "external" },
             "cacheVariables": 
             {
-                "GLFW_BUILD_TESTS":"0",
-                "GLFW_VULKAN_STATIC":"1",
-                "GLFW_BUILD_EXAMPLES":"0",
-                "GLFW_INSTALL":"0",
-                "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0",
+                "CMAKE_BUILD_TYPE":"Debug",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
                 "LUABRIDGE_CXX17":"1"
             },
-          "generator": "Unix Makefiles",
-          "condition":
+            "condition":
             {
                 "type": "notEquals",
                 "lhs": "${hostSystemName}",
@@ -127,24 +230,76 @@
             }
         },
         {
-            "name": "Unix_Clang",
-            "displayName": "Unix Makefiles",
-            "description": "Default build using Unix Makefiles and Clang",
+            "name": "Unix_Release",
+            "displayName": "Unix Makefiles Release",
+            "description": "Default build using Unix Makefiles Release",
+            "generator": "Unix Makefiles",
             "architecture":{ "value": "x64", "strategy": "external" },
             "cacheVariables": 
             {
+                "CMAKE_BUILD_TYPE":"Release",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "LUABRIDGE_CXX17":"1"
+            },
+            "condition":
+            {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Unix_Clang_Debug",
+            "displayName": "Unix Makefiles Debug",
+            "description": "Default build using Unix Makefiles and Clang Debug",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Debug",
                 "LLVM_ENABLE_PROJECTS":"clang",
                 "CMAKE_C_COMPILER":"clang",
                 "CMAKE_CXX_COMPILER":"clang++",
-                "GLFW_BUILD_TESTS":"0",
-                "GLFW_VULKAN_STATIC":"1",
-                "GLFW_BUILD_EXAMPLES":"0",
-                "GLFW_INSTALL":"0",
-                "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
                 "LUABRIDGE_CXX17":"1"
             },
             "generator": "Unix Makefiles",
+            "condition":
+            {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Unix_Clang_Release",
+            "displayName": "Unix Makefiles Release",
+            "description": "Default build using Unix Makefiles and Clang Release",
+            "generator": "Unix Makefiles",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Release",
+                "LLVM_ENABLE_PROJECTS":"clang",
+                "CMAKE_C_COMPILER":"clang",
+                "CMAKE_CXX_COMPILER":"clang++",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "LUABRIDGE_CXX17":"1"
+            },
             "condition":
             {
                 "type": "notEquals",
@@ -157,17 +312,17 @@
             "name": "XCode",
             "displayName": "XCode",
             "description": "Default build using XCode",
+            "generator": "XCode",
             "cacheVariables": 
             {
-                "GLFW_BUILD_TESTS":"0",
-                "GLFW_VULKAN_STATIC":"1",
-                "GLFW_BUILD_EXAMPLES":"0",
-                "GLFW_INSTALL":"0",
-                "GLFW_USE_HYBRID_HPG":"1",
-                "GLFW_BUILD_DOCS":"0",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
                 "LUABRIDGE_CXX17":"1"
             },
-            "generator": "XCode",
             "condition":
             {
                 "type": "equals",

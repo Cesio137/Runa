@@ -9,6 +9,7 @@ target_include_directories(Rendering
         PRIVATE
         "${Rendering_DIR}/Private"
         INTERFACE
+        "${Rendering_DIR}/Public"
         "${Rendering_DIR}/Private"
 )
 target_link_libraries(Rendering         

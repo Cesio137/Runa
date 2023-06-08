@@ -1,154 +1,210 @@
 #include "qopengl.h"
 
-QOpenGL::QOpenGL(QObject *parent)
-    : QObject{parent}
+QOpenGL* QOpenGL::opengl = nullptr;
+
+QOpenGL::QOpenGL(QObject* parent)
+        : QObject(parent)
 {
-    connect(this, SIGNAL(BeginPlay()), parent, SLOT(QBeginPlay()));
-    connect(this, SIGNAL(Tick(float)), parent, SLOT(QTick(float)));
-    connect(this, SIGNAL(ConstructInterface()), parent, SLOT(QConstructInterface()));
-
-    //Set error callback
-    glfwSetErrorCallback(error_callback);   
-
-    // Initialize GLFW
-    if (!glfwInit())
+    opengl = this;
+    // Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        qDebug() << "SDL could not be initialized: " << SDL_GetError();
         return;
+    }
 
-    QString ogl_version;
+    QList<QPair<int, int>> GL_Version =
+            {
+                    {4, 6},
+                    {4, 5},
+                    {4, 4},
+                    {4, 3},
+                    {4, 2},
+                    {4, 1},
+                    {4, 0},
+                    {3, 3},
+                    {3, 2},
+                    {3, 1},
+                    {3, 0},
+                    {2, 1},
+                    {2, 0}
+            };
 
-    QList<QPair<int, int>> glfwVersion = 
+    for (int i = 0; i < GL_Version.size(); i++)
     {
-		{4, 6},
-        {4, 5},
-        {4, 4},
-        {4, 3},
-        {4, 2},
-        {4, 1},
-        {4, 0},
-        {3, 3},
-        {3, 2},
-        {3, 1},
-        {3, 0},
-        {2, 1},
-        {2, 0}
-    };
-
-    for (int i = 0; i < glfwVersion.size(); i++)
-    {
-        if (glfwVersion.at(i).first == OPENGL_MAJOR_MIN && glfwVersion.at(i).second < OPENGL_MINOR_MIN)
-	    {
-            glfwTerminate();
-            return;
-	    }
-        // Set the OpenGL version hint
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glfwVersion.at(i).first);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glfwVersion.at(i).second);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        // Create a GLFW window
-        window = glfwCreateWindow(1024, 576, "Lumen", nullptr, nullptr);
-        if (window)
+        if (GL_Version.at(i).first == OPENGL_MAJOR_VERSION && GL_Version.at(i).second < OPENGL_MINOR_VERSION)
         {
-            ogl_version = QString::number(glfwVersion.at(i).first) + QString::number(glfwVersion.at(i).second) + "0";
+            qDebug() << "SDL could not create window: " << SDL_GetError();
+            SDL_Quit();
+            return;
+        }
+
+        // Configurar atributos da janela OpenGL
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, GL_Version.at(i).first);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, GL_Version.at(i).second);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        // Create a GLFW window
+        Window = SDL_CreateWindow("Lumen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+        if (Window)
+        {
             // Make the window's context current
-            glfwMakeContextCurrent(window);
-            glfwMaximizeWindow(window);
+            Context = SDL_GL_CreateContext(Window);
+            if (!Context)
+            {
+                qDebug() << "SDL could not create context: " << SDL_GetError();
+                SDL_DestroyWindow(Window);
+                SDL_Quit();
+                return;
+            }
+
+            // Criar o renderizador com aceleração de hardware
+            Renderer = SDL_CreateRenderer(Window, 0, SDL_RENDERER_ACCELERATED);
+            if (!Renderer)
+            {
+                qDebug() << "SDL could not create renderer: " << SDL_GetError();
+                SDL_Log("Falha ao criar o renderizador: %s", SDL_GetError());
+                SDL_DestroyWindow(Window);
+                SDL_GL_DeleteContext(Context);
+                SDL_Quit();
+                return;
+            }
+
+            OpenGL_Version.first = GL_Version.at(i).first;
+            OpenGL_Version.second = GL_Version.at(i).second;
+            glsl_Version = QString::number(GL_Version.at(i).first) + QString::number(GL_Version.at(i).second) + "0";
+            viewportSize.first = 1024;
+            viewportSize.second = 576;
+            SDL_GL_SetSwapInterval(false);
             break;
         }
     }
 
-    //Window rezise
-    glfwSetWindowSizeCallback(window, window_size_callback);
+    // Inicializar o GLAD
+    if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
+    {
+        SDL_Log("Falha ao inicializar o GLAD");
+        qDebug() << "SDL could not initialize glad";
+        SDL_GL_DeleteContext(Context);
+        SDL_DestroyWindow(Window);
+        SDL_Quit();
+        return;
+    }
 
-    //Load GLAD so it configures OpenGL
-	gladLoadGL();
-	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
-	glViewport(0, 0, 1024, 576);
-
-	// Specify the color of the background
-	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-	// Clean the back buffer and assign the new color to it
-	glClear(GL_COLOR_BUFFER_BIT);
-	// Swap the back buffer with the front buffer
-	glfwSwapBuffers(window);
-    //Remove framerate limit
-    glfwSwapInterval(0);
-
+    SDL_AddEventWatch(WindowEventWatcher, Window);
+    // Load GLAD so it configures OpenGL
+    gladLoadGL();
+    
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version " + ogl_version.toUtf8());
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io;
+    IO = &io;
+    ImGui_ImplSDL2_InitForOpenGL(Window, Context);
+    ImGui_ImplOpenGL3_Init("#version " + glsl_Version.toUtf8());
+}
 
-    // Begin Play
-    emit BeginPlay();
-    // Start a timer count
-    deltaTime.start();
+QOpenGL::~QOpenGL()
+{
+#ifdef GRAPHICS_API_OPENGL
+#undef GRAPHICS_API_OPENGL
+#endif
+    delete IO;
+}
+
+void QOpenGL::Initialize()
+{
+    // Ready
+    emit Ready(*IO);
+    Time.start();
     // Main loop
-    while (!glfwWindowShouldClose(window))
+    while (!WindowShouldClose)
     {
-        emit Tick(float(deltaTime.elapsed()) / 1000.0f);
-        deltaTime.restart();
-
-        // Specify the color of the background
-        glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-        // Clean the back buffer and assign the new color to it
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        emit ConstructInterface();
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        
-        glfwSwapBuffers(window);
-        glfwWaitEvents();
-        FrameRate_Lock();
+        Time.restart();
+        EventHandle();
+        Render();
+        FrameRateLock();
     }
-    
+
+    // Limpar e finalizar
     ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
-    // Delete window before ending the program
-	glfwDestroyWindow(window);
-	// Terminate GLFW before ending the program
-	glfwTerminate();
-    return;
+    SDL_GL_DeleteContext(Context);
+    SDL_DestroyRenderer(Renderer);
+    SDL_DestroyWindow(Window);
+    SDL_Quit();
 }
 
-void QOpenGL::SetWindowTitle(QString title)
+void QOpenGL::EventHandle()
 {
-    glfwSetWindowTitle(window, title.toUtf8());
+    SDL_Event event;
+    while (SDL_PollEvent(&event))
+    {
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)
+        {
+            WindowShouldClose = true;
+        }
+    }
+    if (WaitForEvents)
+    {
+        SDL_WaitEvent(&event);
+    }
 }
 
-GLFWwindow* QOpenGL::GetWindow()
+int QOpenGL::WindowEventWatcher(void* data, SDL_Event* event)
 {
-	return window;
+    if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_RESIZED)
+    {
+        if (opengl->Window == (SDL_Window*)data)
+        {
+            opengl->Render();
+        }
+    }
+    return 0;
 }
 
-void QOpenGL::window_size_callback(GLFWwindow* window, int width, int height)
+void QOpenGL::SetMaxFrameRate(int framerate)
 {
-    glViewport(0, 0, width, height);
-    glClear(GL_COLOR_BUFFER_BIT);
-    // Swap buffers
-    glfwSwapBuffers(window);
+    MaxFrameRate = framerate;
 }
 
-void QOpenGL::error_callback(int error, const char *description)
+void QOpenGL::FrameRateLock()
 {
-    qDebug() << "Error " << error << ":" << description;
-}
-
-void QOpenGL::FrameRate_Lock()
-{
-    if( MAX_FRAME_RATE == 0 || float(deltaTime.elapsed()) / 1000.0f >  1.0f/float(MAX_FRAME_RATE) )
+    if (MaxFrameRate == 0 || float(Time.elapsed()) > ( 1000.0f / float(MaxFrameRate)))
     {
         return;
     }
-    float sleep = ( 1.0f/float(MAX_FRAME_RATE) * 1000.0f ) - float(deltaTime.elapsed());
+
+    float sleep = (1000.0f / float(MaxFrameRate)) - float(Time.elapsed());
     QThread::msleep(sleep);
+}
+
+void QOpenGL::Render()
+{
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame(Window);
+    ImGui::NewFrame();
+    // Renderização GUI
+    emit RenderInterface(IO->DeltaTime);
+    // Set viewport size
+    glViewport(0, 0, viewportSize.first, viewportSize.second);
+    // Specify the color of the background
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    // Clean the back buffer and assign the new color to it
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    emit Tick(IO->DeltaTime);
+
+    // Swap the back buffer with the front buffer
+    SDL_GL_SwapWindow(Window);
+}
+
+ImGuiIO &QOpenGL::GetIO()
+{
+    return *IO;
 }

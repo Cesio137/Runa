@@ -3,27 +3,56 @@
 QRHI::QRHI(QObject *parent, int rhi)
     : QObject{parent}
 {
-#define RHI_API rhi
+    OGL = new QOpenGL();
 
-    connect(this, SIGNAL(BeginPlay()), parent, SLOT(BeginPlay()));
-    connect(this, SIGNAL(Tick(float)), parent, SLOT(Tick(float)));
-    connect(this, SIGNAL(ConstructInterface()), parent, SLOT(ConstructInterface()));
-    
-    switch (RHI_API)
-    {
-    case 0:
-        qogl = new QOpenGL(this);
-        break;
-    
-    default:
-        qogl = new QOpenGL(this);
-        break;
-    }
+#ifdef GRAPHICS_API_OPENGL
+    connect(OGL, SIGNAL(Ready(ImGuiIO&)), this, SLOT(QReady(ImGuiIO&)));
+    connect(OGL, SIGNAL(RenderInterface(float)), this, SLOT(QRenderInterface(float)));
+    connect(OGL, SIGNAL(Tick(float)), this, SLOT(QTick(float)));
+#endif
 }
 
-void QRHI::QBeginPlay()
+QRHI::~QRHI()
 {
-    emit BeginPlay();
+#ifdef GRAPHICS_API_OPENGL
+    delete OGL;
+#endif
+}
+
+void QRHI::Initialize()
+{
+#ifdef GRAPHICS_API_OPENGL
+    OGL->Initialize();
+#endif
+}
+
+void QRHI::WaitForEvent(bool wait)
+{
+    OGL->WaitForEvents = wait;
+}
+
+void QRHI::EnableVSync(bool SwapInterval)
+{
+#ifdef GRAPHICS_API_OPENGL
+    SDL_GL_SetSwapInterval(SwapInterval);
+#endif
+}
+
+void QRHI::SetMaxFrameRate(int FrameRate)
+{
+#ifdef GRAPHICS_API_OPENGL
+    OGL->SetMaxFrameRate(FrameRate);
+#endif
+}
+
+void QRHI::QReady(ImGuiIO& io)
+{
+    emit Ready(io);
+}
+
+void QRHI::QRenderInterface(float DeltaTime)
+{
+    emit RenderInterface(DeltaTime);
 }
 
 void QRHI::QTick(float DeltaTime)
@@ -31,13 +60,4 @@ void QRHI::QTick(float DeltaTime)
     emit Tick(DeltaTime);
 }
 
-void QRHI::QConstructInterface()
-{
-    emit ConstructInterface();
-}
 
-bool QRHI::getGlfwWindow(GLFWwindow*& window)
-{
-    window = qogl->GetWindow();
-    return window ? true : false;
-}

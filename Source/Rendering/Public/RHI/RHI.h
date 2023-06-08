@@ -4,29 +4,33 @@
 #include <QObject>
 #include <OpenGL/qopengl.h>
 
-#define RHI_API 0
-
 class QRHI : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
     explicit QRHI(QObject *parent = nullptr, int rhi = 0);
+    ~QRHI();
+    void Initialize();
+
+    //Event
+    void WaitForEvent(bool wait);
+
+    //FrameRate
+    void EnableVSync(bool SwapInterval);
+    void SetMaxFrameRate(int FrameRate);
 
 public slots:
-    void QBeginPlay();
+    void QReady(ImGuiIO& io);
+    void QRenderInterface(float DeltaTime);
     void QTick(float DeltaTime);
-    void QConstructInterface();
-    bool getGlfwWindow(GLFWwindow* &window);
 
 private:
-    QOpenGL* qogl;
-    
+    QOpenGL* OGL = nullptr;
 
 signals:
-    void BeginPlay();
+    void Ready(ImGuiIO& io);
+    void RenderInterface(float DeltaTime);
     void Tick(float DeltaTime);
-    void ConstructInterface();
 
 };
-
 #endif // QRHI_H

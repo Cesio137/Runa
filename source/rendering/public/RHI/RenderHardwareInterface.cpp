@@ -32,6 +32,11 @@ void RenderHardwareInterface::Render(float delta)
 {
 }
 
+void RenderHardwareInterface::CloseApp()
+{
+    OGL->SetWindowShouldClose(true);
+}
+
 void RenderHardwareInterface::QSlotPreInitialize(ImGuiIO& io)
 {
     PreInitialize(io);

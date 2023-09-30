@@ -33,6 +33,8 @@ public:
 
     void SetFrameRateLimit(int MaxFPS);
     int GetFrameRateLimit();
+
+    void SetWindowShouldClose(bool close);
     
 private:
     /* OpenGL Window */

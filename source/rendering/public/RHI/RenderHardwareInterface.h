@@ -18,6 +18,8 @@ public:
 
     /*ImGui*/
     ImGuiIO* IO = nullptr;
+
+    void CloseApp();
     
 private:
 

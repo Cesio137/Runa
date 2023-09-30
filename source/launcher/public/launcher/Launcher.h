@@ -2,6 +2,8 @@
 #define LAUNCHER_H
 
 #include <RHI/RenderHardwareInterface.h>
+#include <QDesktopServices>
+#include <QUrl>
 
 class Launcher : public RenderHardwareInterface
 {
@@ -38,9 +40,16 @@ private:
     GLuint VAO, VBO;
     
     // Variables to be changed in the ImGUI window
+    void TriangleController();
     bool drawTriangle = true;
     float size = 1.0f;
     float color[4] = { 0.8f, 0.3f, 0.02f, 1.0f };
+
+    //Dockspace Launcher
+    void LauncherDoking();
+    ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+    bool p_open = true;
 signals:
 
 };

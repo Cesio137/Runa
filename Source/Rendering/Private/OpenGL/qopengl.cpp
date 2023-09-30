@@ -146,6 +146,11 @@ int QOpenGL::GetFrameRateLimit()
     return MaxFrameRate;
 }
 
+void QOpenGL::SetWindowShouldClose(bool close)
+{
+    WindowShouldClose = close;
+}
+
 void QOpenGL::SDLEventHandle()
 {
     SDL_Event event;

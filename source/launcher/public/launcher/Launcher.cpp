@@ -1,4 +1,7 @@
 #include "Launcher.h"
+#include "Launcher.h"
+
+#include <EventToken.h>
 
 #include "imgui_internal.h"
 
@@ -19,6 +22,9 @@ void Launcher::Ready()
 {
     RenderHardwareInterface::Ready();
 
+    dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+    window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
+    
     // Create Vertex Shader Object and get its reference
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     // Attach Vertex Shader source to the Vertex Shader Object
@@ -77,82 +83,17 @@ void Launcher::Ready()
     glUseProgram(shaderProgram);
     glUniform1f(glGetUniformLocation(shaderProgram, "size"), size);
     glUniform4f(glGetUniformLocation(shaderProgram, "color"), color[0], color[1], color[2], color[3]);
+
+    // Criar um espaço de docking na janela principal
+    
 }
 
 void Launcher::RenderInterface(float delta)
 {
-    // Criar um espaço de docking na janela principal
-    ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-
-    // Usar a função ImGui::DockBuilder*() para dividir o espaço de docking em regiões e atribuir identificadores para elas
-    ImGui::DockBuilderRemoveNode(dockspace_id); // Clear out existing layout
-    ImGui::DockBuilderAddNode(dockspace_id, ImGuiDockNodeFlags_DockSpace); // Add empty node
-    ImGui::DockBuilderSetNodeSize(dockspace_id, ImVec2(1280.0f, 720.0f));
-
-    ImGuiID dock_main_id = dockspace_id; // This variable will track the document node, however we are not using it here as we aren't docking anything into it.
-    ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.20f, NULL, &dock_main_id);
-    ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.20f, NULL, &dock_main_id);
-    ImGuiID dock_up_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.20f, NULL, &dock_main_id);
-    ImGuiID dock_down_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.20f, NULL, &dock_main_id);
-
-    // Usar a função ImGui::DockBuilderDockWindow() para encaixar as janelas nas regiões que você criou
-    ImGui::DockBuilderDockWindow("Hello", dock_left_id);
-    ImGui::DockBuilderDockWindow("World", dock_right_id);
-    ImGui::DockBuilderDockWindow("Foo", dock_up_id);
-    ImGui::DockBuilderDockWindow("Bar", dock_down_id);
-    ImGui::DockBuilderFinish(dockspace_id);
-
-    // Chamar as funções ImGui::Begin() e ImGui::End() para criar as janelas e widgets dentro delas
-    bool show_hello = true;
-    bool show_world = true;
-    bool show_foo = true;
-    bool show_bar = true;
-
-    if (show_hello)
-    {
-        ImGui::Begin("Hello", &show_hello); // Create a window called "Hello" and append into it.
-        ImGui::Text("This is some useful text."); // Display some text (you can use a format strings too)
-        ImGui::End();
-    }
-
-    if (show_world)
-    {
-        ImGui::Begin("World", &show_world);
-        /*
-        if ()
-        {
-            ImGui::Text("This is another useful text."); // Display some text (you can use a format strings too)
-        // Text that appears in the window
-        ImGui::Text("Hello there adventurer!");
-        // Checkbox that appears in the window
-        ImGui::Checkbox("Draw Triangle?", &drawTriangle);
-        // Slider that appears in the window
-        ImGui::SliderFloat("Scale", &size, 0.5f, 2.0f);
-        // Fancy color editor that appears in the window
-        ImGui::ColorEdit4("Albedo", color);
-        // Ends the window
-        ImGui::Button("engine btn", ImVec2(128.0f, 64.0f));
-        
-        }
-        */
-        ImGui::End();
-        
-    }
-
-    if (show_foo)
-    {
-        ImGui::Begin("Foo", &show_foo); // Create a window called "Foo" and append into it.
-        ImGui::Text("This is some more useful text."); // Display some text (you can use a format strings too)
-        ImGui::End();
-    }
-
-    if (show_bar)
-    {
-        // ImGUI window creation
-        ImGui::Begin("Bar", &show_bar);
-        ImGui::Text("This is even more useful text."); // Display some text (you can use a format strings too)
-        ImGui::End();
-    }
+    //TriangleController();
+    LauncherDoking();
+    TriangleController();
+    
 }
 
 void Launcher::Render(float delta)
@@ -172,4 +113,67 @@ void Launcher::Render(float delta)
     glUseProgram(shaderProgram);
     glUniform1f(glGetUniformLocation(shaderProgram, "size"), size);
     glUniform4f(glGetUniformLocation(shaderProgram, "color"), color[0], color[1], color[2], color[3]);
+}
+
+void Launcher::TriangleController()
+{
+    ImGui::Begin("Nanometro");
+    ImGui::Text("This is another useful text."); // Display some text (you can use a format strings too)
+    // Text that appears in the window
+    ImGui::Text("Hello there adventurer!");
+    // Checkbox that appears in the window
+    ImGui::Checkbox("Draw Triangle?", &drawTriangle);
+    // Slider that appears in the window
+    ImGui::SliderFloat("Scale", &size, 0.5f, 2.0f);
+    // Fancy color editor that appears in the window
+    ImGui::ColorEdit4("Albedo", color);
+    // Ends the window
+    ImGui::Button("engine btn", ImVec2(128.0f, 64.0f));
+    ImGui::End();
+}
+
+void Launcher::LauncherDoking()
+{
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::SetNextWindowViewport(viewport->ID);
+
+    ImGui::Begin("DockSpace Demo", &p_open, window_flags);
+    
+    // Submit the DockSpace
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+    {
+        ImGuiID dockspace_id = ImGui::GetID("Launcher");
+        ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+    }
+    
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Launcher"))
+        {
+            ImGui::MenuItem("Add project");
+            
+            ImGui::Separator();
+            
+            ImGui::MenuItem("Check for updates");
+            if(ImGui::MenuItem("Source"))
+            {
+                SDL_OpenURL("https://github.com/Cesio137/Nanometro");
+            }
+            if(ImGui::MenuItem("Report issues"))
+            {
+                SDL_OpenURL("https://github.com/Cesio137/Nanometro/issues");
+            }
+            
+            ImGui::Separator();
+
+            if (ImGui::MenuItem("Exit"))
+                CloseApp();
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }    
+    ImGui::End();
 }

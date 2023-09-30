@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QThread>
+#include <QPair>
 #include <QDebug>
 #include <QElapsedTimer>
 #include <glad/glad.h>
@@ -24,26 +25,16 @@
 
 class QOpenGL : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit QOpenGL(QObject *parent = nullptr);
     ~QOpenGL();
-    void Initialize();
+    void OGLInit();
 
-    /* Variables */
-    /* Events */
-    bool WaitForEvents = true;
-    /* Display */
-    void SetMaxFrameRate(int framerate);
-
-    /* Imgui */
-    ImGuiIO &GetIO();
-
+    void SetFrameRateLimit(int MaxFPS);
+    int GetFrameRateLimit();
+    
 private:
-    /* Variables */
-    /* Static Reference */
-    static QOpenGL* opengl;
-
     /* OpenGL Window */
     bool WindowShouldClose = false;
     QPair<int, int> OpenGL_Version;
@@ -60,19 +51,19 @@ private:
     int MaxFrameRate;
     QElapsedTimer Time;
 
-    /* Functions */
     /* Events */
-    void EventHandle();
-    static int WindowEventWatcher(void* data, SDL_Event* event);
-    void Render();
+    void SDLEventHandle();
+    void OGLRender();
 
     /* Performance */
     void FrameRateLock();
 
 signals:
-    void Ready(ImGuiIO& io);
+    void PreInitialize(ImGuiIO& io);
+    void Ready();
     void RenderInterface(float DeltaTime);
-    void Tick(float DeltaTime);
+    void Render(float DeltaTime);
+
 };
 
 #endif // QOPENGL_H

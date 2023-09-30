@@ -1,4 +1,4 @@
-# Lumen
+# Nanometro
 
 ## Suported Platforms
 
@@ -35,7 +35,7 @@
 ---
 
 ```shell
-git clone https://github.com/Cesio137/Lumen.git
+git clone https://github.com/Cesio137/Nanometro.git
 ```
 
 ## Building the Engine
@@ -54,7 +54,7 @@ git clone https://github.com/Cesio137/Lumen.git
       ```
 * Setup Project.
   * Create a `build` folder and open terminal inside.
-  * to generate project using Visual studio 2022
+  * to generate project using Visual studio 2022(Recommended)
     * ```bash
       cmake .. --preset=VS2022
       ```

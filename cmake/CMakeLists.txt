@@ -30,4 +30,4 @@ get_all_targets(all_targets)
 message("All targets: ${all_targets}")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set_target_properties(${all_targets} PROPERTIES FOLDER thirdparty)
+set_target_properties(${all_targets} PROPERTIES FOLDER fetch)

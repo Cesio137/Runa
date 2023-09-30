@@ -22,8 +22,7 @@
                 "SDL_X11":"1",
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "LUABRIDGE_CXX17":"1"
+                "SDL_TEST":"0"
             },
             "condition":
             {
@@ -120,8 +119,7 @@
                 "SDL_X11":"1",
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "LUABRIDGE_CXX17":"1"
+                "SDL_TEST":"0"
             },
             "condition":
             {

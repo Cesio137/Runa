@@ -1,18 +1,10 @@
 set(SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-project(Source_Interface)
-add_library(Source_Interface INTERFACE)
-target_link_libraries(Source_Interface 
-        INTERFACE 
-        Qt${QT_VERSION_MAJOR}::Core
-        Rendering
-        Engine
-        SDL2main
-        SDL2-static
-        glad
-        imgui-static
-        lua
-)
+include(${SOURCE_DIR}/rendering/rendering.cmake)
+include(${SOURCE_DIR}/launcher/launcher.cmake)
 
-include(${SOURCE_DIR}/Rendering/Rendering.cmake)
-include(${SOURCE_DIR}/Engine/Engine.cmake)
+target_link_libraries(Nanometro
+        Qt${QT_VERSION_MAJOR}::Core
+        Launcher
+        Rendering
+)

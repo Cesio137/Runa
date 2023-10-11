@@ -19,7 +19,6 @@ add_executable(Nanometro
 include(config.cmake)
 target_link_libraries(Nanometro
         Qt${QT_VERSION_MAJOR}::Core
-        Jolt
 )
 
 include(GNUInstallDirs)

@@ -1,8 +1,12 @@
 #ifndef LAUNCHER_H
 #define LAUNCHER_H
 
+#ifdef LAUNCHER_H
+#define LAUNCHER_FLAGS 1
+#endif
+
+
 #include <RHI/RenderHardwareInterface.h>
-#include <QDesktopServices>
 #include <QUrl>
 
 class Launcher : public RenderHardwareInterface
@@ -10,6 +14,7 @@ class Launcher : public RenderHardwareInterface
     Q_OBJECT
 public:
     explicit Launcher(QObject *parent = nullptr);
+    ~Launcher();
     void PreInitialize(ImGuiIO& io) override;
     void Ready() override;
     void RenderInterface(float delta) override;
@@ -44,13 +49,14 @@ private:
     bool drawTriangle = true;
     float size = 1.0f;
     float color[4] = { 0.8f, 0.3f, 0.02f, 1.0f };
+    bool vsync = false;
+    float fpslimit = 30.0f;
 
     //Dockspace Launcher
     void LauncherDoking();
     ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
     bool p_open = true;
-signals:
 
 };
 

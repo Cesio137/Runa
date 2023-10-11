@@ -1,10 +1,9 @@
 #include <QCoreApplication>
-#include <launcher/Launcher.h>
+#include <core/QCore.h>
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-    Launcher* L = new Launcher();
-
-    return a.exec();
+    QCore Core(argc, argv);
+    
+    return Core.exec();
 }

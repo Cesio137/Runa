@@ -17,5 +17,6 @@ target_link_libraries(Rendering
         SDL2main
         SDL2-static
         glad
-        imgui-static
+        imgui
+        Data
 )

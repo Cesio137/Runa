@@ -7,8 +7,9 @@ if(NOT sdl2_POPULATED)
     FetchContent_Declare(
         sdl2
         GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-        GIT_TAG        8a5ba43d00252c6c8b33c9aa4f1048222955ab4d # 2.28.3
+        GIT_TAG        cc016b0046d563287f0aa9f09b958b5e70d43696 #2.28.4 
       )
   
     FetchContent_MakeAvailable(sdl2)
 endif()
+

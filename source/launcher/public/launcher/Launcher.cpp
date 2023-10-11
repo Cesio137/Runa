@@ -1,13 +1,13 @@
 #include "Launcher.h"
-#include "Launcher.h"
-
-#include <EventToken.h>
-
-#include "imgui_internal.h"
 
 Launcher::Launcher(QObject *parent)
 {
-    Initialize();
+    Init(SDL_INIT_OPENGL);
+}
+
+Launcher::~Launcher()
+{
+
 }
 
 void Launcher::PreInitialize(ImGuiIO& io)
@@ -90,10 +90,8 @@ void Launcher::Ready()
 
 void Launcher::RenderInterface(float delta)
 {
-    //TriangleController();
     LauncherDoking();
     TriangleController();
-    
 }
 
 void Launcher::Render(float delta)
@@ -118,7 +116,7 @@ void Launcher::Render(float delta)
 void Launcher::TriangleController()
 {
     ImGui::Begin("Nanometro");
-    ImGui::Text("This is another useful text."); // Display some text (you can use a format strings too)
+    ImGui::Text(std::to_string(ImGui::GetIO().DeltaTime).c_str()); // Display some text (you can use a format strings too)
     // Text that appears in the window
     ImGui::Text("Hello there adventurer!");
     // Checkbox that appears in the window
@@ -127,8 +125,14 @@ void Launcher::TriangleController()
     ImGui::SliderFloat("Scale", &size, 0.5f, 2.0f);
     // Fancy color editor that appears in the window
     ImGui::ColorEdit4("Albedo", color);
-    // Ends the window
-    ImGui::Button("engine btn", ImVec2(128.0f, 64.0f));
+    // VSync
+    if (ImGui::Checkbox("Enable Vsync", &vsync))
+        QUserSettings::SetVSyncMode(vsync);
+
+    if (ImGui::SliderFloat("FPS Target", &fpslimit, 30.0f, 200.0f))
+        QUserSettings::SetMaxFPS(fpslimit);
+    
+    
     ImGui::End();
 }
 

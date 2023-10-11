@@ -93,6 +93,6 @@ else()
 
 endif ()
 
-project(imgui-static)
-add_library(imgui-static ${imgui_sources})
-target_include_directories(imgui-static PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends PRIVATE ${sdl2_SOURCE_DIR}/include ${Vulkan_INCLUDE_DIRS})
+project(imgui)
+add_library(imgui STATIC ${imgui_sources})
+target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends PRIVATE ${sdl2_SOURCE_DIR}/include ${Vulkan_INCLUDE_DIRS})

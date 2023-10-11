@@ -11,7 +11,5 @@ target_include_directories(Launcher
         "${Launcher_DIR}/public"
 )
 target_link_libraries(Launcher
-        Qt${QT_VERSION_MAJOR}::Core
-        Qt${QT_VERSION_MAJOR}::Gui
         Rendering
 )

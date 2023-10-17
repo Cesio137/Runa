@@ -6,10 +6,10 @@ add_library(Launcher STATIC ${Launcher_Sources})
 target_include_directories(Launcher
         PUBLIC
         "${Launcher_DIR}/public"
-        "${Rendering_DIR}/public"
         INTERFACE
         "${Launcher_DIR}/public"
 )
 target_link_libraries(Launcher
         Rendering
+        Data
 )

@@ -1,4 +1,5 @@
 include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
 #set(FETCHCONTENT_BASE_DIR ${THIRDPARTY_DIR})
 
 file(GLOB_RECURSE cmake_files "*.cmake")
@@ -9,7 +10,6 @@ foreach(file ${cmake_files})
 endforeach()
 
 #Set folder and group all thirdparty projects
-
 function(get_all_targets var)
     set(targets)
     get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})

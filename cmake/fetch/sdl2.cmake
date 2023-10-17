@@ -7,7 +7,8 @@ if(NOT sdl2_POPULATED)
     FetchContent_Declare(
         sdl2
         GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-        GIT_TAG        cc016b0046d563287f0aa9f09b958b5e70d43696 #2.28.4 
+        GIT_TAG        release-2.28.4 #2.28.4 
+        GIT_PROGRESS TRUE
       )
   
     FetchContent_MakeAvailable(sdl2)

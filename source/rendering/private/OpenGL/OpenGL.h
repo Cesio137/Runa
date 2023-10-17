@@ -8,12 +8,13 @@
 #include <QObject>
 #include <QThread>
 #include <QDebug>
+#include <Types.h>
 #include <glad/glad.h>
 #include <SDL.h>
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
-#include <RenderingUserSettings/QUserSettings.h>
+#include <RenderingSettings/RenderingUserSettings.h>
 #include <RenderingConfig/RenderingConfig.h>
 
 using namespace std;
@@ -27,7 +28,7 @@ public:
     int SDL_OpenGL_Init();
     void SDL2_ImGui_Init();
     void SDL2_Destroy_OpenGL();
-    int GetErrorCode(string &log);
+    int GetErrorCode(FString &log);
 
     static SDL_Window* GetWindow();
 
@@ -40,10 +41,10 @@ private:
     inline static SDL_Window* Window = nullptr;
 
     /* Imgui */
-    string glsl_Version;
+    FString glsl_Version;
 
     /* error */
-    string error_log;
+    FString error_log;
     int error_code = 0;
 };
 

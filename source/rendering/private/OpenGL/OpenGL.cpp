@@ -84,7 +84,7 @@ SDL_OpenGL::SDL_OpenGL()
 
                 OpenGL_Version.first = GL_Version[i].first;
                 OpenGL_Version.second = GL_Version[i].second;
-                string glsl = to_string(GL_Version[i].first) + to_string(GL_Version[i].second) + "0";
+                string glsl = "#version " + to_string(GL_Version[i].first) + to_string(GL_Version[i].second) + "0";
                 glsl_Version = glsl.c_str();
                 SDL_GL_SetSwapInterval(false);
                 break;
@@ -94,8 +94,8 @@ SDL_OpenGL::SDL_OpenGL()
     else
     {   /* Manual select */
         // Configurar atributos da janela OpenGL
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, SDL_MAJOR_VERSION);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, SDL_MINOR_VERSION);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OPENGL_MAJOR_VERSION);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OPENGL_MINOR_VERSION);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         
         Window = SDL_CreateWindow("Nanometro", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
@@ -127,9 +127,10 @@ SDL_OpenGL::SDL_OpenGL()
                 return;
             }
 
-            OpenGL_Version.first = SDL_MAJOR_VERSION;
-            OpenGL_Version.second = SDL_MINOR_VERSION;
-            glsl_Version = "#version " + to_string(SDL_MAJOR_VERSION) + to_string(SDL_MINOR_VERSION) + "0";
+            OpenGL_Version.first = OPENGL_MAJOR_VERSION;
+            OpenGL_Version.second = OPENGL_MINOR_VERSION;
+            glsl_Version = "#version " + FString::number(OPENGL_MAJOR_VERSION) + FString::number(OPENGL_MINOR_VERSION) + "0";
+
             SDL_GL_SetSwapInterval(false);
         }
         else
@@ -142,6 +143,18 @@ SDL_OpenGL::SDL_OpenGL()
         }
     }
 
+    //SDL_AddEventWatch(WindowEventWatcher, Window);
+    // Load GLAD so it configures OpenGL
+    if (!gladLoadGL())
+    {
+        error_log = "GLAD could not be loaded.";
+        error_code = -1;
+        SDL_DestroyWindow(Window);
+        SDL_GL_DeleteContext(Context);
+        SDL_DestroyRenderer(Renderer);
+        SDL_Quit();
+        return;
+    }
     
 }
 
@@ -158,7 +171,9 @@ void SDL_OpenGL::SDL2_ImGui_Init()
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
     ImGui_ImplSDL2_InitForOpenGL(Window, Context);
-    ImGui_ImplOpenGL3_Init(glsl_Version.c_str());
+    ImGui_ImplOpenGL3_Init(glsl_Version.toUtf8());
+
+    
 }
 
 void SDL_OpenGL::SDL2_Destroy_OpenGL()
@@ -173,7 +188,7 @@ void SDL_OpenGL::SDL2_Destroy_OpenGL()
     SDL_Quit();
 }
 
-int SDL_OpenGL::GetErrorCode(string &log)
+int SDL_OpenGL::GetErrorCode(FString &log)
 {
     log = error_log;
     return error_code;

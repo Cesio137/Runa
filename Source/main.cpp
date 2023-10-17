@@ -1,9 +1,9 @@
 #include <QCoreApplication>
-#include <core/QCore.h>
+#include <Core.h>
 
 int main(int argc, char *argv[])
 {
-    QCore Core(argc, argv);
+    Core a(argc, argv);
     
-    return Core.exec();
+    return a.exec();;
 }

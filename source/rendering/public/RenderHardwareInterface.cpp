@@ -8,14 +8,26 @@ RenderHardwareInterface::RenderHardwareInterface(QObject *parent)
 
 int  RenderHardwareInterface::Init(Uint32 flags)
 {
+    int code = 0;
     if (flags == 0)
     {
-        OpenGL = new SDL_OpenGL();
+        code = SDLOpenGLManager();         
     }
 
-    string log;
+    return  code;
+}
+
+void RenderHardwareInterface::CloseApp()
+{
+    WindowShouldClose = true;
+}
+
+int RenderHardwareInterface::SDLOpenGLManager()
+{
+    OpenGL = new SDL_OpenGL();
+        
+    FString log;
     int error_code;
-#ifdef NANOMETRO_OPENGL_H
 
     if((error_code = OpenGL->GetErrorCode(log)) != 0)
     {
@@ -27,6 +39,7 @@ int  RenderHardwareInterface::Init(Uint32 flags)
 
     OpenGL->SDL2_ImGui_Init();
     PreInitialize(ImGui::GetIO());
+    RenderingEngineSettings::LoadSettings();
     
     // Ready
     Ready();
@@ -34,28 +47,20 @@ int  RenderHardwareInterface::Init(Uint32 flags)
     // Main loop
     while (!WindowShouldClose)
     {
-        SDLEventHandle();
-        SDLRender();
+        SDLOpenGLEventHandle();
+        SDLOpenGLRender();
         FrameRateLock();
     }
 
-    // Limpar e finalizar
+    // Clean and finish
     OpenGL->SDL2_Destroy_OpenGL();
     OpenGL = nullptr;
     free(OpenGL);
 
-    return  0;
-        
-#endif
-    
+    return 0;
 }
 
-void RenderHardwareInterface::CloseApp()
-{
-    WindowShouldClose = true;
-}
-
-void RenderHardwareInterface::SDLEventHandle()
+void RenderHardwareInterface::SDLOpenGLEventHandle()
 {
     SDL_Event event;
     SDL_WaitEvent(&event);
@@ -70,9 +75,7 @@ void RenderHardwareInterface::SDLEventHandle()
             break;
 
         case SDL_WINDOWEVENT_SIZE_CHANGED:
-#ifdef NANOMETRO_OPENGL_H
             glViewport(0, 0, event.window.data1, event.window.data2); // Set viewport size
-#endif
             
         }
         
@@ -80,9 +83,8 @@ void RenderHardwareInterface::SDLEventHandle()
     EventHandle(event);
 }
 
-void RenderHardwareInterface::SDLRender()
+void RenderHardwareInterface::SDLOpenGLRender()
 {
-#ifdef NANOMETRO_OPENGL_H
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(OpenGL->GetWindow());
     ImGui::NewFrame();
@@ -102,13 +104,12 @@ void RenderHardwareInterface::SDLRender()
 
     // Swap the back buffer with the front buffer
     SDL_GL_SwapWindow(OpenGL->GetWindow());
-#endif
 }
 
 void RenderHardwareInterface::FrameRateLock()
 {
     float sleep = 0.0f;
-    if ( QUserSettings::GetMaxFPS() == 0 || ImGui::GetIO().Framerate > float(QUserSettings::GetMaxFPS()) )
+    if ( RenderingUserSettings::GetMaxFPS() == 0 || ImGui::GetIO().Framerate > float(RenderingUserSettings::GetMaxFPS()) )
     {
         if ( ImGui::GetIO().Framerate > 500.0f )
         {
@@ -119,6 +120,6 @@ void RenderHardwareInterface::FrameRateLock()
         return;
     }
 
-    sleep = (1000.0f / float(QUserSettings::GetMaxFPS())) - ImGui::GetIO().DeltaTime;
+    sleep = (1000.0f / float(RenderingUserSettings::GetMaxFPS())) - ImGui::GetIO().DeltaTime;
     SDL_Delay(sleep);
 }

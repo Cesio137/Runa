@@ -13,10 +13,8 @@ target_include_directories(Rendering
         "${Rendering_DIR}/private"
 )
 target_link_libraries(Rendering
+        PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
-        SDL2main
-        SDL2-static
-        glad
-        imgui
         Data
+        Source_Interface
 )

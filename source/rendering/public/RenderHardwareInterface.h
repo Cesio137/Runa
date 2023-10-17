@@ -1,7 +1,9 @@
-#ifndef RHI_H
-#define RHI_H
+#ifndef RENDERHARDWAREINTERFACE_H
+#define RENDERHARDWAREINTERFACE_H
 
 #include <QObject>
+#include <Types.h>
+#include <RenderingSettings/RenderingEngineSettings.h>
 #include <opengl/OpenGL.h>
 
 class RenderHardwareInterface : public QObject
@@ -23,17 +25,18 @@ public:
 private:
     /*Graphics API*/
     SDL_OpenGL *OpenGL = nullptr;
+    int SDLOpenGLManager();
+    void SDLOpenGLEventHandle();
+    void SDLOpenGLRender();
 
     /*SDL Events*/
     bool WindowShouldClose = false;
-    void SDLEventHandle();
-    void SDLRender();
-    
+
     /*Performance*/
     void FrameRateLock();
     
 signals:
-    void on_error(int code, string error);
+    void on_error(int code, FString error);
 
 };
 

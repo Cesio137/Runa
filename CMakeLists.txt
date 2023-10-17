@@ -10,11 +10,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_PREFIX_PATH C:/Qt/6.2.4/msvc2019_64/lib/cmake)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Gui)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core LinguistTools)
 
 add_executable(Nanometro
   source/main.cpp
+  ${TS_FILES}
+  ${QM_FILES}
 )
 include(config.cmake)
 target_link_libraries(Nanometro

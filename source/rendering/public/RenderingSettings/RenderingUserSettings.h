@@ -2,20 +2,19 @@
 #define QUSERSETTINGS
 
 #include <QObject>
-#include <OpenGL/OpenGL.h>
 #include <SDL.h>
 
-class QUserSettings : public QObject
+class RenderingUserSettings : public QObject
 {
      Q_OBJECT
 public:
-    QUserSettings(QObject *parent = nullptr);
+    RenderingUserSettings(QObject *parent = nullptr);
     
     //static void SetScreenResolution(int value);
     //static void GetSupportedScreenResolution(int value);
     
-    static void SetFullscreenMode(int value);
-    static Uint32 GetFullscreenMode(int value);
+    //static void SetFullscreenMode(int value);
+    //static Uint32 GetFullscreenMode(int value);
 
     //static void SetResolutionScaling(int value);
     //static void GetResolutionScaling(int value);
@@ -23,11 +22,11 @@ public:
     static void SetVSyncMode(int value);
     static int GetVSyncMode();
 
-    static void SetMaxFPS(int value);
+    static void SetMaxFPS(Uint8 value);
     static int GetMaxFPS();
 
 private:
-     inline static Uint32 max_fps_ = 0;
+     inline static Uint8 max_fps_ = 0;
 
 signals:
 

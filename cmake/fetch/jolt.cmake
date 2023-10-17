@@ -3,7 +3,8 @@ if(NOT joltphysics_POPULATED)
     FetchContent_Declare(
       joltphysics
         GIT_REPOSITORY https://github.com/jrouwe/JoltPhysics.git
-        GIT_TAG        3d36f7aea85fcea4b0de5404c953e40db0a749ba #3.0.1
+        GIT_TAG        v3.0.1 #3.0.1
+        GIT_PROGRESS TRUE
         SOURCE_SUBDIR  Build
       )
   

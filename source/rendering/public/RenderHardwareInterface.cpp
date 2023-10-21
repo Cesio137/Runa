@@ -26,7 +26,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
 {
     OpenGL = new SDL_OpenGL();
         
-    FString log;
+    QString log;
     int error_code;
 
     if((error_code = OpenGL->GetErrorCode(log)) != 0)

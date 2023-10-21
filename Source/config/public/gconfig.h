@@ -1,13 +1,22 @@
 #ifndef GCONFIG_H
 #define GCONFIG_H
 
-#include <QObject>
+#include <QSettings>
 
-class GConfig : public QObject
+class GConfig : public QSettings
 {
-    Q_OBJECT
 public:
-    explicit GConfig(QObject *parent = nullptr);
+    GConfig(const QString& organization, const QString& application, QObject* parent);
+    GConfig(Scope scope, const QString& organization, const QString& application, QObject* parent);
+    GConfig(Format format, Scope scope, const QString& organization, const QString& application, QObject* parent);
+    GConfig(const QString& fileName, Format format, QObject* parent);
+    explicit GConfig(QObject* parent = nullptr);
+    GConfig(Scope scope, QObject* parent);
+
+private:
+    Q_OBJECT
+
+public:
 
 signals:
 

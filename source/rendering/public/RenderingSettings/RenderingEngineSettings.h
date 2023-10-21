@@ -1,6 +1,8 @@
 #ifndef RENDERINGENGINESETTINGS_H
 #define RENDERINGENGINESETTINGS_H
 
+#define EXAMPLE "${EXAMPLE}"
+
 #include <QObject>
 #include <QDebug>
 #include <SDL.h>

@@ -1,3 +1,4 @@
+add_subdirectory(doc)
 add_subdirectory(thirdparty)
 add_subdirectory(cmake)
 add_subdirectory(source) 

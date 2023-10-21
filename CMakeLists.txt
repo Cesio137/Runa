@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(Nanometro LANGUAGES CXX)
+project(Nanometro LANGUAGES CXX VERSION 0.0.1)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -15,8 +15,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core LinguistTools)
 
 add_executable(Nanometro
   source/main.cpp
-  ${TS_FILES}
-  ${QM_FILES}
 )
 include(config.cmake)
 target_link_libraries(Nanometro

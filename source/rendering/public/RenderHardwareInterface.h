@@ -2,7 +2,6 @@
 #define RENDERHARDWAREINTERFACE_H
 
 #include <QObject>
-#include <Types.h>
 #include <RenderingSettings/RenderingEngineSettings.h>
 #include <opengl/OpenGL.h>
 
@@ -36,7 +35,7 @@ private:
     void FrameRateLock();
     
 signals:
-    void on_error(int code, FString error);
+    void on_error(int code, QString error);
 
 };
 

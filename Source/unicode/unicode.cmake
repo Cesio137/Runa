@@ -14,4 +14,6 @@ target_include_directories(Unicode
 target_link_libraries(Unicode
         PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
+        Data
+        boost_locale
 )

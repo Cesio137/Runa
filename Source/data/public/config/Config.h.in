@@ -1,0 +1,24 @@
+/* Build Data */
+#cmakedefine ENGINE_BUILD_DEBUG
+#cmakedefine ENGINE_BUILD_RELEASE
+
+/* System Data */
+#cmakedefine HOST_SYSTEM_WINDOWS
+#cmakedefine HOST_SYSTEM_LINUX
+#cmakedefine HOST_SYSTEM_DARWIN
+
+#cmakedefine TARGET_SYSTEM_WINDOWS
+#cmakedefine TARGET_SYSTEM_LINUX
+#cmakedefine TARGET_SYSTEM_DARWIN
+#cmakedefine TARGET_SYSTEM_ANDROID
+#cmakedefine TARGET_SYSTEM_IOS
+
+/* Engine Data */
+#cmakedefine ENGINE_NAME "@ENGINE_NAME@"
+#cmakedefine ENGINE_VERSION "@ENGINE_VERSION@"
+#cmakedefine ENGINE_VERSION_MAJOR @ENGINE_VERSION_MAJOR@
+#cmakedefine ENGINE_VERSION_MINOR @ENGINE_VERSION_MINOR@
+#cmakedefine ENGINE_VERSION_PATCH @ENGINE_VERSION_PATCH@
+
+/* Dictionary Data */
+#cmakedefine DICTIONARY_PATH "@DICTIONARY_PATH@"

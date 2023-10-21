@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QCoreApplication>
-#include <Types.h>
 #include <Launcher.h>
+#include <InternationalComponent.h>
 
 using namespace std;
 
@@ -20,11 +20,12 @@ public:
 private:
     int exec_code = 0;
     Launcher* launcher = nullptr;
+    InternationalComponent* international = nullptr;
 
 
 
 private slots:
-    void QSlotDebugError(int code, FString error);
+    void QSlotDebugError(int code, QString error);
 
 };
 

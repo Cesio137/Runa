@@ -98,7 +98,7 @@ SDL_OpenGL::SDL_OpenGL()
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OPENGL_MINOR_VERSION);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         
-        Window = SDL_CreateWindow("Nanometro", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+        Window = SDL_CreateWindow(ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
         if (Window)
         {
@@ -129,7 +129,7 @@ SDL_OpenGL::SDL_OpenGL()
 
             OpenGL_Version.first = OPENGL_MAJOR_VERSION;
             OpenGL_Version.second = OPENGL_MINOR_VERSION;
-            glsl_Version = "#version " + FString::number(OPENGL_MAJOR_VERSION) + FString::number(OPENGL_MINOR_VERSION) + "0";
+            glsl_Version = "#version " + QString::number(OPENGL_MAJOR_VERSION) + QString::number(OPENGL_MINOR_VERSION) + "0";
 
             SDL_GL_SetSwapInterval(false);
         }
@@ -188,7 +188,7 @@ void SDL_OpenGL::SDL2_Destroy_OpenGL()
     SDL_Quit();
 }
 
-int SDL_OpenGL::GetErrorCode(FString &log)
+int SDL_OpenGL::GetErrorCode(QString &log)
 {
     log = error_log;
     return error_code;

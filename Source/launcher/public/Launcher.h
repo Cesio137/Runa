@@ -3,8 +3,7 @@
 
 #include <RenderHardwareInterface.h>
 #include <QCoreApplication>
-#include <Types.h>
-#include <Text/FText.h>
+#include <Text/QText.h>
 #include <QTranslator>
 
 class Launcher : public RenderHardwareInterface

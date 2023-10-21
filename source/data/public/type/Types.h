@@ -1,8 +1,8 @@
 #ifndef TYPE_H
 #define TYPE_H
 
-#include <QString>
+//#include <QString>
 
-typedef QString FString;
+//typedef QString FString;
 
 #endif // TYPE_H

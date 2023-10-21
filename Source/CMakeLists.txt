@@ -4,6 +4,7 @@ project(Source_Interface)
 add_library(Source_Interface INTERFACE)
 target_link_libraries(Source_Interface
         INTERFACE
+        Data
         SDL2main
         SDL2-static
         glad

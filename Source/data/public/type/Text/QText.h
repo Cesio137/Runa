@@ -2,19 +2,18 @@
 #define FTEXT_H
 
 #include <QString>
-#include <Types.h>
 using namespace std;
 
 class FText
 {
 public:
     FText() : Text(){}
-    FText(const FString& str) : Text(str){}
+    FText(const QString& str) : Text(str){}
     FText(const string& str) : Text(QString::fromStdString(str)) {}
     FText(const char* str) : Text(QString(str)) {}
 
     //Set
-    const void append(const FString& str) { Text.append(str); }
+    const void append(const QString& str) { Text.append(str); }
     const void appendFromStdString(const string& str) { Text.append(QString::fromStdString(str)); }
     const void appendFromUtf8(const char* str) { Text.append(QString::fromUtf8(str)); }
 

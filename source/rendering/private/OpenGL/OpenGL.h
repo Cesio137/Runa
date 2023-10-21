@@ -8,7 +8,7 @@
 #include <QObject>
 #include <QThread>
 #include <QDebug>
-#include <Types.h>
+#include <Config.h>
 #include <glad/glad.h>
 #include <SDL.h>
 #include <imgui.h>
@@ -28,7 +28,7 @@ public:
     int SDL_OpenGL_Init();
     void SDL2_ImGui_Init();
     void SDL2_Destroy_OpenGL();
-    int GetErrorCode(FString &log);
+    int GetErrorCode(QString &log);
 
     static SDL_Window* GetWindow();
 
@@ -41,10 +41,10 @@ private:
     inline static SDL_Window* Window = nullptr;
 
     /* Imgui */
-    FString glsl_Version;
+    QString glsl_Version;
 
     /* error */
-    FString error_log;
+    QString error_log;
     int error_code = 0;
 };
 

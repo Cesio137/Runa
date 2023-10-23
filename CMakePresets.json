@@ -3,7 +3,7 @@
     "cmakeMinimumRequired": 
     {
       "major": 3,
-      "minor": 22,
+      "minor": 24,
       "patch": 0
     },
     "configurePresets": 
@@ -17,7 +17,7 @@
             "binaryDir": "${sourceDir}/build",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "nanometro"
+                    "defaultProject": "Nanometro"
                 }
             },
             "cacheVariables": 
@@ -49,7 +49,7 @@
             "binaryDir": "${sourceDir}/build",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "nanometro"
+                    "defaultProject": "Nanometro"
                 }
             },
             "cacheVariables": 
@@ -81,7 +81,7 @@
             "binaryDir": "${sourceDir}/build",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "nanometro"
+                    "defaultProject": "Nanometro"
                 }
             },
             "cacheVariables": 
@@ -113,12 +113,152 @@
             "binaryDir": "${sourceDir}/build",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "nanometro"
+                    "defaultProject": "Nanometro"
                 }
             },
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
+                "SDL_SHARED":"0",
+                "SDL_FORCE_STATIC_VCRT":"1",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "FLECS_SHARED":"0"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Ninja_VS2022_Debug",
+            "displayName": "Visual Studio 2022 Ninja Debug",
+            "description": "Default build using VS 2022 Debug",
+            "generator": "Ninja",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "defaultProject": "Nanometro"
+                }
+            },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "CMAKE_C_COMPILER":"cl.exe",
+                "CMAKE_CXX_COMPILER":"cl.exe",
+                "MSVC_TOOLSET_VERSION":"143",
+                "SDL_SHARED":"0",
+                "SDL_FORCE_STATIC_VCRT":"1",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "FLECS_SHARED":"0"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Ninja_VS2022_Release",
+            "displayName": "Visual Studio 2022 Ninja Release",
+            "description": "Default build using VS 2022 Release",
+            "generator": "Visual Studio 17 2022",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "defaultProject": "Nanometro"
+                }
+            },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Release",
+                "CMAKE_C_COMPILER":"cl.exe",
+                "CMAKE_CXX_COMPILER":"cl.exe",
+                "MSVC_TOOLSET_VERSION":"143",
+                "SDL_SHARED":"0",
+                "SDL_FORCE_STATIC_VCRT":"1",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "FLECS_SHARED":"0"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Ninja_VS2019_Debug",
+            "displayName": "Visual Studio 2019 Ninja Debug",
+            "description": "Default build using VS 2019 Debug",
+            "generator": "Visual Studio 16 2019",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "defaultProject": "Nanometro"
+                }
+            },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "CMAKE_C_COMPILER":"cl.exe",
+                "CMAKE_CXX_COMPILER":"cl.exe",
+                "MSVC_TOOLSET_VERSION":"143",
+                "SDL_SHARED":"0",
+                "SDL_FORCE_STATIC_VCRT":"1",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "FLECS_SHARED":"0"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Ninja_VS2019_Release",
+            "displayName": "Visual Studio 2019 Ninja Release",
+            "description": "Default build using VS 2019 Release",
+            "generator": "Visual Studio 16 2019",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "defaultProject": "Nanometro"
+                }
+            },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Release",
+                "CMAKE_C_COMPILER":"cl.exe",
+                "CMAKE_CXX_COMPILER":"cl.exe",
+                "MSVC_TOOLSET_VERSION":"143",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -196,8 +336,14 @@
             {
                 "CMAKE_BUILD_TYPE":"Debug",
                 "LLVM_ENABLE_PROJECTS":"clang",
-                "CMAKE_C_COMPILER":"clang",
-                "CMAKE_CXX_COMPILER":"clang++",
+                "CMAKE_C_COMPILER": {
+                    "type": "FILEPATH",
+                    "value": "clang"
+                },
+                "CMAKE_CXX_COMPILER": {
+                    "type": "FILEPATH",
+                    "value": "clang++"
+                },
                 "SDL_SHARED":"0",
                 "SDL_PIPEWIRE":"1",
                 "SDL_SNDIO":"1",
@@ -225,8 +371,14 @@
             {
                 "CMAKE_BUILD_TYPE":"Release",
                 "LLVM_ENABLE_PROJECTS":"clang",
-                "CMAKE_C_COMPILER":"clang",
-                "CMAKE_CXX_COMPILER":"clang++",
+                "CMAKE_C_COMPILER": {
+                    "type": "FILEPATH",
+                    "value": "clang"
+                },
+                "CMAKE_CXX_COMPILER": {
+                    "type": "FILEPATH",
+                    "value": "clang++"
+                },
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",

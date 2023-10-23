@@ -13,4 +13,3 @@ if(NOT sdl2_POPULATED)
   
     FetchContent_MakeAvailable(sdl2)
 endif()
-

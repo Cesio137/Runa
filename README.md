@@ -1,5 +1,7 @@
 # Nanometro
 
+Nanometro (Decimal Metric System) is a set of tools planned to be an open-source, real-time, cross-platform 2D and 3D engine.
+
 ## Suported Platforms
 
 ---
@@ -18,19 +20,29 @@
 
 - [CMake 3.24 or above](https://cmake.org/download/)
 
-- [Visual Studio 2019/2022](https://visualstudio.microsoft.com/downloads/) `Windows only`
-  
-  * Install the following workloads:
-    - Game Development with C++
-    - MSVC v142 or above | x64/x86
-    - C++ 2022 redistributable update
-
-- [QT 6.2.4 LTS](https://www.qt.io/download)
-
-- [Ninja-Build (Optional)](https://github.com/ninja-build/ninja/releases)
+- [QT 6.5.x LTS](https://www.qt.io/download)
 
 - [Vulkan 1.3](https://vulkan.lunarg.com)
 
+- Windows only
+  - Build With Visual Studio
+    - [Visual Studio 2019/2022](https://visualstudio.microsoft.com/downloads/)
+    - 👇 Install the following workloads:
+    - Game Development with C++
+    - MSVC v142 or above | x64/x86
+    - C++ 2022 redistributable update
+    - LLVM(Optional)
+
+- Linux only
+  - Build With GNU
+    - GCC 9.x or above
+    - [LLVM(Optional)](https://github.com/llvm/llvm-project/releases)
+
+- MacOS only
+  - Build With Xcode
+    - [Xcode](https://developer.apple.com/xcode/)
+    - [LLVM(Optional)](https://github.com/llvm/llvm-project/releases)
+  
 ## Setup Repository
 
 ---
@@ -43,82 +55,64 @@ git clone https://github.com/Cesio137/Nanometro.git
 
 ---
 
-#### Windows
+#### Setup Enviroment Variables
 
 * Setup QT  
+  * Create a variable called `QT_Dir`:
+    * ```Path
+      <Path to Qt>/6.5.x/
+      ```
+
+* Setup LLVM
   * Add to enviroment variables:
     * ```Path
-      <Path to Qt>/6.2.4/<your build tool>/bin
+      <Path to LLVM>/bin
       ```
-    * ```
-      <Path to Qt>/6.2.4/<your build tool>/lib
-      ```
-    * ```
-      <Path to Ninja>(Optional)
-      ```
+
+#### Windows
+
 * Setup Project.
   * Create a `build` folder and open terminal inside.
-  * to generate project using Visual studio 2022 Debug(Recommended)
+  * Commands to generate project
     * ```bash
       cmake .. --preset=VS2022_Debug
       ```
-  * to generate project using Visual studio 2022 Release(Recommended)
     * ```bash
       cmake .. --preset=VS2022_Release
       ```
-  * to generate project using Visual studio 2019 Debug
+    * ```bash
+      cmake .. --preset=VSClang2022_Debug
+      ```
+    * ```bash
+      cmake .. --preset=VSClang2022_Release
+      ```
     * ```bash
       cmake .. --preset=VS2019_Debug
       ```
-  * to generate project using Visual studio 2019 Release
     * ```bash
       cmake .. --preset=VS2019_Release
       ```
-  * to generate project using Ninja and Visual studio 20XX
     * ```bash
-      cmake .. --preset=Ninja_VS20XX_<Debug or Release>
+      cmake .. --preset=VSClang2019_Debug
+      ```
+    * ```bash
+      cmake .. --preset=VSClang2019_Release
       ```
 
 #### Linux
 
-* Setup QT  
-  
-  * Add to enviroment variables:
-    * ```
-      <Path to Qt>/6.2.4>/<your build tool>/bin
-      ```
-    * ```
-      <Path to Qt>/6.2.4/<your build tool>/lib
-      ```
-
 * Setup Project.
   
   * Create a `build` folder and open terminal inside.
   
-  * to generate project using Unix Makefile
+  * Commands to generate project
     
     * ```bash
       cmake .. --preset=Unix
-      ```
-  
-  * to generate project using Unix Makefile and LLVM Clang
-    
-    * ```bash
       cmake .. --preset=Unix_clang
-      ```
+      ```    
 
 #### Mac OS
-
-* Setup QT  
-  
-  * Add to enviroment variables:
-    
-    * ```
-      <Path to Qt>/6.2.4>/<your build tool>/bin
-      ```
-    * ```
-      <Path to Qt>/6.2.4/<your build tool>/lib
-      ```
 
 * Setup Project.
   
@@ -128,15 +122,6 @@ git clone https://github.com/Cesio137/Nanometro.git
     
     * ```bash
       cmake .. --preset=XCode
-      ```
-  
-  * to generate project using Unix Makefile
-    
-    * ```bash
       cmake .. --preset=Unix
-      ```
-  
-  * to generate project using Unix Makefile and LLVM Clang
-    
-    * ```bash
       cmake .. --preset=Unix_clang
+      ```

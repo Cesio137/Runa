@@ -2,6 +2,10 @@
 #cmakedefine ENGINE_BUILD_DEBUG
 #cmakedefine ENGINE_BUILD_RELEASE
 
+/* Toolset Data */
+#cmakedefine C_COMPILER_ID "@C_COMPILER_ID@"
+#cmakedefine CXX_COMPILER_ID "@CXX_COMPILER_ID@"
+
 /* System Data */
 #cmakedefine HOST_SYSTEM_WINDOWS
 #cmakedefine HOST_SYSTEM_LINUX

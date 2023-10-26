@@ -14,7 +14,7 @@
             "description": "Default build using VS 2022 Debug",
             "generator": "Visual Studio 17 2022",
             "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/VS2022_Debug",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "defaultProject": "Nanometro"
@@ -23,6 +23,7 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -46,7 +47,7 @@
             "description": "Default build using VS 2022 Release",
             "generator": "Visual Studio 17 2022",
             "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/VS2022_Release",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "defaultProject": "Nanometro"
@@ -55,6 +56,75 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
+                "SDL_SHARED":"0",
+                "SDL_FORCE_STATIC_VCRT":"1",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "FLECS_SHARED":"0"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VSClang2022_Debug",
+            "displayName": "Visual Studio 2022 Clang Debug",
+            "description": "Default build using VS 2022 Clang Debug",
+            "generator": "Visual Studio 17 2022",
+            "toolset": "ClangCL",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build/VSClang2022_Debug",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "defaultProject": "Nanometro"
+                }
+            },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
+                "SDL_SHARED":"0",
+                "SDL_FORCE_STATIC_VCRT":"1",
+                "SDL_PIPEWIRE":"1",
+                "SDL_SNDIO":"1",
+                "SDL_X11":"1",
+                "SDL_WAYLAND":"1",
+                "SDL_METAL":"1",
+                "SDL_TEST":"0",
+                "FLECS_SHARED":"0"
+            },
+            "condition":
+            {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VSClang2022_Release",
+            "displayName": "Visual Studio 2022 Clang Release",
+            "description": "Default build using VS 2022 Clang Release",
+            "generator": "Visual Studio 17 2022",
+            "toolset": "ClangCL",
+            "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build/VSClang2022_Release",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "defaultProject": "Nanometro"
+                }
+            },
+            "cacheVariables": 
+            {
+                "CMAKE_BUILD_TYPE":"Release",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -78,7 +148,7 @@
             "description": "Default build using VS 2019 Debug",
             "generator": "Visual Studio 16 2019",
             "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/VS2019_Debug",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "defaultProject": "Nanometro"
@@ -87,6 +157,7 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -110,7 +181,7 @@
             "description": "Default build using VS 2019 Release",
             "generator": "Visual Studio 16 2019",
             "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/VS2019_Release",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "defaultProject": "Nanometro"
@@ -119,6 +190,7 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -137,12 +209,13 @@
             }
         },
         {
-            "name": "Ninja_VS2022_Debug",
-            "displayName": "Visual Studio 2022 Ninja Debug",
-            "description": "Default build using VS 2022 Debug",
-            "generator": "Ninja",
+            "name": "VSClang2019_Debug",
+            "displayName": "Visual Studio 2019 Clang Debug",
+            "description": "Default build using VS 2019 Clang Debug",
+            "generator": "Visual Studio 16 2019",
+            "toolset": "ClangCL",
             "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/VSClang2019_Debug",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "defaultProject": "Nanometro"
@@ -151,9 +224,7 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
-                "CMAKE_C_COMPILER":"cl.exe",
-                "CMAKE_CXX_COMPILER":"cl.exe",
-                "MSVC_TOOLSET_VERSION":"143",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -172,12 +243,13 @@
             }
         },
         {
-            "name": "Ninja_VS2022_Release",
-            "displayName": "Visual Studio 2022 Ninja Release",
-            "description": "Default build using VS 2022 Release",
-            "generator": "Visual Studio 17 2022",
+            "name": "VSClang2019_Release",
+            "displayName": "Visual Studio 2019 Clang Release",
+            "description": "Default build using VS 2019 Clang Release",
+            "generator": "Visual Studio 16 2019",
+            "toolset": "ClangCL",
             "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/VSClang2019_Release",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "defaultProject": "Nanometro"
@@ -186,79 +258,7 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
-                "CMAKE_C_COMPILER":"cl.exe",
-                "CMAKE_CXX_COMPILER":"cl.exe",
-                "MSVC_TOOLSET_VERSION":"143",
-                "SDL_SHARED":"0",
-                "SDL_FORCE_STATIC_VCRT":"1",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "condition":
-            {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "Ninja_VS2019_Debug",
-            "displayName": "Visual Studio 2019 Ninja Debug",
-            "description": "Default build using VS 2019 Debug",
-            "generator": "Visual Studio 16 2019",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "Nanometro"
-                }
-            },
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Debug",
-                "CMAKE_C_COMPILER":"cl.exe",
-                "CMAKE_CXX_COMPILER":"cl.exe",
-                "MSVC_TOOLSET_VERSION":"143",
-                "SDL_SHARED":"0",
-                "SDL_FORCE_STATIC_VCRT":"1",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "condition":
-            {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "Ninja_VS2019_Release",
-            "displayName": "Visual Studio 2019 Ninja Release",
-            "description": "Default build using VS 2019 Release",
-            "generator": "Visual Studio 16 2019",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "Nanometro"
-                }
-            },
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Release",
-                "CMAKE_C_COMPILER":"cl.exe",
-                "CMAKE_CXX_COMPILER":"cl.exe",
-                "MSVC_TOOLSET_VERSION":"143",
+                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -283,6 +283,7 @@
             "description": "Default build using Unix Makefiles Debug",
             "generator": "Unix Makefiles",
             "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build/Unix_Debug",
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
@@ -308,6 +309,7 @@
             "description": "Default build using Unix Makefiles Release",
             "generator": "Unix Makefiles",
             "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build/Unix_Release",
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
@@ -332,6 +334,7 @@
             "displayName": "Unix Makefiles Debug",
             "description": "Default build using Unix Makefiles and Clang Debug",
             "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build/Unix_Clang_Debug",
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
@@ -367,6 +370,7 @@
             "description": "Default build using Unix Makefiles and Clang Release",
             "generator": "Unix Makefiles",
             "architecture":{ "value": "x64", "strategy": "external" },
+            "binaryDir": "${sourceDir}/build/Unix_Clang_Release",
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
@@ -402,6 +406,7 @@
             "displayName": "XCode",
             "description": "Default build using XCode",
             "generator": "XCode",
+            "binaryDir": "${sourceDir}/build/XCode",
             "cacheVariables": 
             {
                 "SDL_SHARED":"0",

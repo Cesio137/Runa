@@ -27,6 +27,7 @@ if (WIN32)
 
             ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp
+            if(MSVC)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_dx9.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_dx9.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_dx10.h
@@ -35,8 +36,11 @@ if (WIN32)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_dx11.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_dx12.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_dx12.cpp
+            endif(MSVC)
+            if(Vulkan_FOUND)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
+            endif(Vulkan_FOUND)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
@@ -52,9 +56,10 @@ elseif(UNIX)
     file(GLOB imgui_sources
             ${imgui_SOURCE_DIR}/imgui/*.h
             ${imgui_SOURCE_DIR}/imgui/*.cpp
-
+            if(Vulkan_FOUND)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
+            endif(Vulkan_FOUND)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
@@ -64,8 +69,6 @@ elseif(UNIX)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.cpp
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_android.h
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_android.cpp
             )
 
 else()
@@ -88,8 +91,6 @@ else()
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.h
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.cpp
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_android.h
-            ${imgui_SOURCE_DIR}/backends/imgui_impl_android.cpp
             )
 
 endif ()

@@ -11,5 +11,4 @@ target_include_directories(Launcher
 )
 target_link_libraries(Launcher
         Rendering
-        Data
 )

@@ -15,6 +15,6 @@ target_include_directories(Rendering
 target_link_libraries(Rendering
         PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
+        Render_Interface
         Data
-        Source_Interface
 )

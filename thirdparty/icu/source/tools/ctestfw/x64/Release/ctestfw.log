@@ -1,0 +1,28 @@
+﻿  ctest.c
+  datamap.cpp
+  testdata.cpp
+  tstdtmod.cpp
+  uperf.cpp
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\tstdtmod.cpp(222,24): warning C4805: '==': mistura não segura de tipo 'const UBool' e tipo 'bool' em operação
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\tstdtmod.cpp(222,24): warning C4805:   if(fDataTestValid == true) {
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\tstdtmod.cpp(222,24): warning C4805:                        ^
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\tstdtmod.cpp(250,24): warning C4805: '==': mistura não segura de tipo 'const UBool' e tipo 'bool' em operação
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\tstdtmod.cpp(250,24): warning C4805:   if(fDataTestValid == true) {
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\tstdtmod.cpp(250,24): warning C4805:                        ^
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(272,25): warning C4805: '==': mistura não segura de tipo 'UBool' e tipo 'bool' em operação
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(272,25): warning C4805:             if(verbose==true){
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(272,25): warning C4805:                         ^
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(380,29): warning C4805: '==': mistura não segura de tipo 'UBool' e tipo 'bool' em operação
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(380,29): warning C4805:                 if(verbose==true){
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(380,29): warning C4805:                             ^
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(415,29): warning C4805: '==': mistura não segura de tipo 'UBool' e tipo 'bool' em operação
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(415,29): warning C4805:                 if(verbose==true){
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(415,29): warning C4805:                             ^
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(434,29): warning C4805: '==': mistura não segura de tipo 'UBool' e tipo 'bool' em operação
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(434,29): warning C4805:                 if(verbose==true){
+E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\uperf.cpp(434,29): warning C4805:                             ^
+  ucln_ct.c
+     Criando biblioteca .\..\..\..\lib64\icutest.lib e objeto .\..\..\..\lib64\icutest.exp
+  Gerando código
+  Finalizada a geração de código
+  ctestfw.vcxproj -> E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\ctestfw\x64\Release\ctestfw.dll

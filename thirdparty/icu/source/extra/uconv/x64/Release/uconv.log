@@ -1,0 +1,21 @@
+﻿  Performing Custom Build Tools
+  ICU path is E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\extra\uconv\..\..\..
+  Making Resource Bundle files
+  	"E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\extra\uconv\..\..\..\bin64\genrb" -s resources -d resources root.txt
+  Making Resource Bundle files
+  	"E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\extra\uconv\..\..\..\bin64\genrb" -s resources -d resources fr.txt
+  Building uconvmsg.lib
+  # pkgdata: Reading pkgdatain.txt..
+  # Writing package file .\x64\Release\uconvmsg.dat ..
+  # Writing object code to  ..
+  genccode: using architecture cpu=0 bits=64 big-endian=0
+  pkgdata: LIB.exe /nologo /out:".\x64\Release\uconvmsg.lib" ".\x64\Release\uconvmsg_dat.obj"
+  All targets are up to date (mode static)
+  uconv.cpp
+  uwmsg.c
+     Criando biblioteca .\x64\Release\uconv.lib e objeto .\x64\Release\uconv.exp
+  Gerando código
+  Finalizada a geração de código
+  uconv.vcxproj -> E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\extra\uconv\x64\Release\uconv.exe
+  Executando a Etapa de Compilação Personalizada
+          1 arquivo(s) copiado(s).

@@ -1,7 +1,0 @@
-     ../../../gettext-runtime/gnulib-lib/closeout.c \
-     ../../../gettext-runtime/gnulib-lib/error.c \
-     ../../../gettext-runtime/gnulib-lib/getopt.c \
-     ../../../gettext-runtime/gnulib-lib/xalloc-die.c \
-     ../../../gettext-runtime/src/envsubst.c \
-     ../../../gettext-runtime/src/gettext.c \
-     ../../../gettext-runtime/src/ngettext.c

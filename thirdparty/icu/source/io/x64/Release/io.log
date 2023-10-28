@@ -1,0 +1,17 @@
+﻿  locbund.cpp
+  sprintf.cpp
+  sscanf.cpp
+  ucln_io.cpp
+  ufile.cpp
+  ufmt_cmn.cpp
+  uprintf.cpp
+  uprntf_p.cpp
+  uscanf.cpp
+  uscanf_p.cpp
+  ustdio.cpp
+  ustream.cpp
+     Criando biblioteca ..\..\lib64\icuio.lib e objeto ..\..\lib64\icuio.exp
+  Gerando código
+  Finalizada a geração de código
+  io.vcxproj -> E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\io\x64\Release\io.dll
+  Copying 2 header files to E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\allinone\\..\..\include\unicode. Files copied: .\unicode\ustdio.h;.\unicode\ustream.h

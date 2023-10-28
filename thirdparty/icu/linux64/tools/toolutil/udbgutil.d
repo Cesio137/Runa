@@ -1,0 +1,56 @@
+udbgutil.o udbgutil.d : ../.././../source/tools/toolutil/udbgutil.cpp \
+ ../.././../source/tools/toolutil/udbgutil.h \
+ ../.././../source/common/unicode/utypes.h \
+ ../.././../source/common/unicode/umachine.h \
+ ../.././../source/common/unicode/ptypes.h \
+ ../.././../source/common/unicode/platform.h \
+ ../.././../source/common/unicode/uconfig.h \
+ ../.././../source/common/unicode/uvernum.h \
+ ../.././../source/common/unicode/urename.h \
+ ../.././../source/common/unicode/uversion.h \
+ ../.././../source/common/ustr_imp.h \
+ ../.././../source/common/unicode/utypes.h \
+ ../.././../source/common/unicode/utf8.h \
+ ../.././../source/common/unicode/utf.h \
+ ../.././../source/common/cmemory.h \
+ ../.././../source/common/unicode/localpointer.h \
+ ../.././../source/common/uassert.h \
+ ../.././../source/common/unicode/uobject.h \
+ ../.././../source/common/cstring.h ../.././../source/common/cmemory.h \
+ ../.././../source/common/putilimp.h \
+ ../.././../source/common/unicode/putil.h \
+ ../.././../source/i18n/unicode/ulocdata.h \
+ ../.././../source/common/unicode/ures.h \
+ ../.././../source/common/unicode/char16ptr.h \
+ ../.././../source/common/unicode/uloc.h \
+ ../.././../source/common/unicode/uenum.h \
+ ../.././../source/common/unicode/localpointer.h \
+ ../.././../source/common/unicode/unistr.h \
+ ../.././../source/common/unicode/rep.h \
+ ../.././../source/common/unicode/uobject.h \
+ ../.././../source/common/unicode/std_string.h \
+ ../.././../source/common/unicode/stringpiece.h \
+ ../.././../source/common/unicode/bytestream.h \
+ ../.././../source/common/unicode/uset.h \
+ ../.././../source/common/unicode/uchar.h \
+ ../.././../source/common/unicode/stringoptions.h \
+ ../.././../source/common/unicode/ucpmap.h \
+ ../.././../source/common/unicode/ucnv.h \
+ ../.././../source/common/unicode/ucnv_err.h \
+ ../.././../source/common/cstr.h \
+ ../.././../source/common/unicode/unistr.h \
+ ../.././../source/common/charstr.h ../.././../source/i18n/unicode/ucal.h \
+ ../.././../source/i18n/unicode/udat.h \
+ ../.././../source/i18n/unicode/unum.h \
+ ../.././../source/common/unicode/ucurr.h \
+ ../.././../source/common/unicode/umisc.h \
+ ../.././../source/common/unicode/parseerr.h \
+ ../.././../source/i18n/unicode/uformattable.h \
+ ../.././../source/common/unicode/udisplaycontext.h \
+ ../.././../source/i18n/unicode/ufieldpositer.h \
+ ../.././../source/i18n/unicode/unumberoptions.h \
+ ../.././../source/i18n/unicode/ucol.h \
+ ../.././../source/common/unicode/unorm.h \
+ ../.././../source/common/unicode/uiter.h \
+ ../.././../source/common/unicode/unorm2.h \
+ ../.././../source/common/unicode/uscript.h

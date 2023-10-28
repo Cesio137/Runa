@@ -36,6 +36,7 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
 - Linux only
   - Build With GNU
     - GCC 9.x or above
+    - Make
     - [LLVM(Optional)](https://github.com/llvm/llvm-project/releases)
 
 - MacOS only
@@ -58,7 +59,7 @@ git clone https://github.com/Cesio137/Nanometro.git
 #### Setup Enviroment Variables
 
 * Setup QT  
-  * Create a variable called `QT_Dir`:
+  * Create a variable called `QT_PATH`:
     * ```Path
       <Path to Qt>/6.5.x/
       ```

@@ -23,7 +23,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -56,7 +55,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -90,7 +88,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -124,7 +121,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -157,7 +153,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -190,7 +185,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -224,7 +218,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Debug",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",
@@ -258,7 +251,6 @@
             "cacheVariables": 
             {
                 "CMAKE_BUILD_TYPE":"Release",
-                "QT_DIR": "$ENV{QT_PATH}/msvc2019_64/lib/cmake",
                 "SDL_SHARED":"0",
                 "SDL_FORCE_STATIC_VCRT":"1",
                 "SDL_PIPEWIRE":"1",

@@ -19,14 +19,30 @@ if(NOT imgui_POPULATED)
     FetchContent_MakeAvailable(imgui)
     #add_subdirectory(${imgui_SOURCE_DIR} ${imgui_BINARY_DIR})
 
-    if (WIN32)
-        file(GLOB imgui_sources
-                ${imgui_SOURCE_DIR}/*.h
-                ${imgui_SOURCE_DIR}/*.cpp
+    file(GLOB imgui_sources
+        ${imgui_SOURCE_DIR}/*.h
+        ${imgui_SOURCE_DIR}/*.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.h
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.cpp        
+    )
+    list(APPEND imgui_sources
 
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp
-                if(MSVC)
+    )
+
+    if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+        list(APPEND  imgui_sources
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp
+        )
+        if(MSVC)
+            list(APPEND  imgui_sources 
                 ${imgui_SOURCE_DIR}/backends/imgui_impl_dx9.h
                 ${imgui_SOURCE_DIR}/backends/imgui_impl_dx9.cpp
                 ${imgui_SOURCE_DIR}/backends/imgui_impl_dx10.h
@@ -35,64 +51,17 @@ if(NOT imgui_POPULATED)
                 ${imgui_SOURCE_DIR}/backends/imgui_impl_dx11.cpp
                 ${imgui_SOURCE_DIR}/backends/imgui_impl_dx12.h
                 ${imgui_SOURCE_DIR}/backends/imgui_impl_dx12.cpp
-                endif(MSVC)
-                if(Vulkan_FOUND)
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
-                endif(Vulkan_FOUND)
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.cpp
-                )
-
-    elseif(UNIX)
-        file(GLOB imgui_sources
-                ${imgui_SOURCE_DIR}/imgui/*.h
-                ${imgui_SOURCE_DIR}/imgui/*.cpp
-                if(Vulkan_FOUND)
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
-                endif(Vulkan_FOUND)
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.cpp
-                )
-
-    else()
-        file(GLOB imgui_sources
-                ${imgui_SOURCE_DIR}/imgui/*.h
-                ${imgui_SOURCE_DIR}/imgui/*.cpp
-
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_osx.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_osx.mm
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_metal.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_metal.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.h
-                ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.cpp
-                )
-
-    endif ()
+            )
+        endif()
+    endif()
+    if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+        list(APPEND  imgui_sources 
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_osx.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_osx.mm
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_metal.h
+            ${imgui_SOURCE_DIR}/backends/imgui_impl_metal.cpp
+        )
+    endif()
 
     project(imgui)
     add_library(imgui STATIC ${imgui_sources})

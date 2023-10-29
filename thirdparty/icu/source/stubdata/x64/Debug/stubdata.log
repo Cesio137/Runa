@@ -1,4 +1,0 @@
-﻿  stubdata.cpp
-LINK : warning LNK4075: ignorando '/INCREMENTAL' devido a especificação '/RELEASE'
-     Criando biblioteca ..\..\lib64\icudt.lib e objeto ..\..\lib64\icudt.exp
-  stubdata.vcxproj -> E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\stubdata\x64\Debug\stubdata.dll

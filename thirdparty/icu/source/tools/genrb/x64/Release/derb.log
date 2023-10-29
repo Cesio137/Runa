@@ -1,7 +1,0 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: O diretório intermediário (.\x64\Release\) contém arquivos compartilhados de outro projeto (genrb.vcxproj). Isso pode levar a um comportamento incorreto de limpeza e recompilação.
-  derb.cpp
-  Gerando código
-  Finalizada a geração de código
-  derb.vcxproj -> E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\genrb\x64\Release\derb.exe
-  Executando a Etapa de Compilação Personalizada
-          1 arquivo(s) copiado(s).

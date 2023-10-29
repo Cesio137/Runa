@@ -1,2 +1,0 @@
-^E:\USERS\DOCUMENTS\QT\NANOMETRO\THIRDPARTY\ICU\SOURCE\EXTRA\UCONV\MAKEDATA.MAK
-nmake /nologo /f makedata.mak icup="E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\extra\uconv\..\..\.." CFG=x64\Release

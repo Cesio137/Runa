@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <SDL.h>
 #include <imgui.h>
+#include <Config.h>
 
 using namespace std;
 

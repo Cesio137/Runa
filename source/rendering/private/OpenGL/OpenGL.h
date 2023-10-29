@@ -15,7 +15,7 @@
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 #include <RenderingSettings/RenderingUserSettings.h>
-#include <RenderingConfig/RenderingConfig.h>
+#include <RenderingConfig.h>
 
 using namespace std;
 

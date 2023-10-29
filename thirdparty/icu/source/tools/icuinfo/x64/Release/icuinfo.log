@@ -1,7 +1,0 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: O diretório intermediário (.\x64\Release\) contém arquivos compartilhados de outro projeto (testplug.vcxproj). Isso pode levar a um comportamento incorreto de limpeza e recompilação.
-  icuinfo.cpp
-  Gerando código
-  Finalizada a geração de código
-  icuinfo.vcxproj -> E:\Users\Documents\QT\Nanometro\thirdparty\icu\source\tools\icuinfo\x64\Release\icuinfo.exe
-  Executando a Etapa de Compilação Personalizada
-          1 arquivo(s) copiado(s).

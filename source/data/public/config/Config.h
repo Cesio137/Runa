@@ -3,8 +3,8 @@
 /* #undef ENGINE_BUILD_RELEASE */
 
 /* Toolset Data */
-#define C_COMPILER_ID "MSVC"
-#define CXX_COMPILER_ID "MSVC"
+#define C_COMPILER_ID "Clang"
+#define CXX_COMPILER_ID "Clang"
 
 /* System Data */
 #define HOST_SYSTEM_WINDOWS

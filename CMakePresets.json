@@ -31,7 +31,9 @@
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
                 "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
+                "FLECS_SHARED":"0",
+                "BOOST_LOCALE_ENABLE_ICU":"1",
+                "USE_AVX512":"1"
             },
             "condition":
             {
@@ -63,73 +65,9 @@
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
                 "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "condition":
-            {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "VSClang2022_Debug",
-            "displayName": "Visual Studio 2022 Clang Debug",
-            "description": "Default build using VS 2022 Clang Debug",
-            "generator": "Visual Studio 17 2022",
-            "toolset": "ClangCL",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build/VSClang2022_Debug",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "Nanometro"
-                }
-            },
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Debug",
-                "SDL_SHARED":"0",
-                "SDL_FORCE_STATIC_VCRT":"1",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "condition":
-            {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "VSClang2022_Release",
-            "displayName": "Visual Studio 2022 Clang Release",
-            "description": "Default build using VS 2022 Clang Release",
-            "generator": "Visual Studio 17 2022",
-            "toolset": "ClangCL",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build/VSClang2022_Release",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "Nanometro"
-                }
-            },
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Release",
-                "SDL_SHARED":"0",
-                "SDL_FORCE_STATIC_VCRT":"1",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
+                "FLECS_SHARED":"0",
+                "BOOST_LOCALE_ENABLE_ICU":"1",
+                "USE_AVX512":"1"
             },
             "condition":
             {
@@ -161,7 +99,9 @@
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
                 "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
+                "FLECS_SHARED":"0",
+                "BOOST_LOCALE_ENABLE_ICU":"1",
+                "USE_AVX512":"1"
             },
             "condition":
             {
@@ -193,73 +133,9 @@
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
                 "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "condition":
-            {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "VSClang2019_Debug",
-            "displayName": "Visual Studio 2019 Clang Debug",
-            "description": "Default build using VS 2019 Clang Debug",
-            "generator": "Visual Studio 16 2019",
-            "toolset": "ClangCL",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build/VSClang2019_Debug",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "Nanometro"
-                }
-            },
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Debug",
-                "SDL_SHARED":"0",
-                "SDL_FORCE_STATIC_VCRT":"1",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "condition":
-            {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "VSClang2019_Release",
-            "displayName": "Visual Studio 2019 Clang Release",
-            "description": "Default build using VS 2019 Clang Release",
-            "generator": "Visual Studio 16 2019",
-            "toolset": "ClangCL",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build/VSClang2019_Release",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "defaultProject": "Nanometro"
-                }
-            },
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Release",
-                "SDL_SHARED":"0",
-                "SDL_FORCE_STATIC_VCRT":"1",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
+                "FLECS_SHARED":"0",
+                "BOOST_LOCALE_ENABLE_ICU":"1",
+                "USE_AVX512":"1"
             },
             "condition":
             {
@@ -286,7 +162,9 @@
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
                 "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
+                "FLECS_SHARED":"0",
+                "BOOST_LOCALE_ENABLE_ICU":"1",
+                "USE_AVX512":"1"
             },
             "condition":
             {
@@ -312,78 +190,9 @@
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
                 "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "condition":
-            {
-                "type": "notEquals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "Unix_Clang_Debug",
-            "displayName": "Unix Makefiles Debug",
-            "description": "Default build using Unix Makefiles and Clang Debug",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build/Unix_Clang_Debug",
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Debug",
-                "LLVM_ENABLE_PROJECTS":"clang",
-                "CMAKE_C_COMPILER": {
-                    "type": "FILEPATH",
-                    "value": "clang"
-                },
-                "CMAKE_CXX_COMPILER": {
-                    "type": "FILEPATH",
-                    "value": "clang++"
-                },
-                "SDL_SHARED":"0",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
-            },
-            "generator": "Unix Makefiles",
-            "condition":
-            {
-                "type": "notEquals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "Unix_Clang_Release",
-            "displayName": "Unix Makefiles Release",
-            "description": "Default build using Unix Makefiles and Clang Release",
-            "generator": "Unix Makefiles",
-            "architecture":{ "value": "x64", "strategy": "external" },
-            "binaryDir": "${sourceDir}/build/Unix_Clang_Release",
-            "cacheVariables": 
-            {
-                "CMAKE_BUILD_TYPE":"Release",
-                "LLVM_ENABLE_PROJECTS":"clang",
-                "CMAKE_C_COMPILER": {
-                    "type": "FILEPATH",
-                    "value": "clang"
-                },
-                "CMAKE_CXX_COMPILER": {
-                    "type": "FILEPATH",
-                    "value": "clang++"
-                },
-                "SDL_SHARED":"0",
-                "SDL_FORCE_STATIC_VCRT":"1",
-                "SDL_PIPEWIRE":"1",
-                "SDL_SNDIO":"1",
-                "SDL_X11":"1",
-                "SDL_WAYLAND":"1",
-                "SDL_METAL":"1",
-                "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
+                "FLECS_SHARED":"0",
+                "BOOST_LOCALE_ENABLE_ICU":"1",
+                "USE_AVX512":"1"
             },
             "condition":
             {
@@ -408,7 +217,9 @@
                 "SDL_WAYLAND":"1",
                 "SDL_METAL":"1",
                 "SDL_TEST":"0",
-                "FLECS_SHARED":"0"
+                "FLECS_SHARED":"0",
+                "BOOST_LOCALE_ENABLE_ICU":"1",
+                "USE_AVX512":"1"
             },
             "condition":
             {

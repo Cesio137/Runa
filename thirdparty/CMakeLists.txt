@@ -3,8 +3,8 @@ set(THIRDPARTY_DIR ${CMAKE_CURRENT_LIST_DIR})
 #Configure glad library
 include(${THIRDPARTY_DIR}/glad/glad.cmake)
 
-#Configure jolt library
-#add_subdirectory(${THIRDPARTY_DIR}/JoltPhysics/Build)
+#Configure ICU
+include(${THIRDPARTY_DIR}/icu/icu.cmake)
 
 #Set folder and group all thirdparty projects
 

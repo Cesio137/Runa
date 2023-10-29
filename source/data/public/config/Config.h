@@ -3,19 +3,17 @@
 /* #undef ENGINE_BUILD_RELEASE */
 
 /* Toolset Data */
-#define C_COMPILER_ID "Clang"
-#define CXX_COMPILER_ID "Clang"
+#define C_COMPILER_ID "MSVC"
+#define CXX_COMPILER_ID "MSVC"
 
 /* System Data */
 #define HOST_SYSTEM_WINDOWS
 /* #undef HOST_SYSTEM_LINUX */
 /* #undef HOST_SYSTEM_DARWIN */
 
-#define TARGET_SYSTEM_WINDOWS
-/* #undef TARGET_SYSTEM_LINUX */
-/* #undef TARGET_SYSTEM_DARWIN */
-/* #undef TARGET_SYSTEM_ANDROID */
-/* #undef TARGET_SYSTEM_IOS */
+/* Archteture Data */
+#define HOST_ARCH_X64
+/* #undef HOST_ARCH_ARM64 */
 
 /* Engine Data */
 #define ENGINE_NAME "Nanometro"

@@ -31,7 +31,6 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
     - Game Development with C++
     - MSVC v142 or above | x64/x86
     - C++ 2022 redistributable update
-    - LLVM(Optional)
 
 - Linux only
   - Build With GNU
@@ -64,12 +63,6 @@ git clone https://github.com/Cesio137/Nanometro.git
       <Path to Qt>/6.5.x/
       ```
 
-* Setup LLVM
-  * Add to enviroment variables:
-    * ```Path
-      <Path to LLVM>/bin
-      ```
-
 #### Windows
 
 * Setup Project.
@@ -77,27 +70,11 @@ git clone https://github.com/Cesio137/Nanometro.git
   * Commands to generate project
     * ```bash
       cmake .. --preset=VS2022_Debug
-      ```
-    * ```bash
-      cmake .. --preset=VS2022_Release
-      ```
-    * ```bash
-      cmake .. --preset=VSClang2022_Debug
-      ```
-    * ```bash
-      cmake .. --preset=VSClang2022_Release
+      make .. --preset=VS2022_Release
       ```
     * ```bash
       cmake .. --preset=VS2019_Debug
-      ```
-    * ```bash
       cmake .. --preset=VS2019_Release
-      ```
-    * ```bash
-      cmake .. --preset=VSClang2019_Debug
-      ```
-    * ```bash
-      cmake .. --preset=VSClang2019_Release
       ```
 
 #### Linux
@@ -109,8 +86,8 @@ git clone https://github.com/Cesio137/Nanometro.git
   * Commands to generate project
     
     * ```bash
-      cmake .. --preset=Unix
-      cmake .. --preset=Unix_clang
+      cmake .. --preset=Unix_Debug
+      cmake .. --preset=Unix_Release
       ```    
 
 #### Mac OS
@@ -124,5 +101,4 @@ git clone https://github.com/Cesio137/Nanometro.git
     * ```bash
       cmake .. --preset=XCode
       cmake .. --preset=Unix
-      cmake .. --preset=Unix_clang
       ```

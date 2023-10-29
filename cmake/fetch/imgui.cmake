@@ -32,9 +32,6 @@ if(NOT imgui_POPULATED)
         ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.h
         ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl2.cpp        
     )
-    list(APPEND imgui_sources
-
-    )
 
     if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
         list(APPEND  imgui_sources

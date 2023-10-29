@@ -30,5 +30,7 @@ int RenderingEngineSettings::LoadSettings()
     DefaultFont = ImGui::GetIO().Fonts->AddFontFromFileTTF(DefaultFontPath.toUtf8(), DefaultFontSize, NULL, ImGui::GetIO().Fonts->GetGlyphRangesJapanese());
     IM_ASSERT(DefaultFont != NULL);
 
+
+
     return 0;
 }

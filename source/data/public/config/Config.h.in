@@ -11,11 +11,9 @@
 #cmakedefine HOST_SYSTEM_LINUX
 #cmakedefine HOST_SYSTEM_DARWIN
 
-#cmakedefine TARGET_SYSTEM_WINDOWS
-#cmakedefine TARGET_SYSTEM_LINUX
-#cmakedefine TARGET_SYSTEM_DARWIN
-#cmakedefine TARGET_SYSTEM_ANDROID
-#cmakedefine TARGET_SYSTEM_IOS
+/* Archteture Data */
+#cmakedefine HOST_ARCH_X64
+#cmakedefine HOST_ARCH_ARM64
 
 /* Engine Data */
 #cmakedefine ENGINE_NAME "@ENGINE_NAME@"

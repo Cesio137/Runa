@@ -1,25 +1,21 @@
 #include "InternationalComponent.h"
 
-#include <QCoreApplication>
-
 InternationalComponent::InternationalComponent(QObject* parent)
     : QObject{parent}
 {
 #ifdef ENGINE_BUILD_DEBUG
     
 #endif
-    // Especificar o caminho e o domínio dos arquivos de dicionário
-    gen.add_messages_path(DICTIONARY_PATH);
-    gen.add_messages_domain("hello");
+    // Define as strings de entrada e os idiomas de origem e destino
+  std::string input = "Olá, mundo!";
+  std::string from = "pt";
+  std::string to = "en";
 
-    // Gerar uma localização em português
-    std::locale loc_pt = gen("pt_BR.UTF-8");
+  // Chama a função de tradução e imprime o resultado
+  std::string output = translate(input, from, to);
+  std::cout << output << std::endl;
 
-    // Atribuir as localizações aos fluxos de saída
-    std::wcout.imbue(loc_pt);
-
-    // Usar a função translate para traduzir os textos
-    std::wcout << boost::locale::translate(L"Hello World") << std::endl;
+  // Saída esperada: Hello, world!
 }
 
 InternationalComponent::~InternationalComponent()

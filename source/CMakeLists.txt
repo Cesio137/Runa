@@ -15,7 +15,6 @@ add_library(Data_Interface INTERFACE)
 target_link_libraries(Data_Interface
         INTERFACE
         Data
-        boost_locale
 )
 
 include(${SOURCE_DIR}/config/config.cmake)

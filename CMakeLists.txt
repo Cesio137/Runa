@@ -16,7 +16,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   list(APPEND CMAKE_PREFIX_PATH "$ENV{QT_PATH}/gcc_64/lib/cmake")
 endif()
-
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core LinguistTools)
 

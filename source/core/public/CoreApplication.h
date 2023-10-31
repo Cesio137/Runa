@@ -2,7 +2,6 @@
 #define CORE_H
 
 #include <QObject>
-#include <QCoreApplication>
 #include <Launcher.h>
 #include <InternationalComponent.h>
 
@@ -20,7 +19,7 @@ public:
 private:
     int exec_code = 0;
     Launcher* launcher;
-    InternationalComponent* international = nullptr;
+    InternationalComponent* international;
 
 
 

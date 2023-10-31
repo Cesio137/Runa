@@ -15,13 +15,13 @@ class InternationalComponent : public QObject
 {
     Q_OBJECT
 public:
-   InternationalComponent(ELanguages Language = ELanguages::EN_US);
+   InternationalComponent(ELanguages Language = ELanguages::EEN_US);
   ~InternationalComponent();
   static bool ChangeLanguage();
 
 private:
-    static QString JsonText;
-    inline static ELanguages language = ELanguages::EN_US;
+    inline static QString JsonText;
+    inline static ELanguages language = ELanguages::EEN_US;
     
 };
 

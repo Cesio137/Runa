@@ -5,14 +5,14 @@
 
 enum EJsonUnicode : uint8_t
 {
-    Launcher = 0,
-    Engine = 1
+    ELauncher = 0,
+    EEngine = 1
 };
 
 enum ELanguages : uint8_t
 {
-    EN_US = 0,
-    PT_BR = 1
+    EEN_US = 0,
+    EPT_BR = 1
 };
 
 #endif // EUNICODE_H

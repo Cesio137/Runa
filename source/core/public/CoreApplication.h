@@ -8,18 +8,18 @@
 
 using namespace std;
 
-class Core : public QCoreApplication
+class CoreApplication : public QObject
 {
     Q_OBJECT
 public:
-    Core(int& argc, char** argv);
-    ~Core();
+    CoreApplication(int& argc, char** argv);
+    ~CoreApplication();
 
     int exec();
 
 private:
     int exec_code = 0;
-    Launcher* launcher = nullptr;
+    Launcher* launcher;
     InternationalComponent* international = nullptr;
 
 

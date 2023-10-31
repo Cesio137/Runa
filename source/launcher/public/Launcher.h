@@ -2,7 +2,6 @@
 #define LAUNCHER_H
 
 #include <RenderHardwareInterface.h>
-#include <QCoreApplication>
 #include <Text/QText.h>
 #include <QTranslator>
 

@@ -1,6 +1,6 @@
-#include "Core.h"
+#include "CoreApplication.h"
 
-Core::Core(int& argc, char** argv): QCoreApplication(argc, argv)
+CoreApplication::CoreApplication(int& argc, char** argv)
 {
     if (argc <= 1)
     {
@@ -8,11 +8,11 @@ Core::Core(int& argc, char** argv): QCoreApplication(argc, argv)
     }
 }
 
-Core::~Core()
+CoreApplication::~CoreApplication()
 {
 }
 
-int Core::exec()
+int CoreApplication::exec()
 {
     international = new InternationalComponent();
     launcher = new Launcher();
@@ -20,7 +20,7 @@ int Core::exec()
     return exec_code;
 }
 
-void Core::QSlotDebugError(int code, QString error)
+void CoreApplication::QSlotDebugError(int code, QString error)
 {
     exec_code = code;
     if (error != "")

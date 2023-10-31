@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <RenderingSettings/RenderingEngineSettings.h>
-#include <opengl/OpenGL.h>
+#include <OpenGL/OpenGL.h>
 
 class RenderHardwareInterface : public QObject
 {

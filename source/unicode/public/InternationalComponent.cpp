@@ -1,21 +1,15 @@
 #include "InternationalComponent.h"
 
-InternationalComponent::InternationalComponent(QObject* parent)
-    : QObject{parent}
+InternationalComponent::InternationalComponent(ELanguages Language)
 {
 #ifdef ENGINE_BUILD_DEBUG
-    
+    QFile UnicodeJson(DICTIONARY_PATH);
+    if (!UnicodeJson.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QTextStream JsonStream(&UnicodeJson);
+    JsonText = JsonStream.readAll();
 #endif
-    // Define as strings de entrada e os idiomas de origem e destino
-  std::string input = "Olá, mundo!";
-  std::string from = "pt";
-  std::string to = "en";
-
-  // Chama a função de tradução e imprime o resultado
-  std::string output = translate(input, from, to);
-  std::cout << output << std::endl;
-
-  // Saída esperada: Hello, world!
 }
 
 InternationalComponent::~InternationalComponent()

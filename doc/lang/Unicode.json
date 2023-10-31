@@ -1,0 +1,19 @@
+{
+    "Launcher":
+    {
+      "Hello, world!": 
+      {
+        "pt-BR": "Olá, mundo",
+        "es": "Hola mundo"
+      }
+    },
+
+    "Engine":
+    {
+      "Hello, world!":
+      {
+        "pt-BR": "Olá, mundo",
+        "es": "Hola mundo"
+      }
+    }
+}

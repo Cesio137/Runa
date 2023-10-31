@@ -64,6 +64,6 @@ else()
         set(ENGINE_VERSION_PATCH 0)
 endif()
 
-set(DICTIONARY_PATH ${CMAKE_SOURCE_DIR}/doc/lang/)
+set(DICTIONARY_PATH ${CMAKE_SOURCE_DIR}/doc/lang/Unicode.json)
 
 configure_file(${Data_DIR}/public/config/Config.h.in ${Data_DIR}/public/config/Config.h @ONLY)

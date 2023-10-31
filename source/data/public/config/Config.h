@@ -23,4 +23,4 @@
 #define ENGINE_VERSION_PATCH 1
 
 /* Dictionary Data */
-#define DICTIONARY_PATH "E:/Users/Documents/QT/Nanometro/doc/lang/"
+#define DICTIONARY_PATH "E:/Users/Documents/QT/Nanometro/doc/lang/Unicode.json"

@@ -3,16 +3,18 @@
 
 #include <cstdint>
 
-enum EJsonUnicode : uint8_t
+enum ELanguageID : uint8_t
 {
-    ELauncher = 0,
-    EEngine = 1
-};
-
-enum ELanguages : uint8_t
-{
-    EEN_US = 0,
-    EPT_BR = 1
+    EN_US = 0, // American English
+    PT_BR = 1, // Brazilian Portuguese
+    ES = 2, // Spanish
+    FR = 3, // French
+    DE = 4, // German
+    IT = 5, // Italian
+    RU = 6, // Russian
+    ZH_CN = 7, // Simplified Chinese
+    JA = 8, // Japanese
+    KO_KR = 9 // South Korean
 };
 
 #endif // EUNICODE_H

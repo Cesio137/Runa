@@ -1,6 +1,6 @@
 #include "InternationalComponent.h"
 
-InternationalComponent::InternationalComponent(ELanguages Language)
+InternationalComponent::InternationalComponent(ELanguageID id)
 {
 #ifdef ENGINE_BUILD_DEBUG
     QFile UnicodeJson(DICTIONARY_PATH);
@@ -9,9 +9,22 @@ InternationalComponent::InternationalComponent(ELanguages Language)
 
     QTextStream JsonStream(&UnicodeJson);
     JsonText = JsonStream.readAll();
-#endif
+    qDebug() << JsonText;
+#endif   
+    
 }
 
 InternationalComponent::~InternationalComponent()
 {
+}
+
+void InternationalComponent::SetLocaleID(ELanguageID id)
+{
+    language = id;
+}
+
+QString InternationalComponent::ParseStr(QString str)
+{
+    
+    return "";
 }

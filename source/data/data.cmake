@@ -17,6 +17,7 @@ target_include_directories(Data
 )
 target_link_libraries(Data
         Qt${QT_VERSION_MAJOR}::Core
+        Unicode
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

@@ -2,6 +2,7 @@
 #define INTERNATIONALCOMPONENT_H
 
 #include <QObject>
+#include <QLocale>
 #include <QFile>
 #include <QTextStream>
 #include <boost/json.hpp>
@@ -15,13 +16,15 @@ class InternationalComponent : public QObject
 {
     Q_OBJECT
 public:
-   InternationalComponent(ELanguages Language = ELanguages::EEN_US);
-  ~InternationalComponent();
-  static bool ChangeLanguage();
+    InternationalComponent(ELanguageID id);
+    ~InternationalComponent();
+    static void SetLocaleID(ELanguageID id);
+    static ELanguageID GetLocaleID();
+    static QString ParseStr(QString str);
 
 private:
     inline static QString JsonText;
-    inline static ELanguages language = ELanguages::EEN_US;
+    inline static ELanguageID language = ELanguageID::EN_US;
     
 };
 

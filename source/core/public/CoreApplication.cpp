@@ -6,6 +6,8 @@ CoreApplication::CoreApplication(int& argc, char** argv)
     {
         qDebug() << argv[0];
     }
+
+    
 }
 
 CoreApplication::~CoreApplication()
@@ -14,7 +16,7 @@ CoreApplication::~CoreApplication()
 
 int CoreApplication::exec()
 {
-    international = new InternationalComponent();
+    international = new InternationalComponent(EN_US);
     launcher = new Launcher();
     QObject::connect(launcher, SIGNAL(on_error(int, QString)), this, SLOT(QSlotDebugError(int, QString)));
     return exec_code;

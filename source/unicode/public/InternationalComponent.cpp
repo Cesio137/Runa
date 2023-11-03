@@ -23,6 +23,11 @@ void InternationalComponent::SetLocaleID(ELanguageID id)
     language = id;
 }
 
+ELanguageID InternationalComponent::GetLocaleID()
+{
+    return language;
+}
+
 QString InternationalComponent::ParseStr(QString str)
 {
     

@@ -65,7 +65,8 @@ void Launcher::LauncherDoking()
     if (ImGui::BeginMenuBar())
     {
         ImGui::PushFont(RenderingEngineSettings::ContextMenuFont);
-        if (ImGui::BeginMenu("Launcher"))
+        
+        if (ImGui::BeginMenu(QText("test").c_str()))
         {
             ImGui::MenuItem("Add project");
 

@@ -4,8 +4,7 @@
 #include <QLocale>
 #include <QString>
 #include <QMap>
-#include "EUnicode.h"
-#include "InternationalComponent.h"
+#include <InternationalComponent.h>
 
 using namespace std;
 
@@ -13,12 +12,12 @@ class QText
 {
 public:
     QText() { tr(); }
-    QText(const QString& str) { Text.insert(ELanguageID::EN_US, str); tr(); }
-    QText(const ELanguageID& locale, const QString& str) { Text.insert(locale, str); tr(); }
-    QText(const string& str) { Text.insert(ELanguageID::EN_US, QString::fromStdString(str)); tr(); }
-    QText(const ELanguageID& locale, const string& str) { Text.insert(locale, QString::fromStdString(str)); tr(); }
-    QText(const char* str) { Text.insert(ELanguageID::EN_US, QString(str)); tr(); }
-    QText(const ELanguageID& locale, const char* str) { Text.insert(locale, QString(str)); tr(); }
+    QText(const QString& str) : Text(QMap<uint8_t, QString>{ {EN_US, str} }) { tr(); }
+    QText(const ELanguageID& localeID, const QString& str) : Text(QMap<uint8_t, QString>{ {localeID, str} }) { tr(); }
+    QText(const string& str) : Text(QMap<uint8_t, QString>{ {EN_US, QString::fromStdString(str)} }) { tr(); }
+    QText(const ELanguageID& localeID, const string& str) : Text(QMap<uint8_t, QString>{ {localeID, QString::fromStdString(str)} }) { tr(); }
+    QText(const char* str) : Text(QMap<uint8_t, QString>{ {EN_US, QString::fromStdString(str)} }) { tr(); }
+    QText(const ELanguageID& localeID, const char* str) : Text(QMap<uint8_t, QString>{ {localeID, QString::fromStdString(str)} }) { tr(); }
     
     //Set
     const void append(const QString& str) { Text.begin().value().append(str); tr(); }
@@ -28,23 +27,19 @@ public:
     //Get
     const QString toCaseFolded() { return Text.contains(InternationalComponent::GetLocaleID()) ? Text[InternationalComponent::GetLocaleID()].toCaseFolded() : Text.begin().value(); }
     const string toStdString() { return Text.contains(InternationalComponent::GetLocaleID()) ? Text[InternationalComponent::GetLocaleID()].toStdString() : Text.begin().value().toStdString(); }
-    const char* c_str()
+    const QByteArray c_str()
     {
         // Temp QByteArray
-        QByteArray temp_qbytearray( Text.contains(InternationalComponent::GetLocaleID()) ? Text[InternationalComponent::GetLocaleID()].toUtf8() : Text.begin().value().toUtf8());
-
-        // Convert to const char*
-        const char* const_char_ptr = temp_qbytearray.constData();
-
-        // Returning pointer with data from QByteArray
-        return const_char_ptr;
+        QByteArray temp_qbytearray = Text.contains(InternationalComponent::GetLocaleID()) ? Text[InternationalComponent::GetLocaleID()].toUtf8() : Text.begin().value().toUtf8();
+        
+        return temp_qbytearray.constData();
     }
 
     //Translation
     
 
 private:
-    QMap<ELanguageID, QString> Text;
+    QMap<uint8_t, QString> Text;
     void tr()
     {
 #ifdef ENGINE_BUILD_DEBUG

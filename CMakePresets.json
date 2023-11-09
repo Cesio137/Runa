@@ -1,0 +1,256 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired":
+  {
+    "major": 3,
+    "minor": 24,
+    "patch": 0
+  },
+  "configurePresets":
+  [
+    {
+      "name": "VS2022_Debug",
+      "displayName": "Visual Studio 2022 Debug",
+      "description": "Default build using VS 2022 Debug",
+      "generator": "Visual Studio 17 2022",
+      "architecture":{ "value": "x64", "strategy": "external" },
+      "binaryDir": "${sourceDir}/build/VS2022_Debug",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "defaultProject": "Nanometro"
+        }
+      },
+      "cacheVariables":
+      {
+        "CMAKE_BUILD_TYPE":"Debug",
+        "SDL_SHARED":"1",
+        "SDL_STATIC":"0",
+        "SDL_FORCE_STATIC_VCRT":"0",
+        "SDL_PIPEWIRE":"1",
+        "SDL_SNDIO":"1",
+        "SDL_X11":"1",
+        "SDL_WAYLAND":"1",
+        "SDL_METAL":"1",
+        "SDL_TEST":"0",
+        "FLECS_SHARED":"0",
+        "FLECS_STATIC":"1",
+        "BOX2D_BUILD_TESTBED":"0",
+        "BOX2D_BUILD_UNIT_TESTS":"0",
+        "USE_AVX512":"1"
+      },
+      "condition":
+      {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "VS2022_Release",
+      "displayName": "Visual Studio 2022 Release",
+      "description": "Default build using VS 2022 Release",
+      "generator": "Visual Studio 17 2022",
+      "architecture":{ "value": "x64", "strategy": "external" },
+      "binaryDir": "${sourceDir}/build/VS2022_Release",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "defaultProject": "Nanometro"
+        }
+      },
+      "cacheVariables":
+      {
+        "CMAKE_BUILD_TYPE":"Release",
+        "SDL_SHARED":"1",
+        "SDL_STATIC":"0",
+        "SDL_FORCE_STATIC_VCRT":"0",
+        "SDL_PIPEWIRE":"1",
+        "SDL_SNDIO":"1",
+        "SDL_X11":"1",
+        "SDL_WAYLAND":"1",
+        "SDL_METAL":"1",
+        "SDL_TEST":"0",
+        "FLECS_SHARED":"0",
+        "FLECS_STATIC":"1",
+        "BOX2D_BUILD_TESTBED":"0",
+        "BOX2D_BUILD_UNIT_TESTS":"0",
+        "USE_AVX512":"1"
+      },
+      "condition":
+      {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "VS2019_Debug",
+      "displayName": "Visual Studio 2019 Debug",
+      "description": "Default build using VS 2019 Debug",
+      "generator": "Visual Studio 16 2019",
+      "architecture":{ "value": "x64", "strategy": "external" },
+      "binaryDir": "${sourceDir}/build/VS2019_Debug",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "defaultProject": "Nanometro"
+        }
+      },
+      "cacheVariables":
+      {
+        "CMAKE_BUILD_TYPE":"Debug",
+        "SDL_SHARED":"1",
+        "SDL_STATIC":"0",
+        "SDL_FORCE_STATIC_VCRT":"0",
+        "SDL_PIPEWIRE":"1",
+        "SDL_SNDIO":"1",
+        "SDL_X11":"1",
+        "SDL_WAYLAND":"1",
+        "SDL_METAL":"1",
+        "SDL_TEST":"0",
+        "FLECS_SHARED":"0",
+        "FLECS_STATIC":"1",
+        "BOX2D_BUILD_TESTBED":"0",
+        "BOX2D_BUILD_UNIT_TESTS":"0",
+        "USE_AVX512":"1"
+      },
+      "condition":
+      {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "VS2019_Release",
+      "displayName": "Visual Studio 2019 Release",
+      "description": "Default build using VS 2019 Release",
+      "generator": "Visual Studio 16 2019",
+      "architecture":{ "value": "x64", "strategy": "external" },
+      "binaryDir": "${sourceDir}/build/VS2019_Release",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "defaultProject": "Nanometro"
+        }
+      },
+      "cacheVariables":
+      {
+        "CMAKE_BUILD_TYPE":"Release",
+        "SDL_SHARED":"1",
+        "SDL_STATIC":"0",
+        "SDL_FORCE_STATIC_VCRT":"0",
+        "SDL_PIPEWIRE":"1",
+        "SDL_SNDIO":"1",
+        "SDL_X11":"1",
+        "SDL_WAYLAND":"1",
+        "SDL_METAL":"1",
+        "SDL_TEST":"0",
+        "FLECS_SHARED":"0",
+        "FLECS_STATIC":"1",
+        "BOX2D_BUILD_TESTBED":"0",
+        "BOX2D_BUILD_UNIT_TESTS":"0",
+        "USE_AVX512":"1"
+      },
+      "condition":
+      {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+
+    {
+      "name": "Unix_Debug",
+      "displayName": "Unix Makefiles Debug",
+      "description": "Default build using Unix Makefiles Debug",
+      "generator": "Unix Makefiles",
+      "architecture":{ "value": "x64", "strategy": "external" },
+      "binaryDir": "${sourceDir}/build/Unix_Debug",
+      "cacheVariables":
+      {
+        "CMAKE_BUILD_TYPE":"Debug",
+        "SDL_SHARED":"1",
+        "SDL_STATIC":"0",
+        "SDL_FORCE_STATIC_VCRT":"0",
+        "SDL_PIPEWIRE":"1",
+        "SDL_SNDIO":"1",
+        "SDL_X11":"1",
+        "SDL_WAYLAND":"1",
+        "SDL_METAL":"1",
+        "SDL_TEST":"0",
+        "FLECS_SHARED":"0",
+        "FLECS_STATIC":"1",
+        "BOX2D_BUILD_TESTBED":"0",
+        "BOX2D_BUILD_UNIT_TESTS":"0",
+        "USE_AVX512":"1"
+      },
+      "condition":
+      {
+        "type": "notEquals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "Unix_Release",
+      "displayName": "Unix Makefiles Release",
+      "description": "Default build using Unix Makefiles Release",
+      "generator": "Unix Makefiles",
+      "architecture":{ "value": "x64", "strategy": "external" },
+      "binaryDir": "${sourceDir}/build/Unix_Release",
+      "cacheVariables":
+      {
+        "CMAKE_BUILD_TYPE":"Release",
+        "SDL_SHARED":"1",
+        "SDL_STATIC":"0",
+        "SDL_FORCE_STATIC_VCRT":"0",
+        "SDL_PIPEWIRE":"1",
+        "SDL_SNDIO":"1",
+        "SDL_X11":"1",
+        "SDL_WAYLAND":"1",
+        "SDL_METAL":"1",
+        "SDL_TEST":"0",
+        "FLECS_SHARED":"0",
+        "FLECS_STATIC":"1",
+        "BOX2D_BUILD_TESTBED":"0",
+        "BOX2D_BUILD_UNIT_TESTS":"0",
+        "USE_AVX512":"1"
+      },
+      "condition":
+      {
+        "type": "notEquals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+
+    {
+      "name": "XCode",
+      "displayName": "XCode",
+      "description": "Default build using XCode",
+      "generator": "XCode",
+      "binaryDir": "${sourceDir}/build/XCode",
+      "cacheVariables":
+      {
+        "SDL_SHARED":"1",
+        "SDL_STATIC":"0",
+        "SDL_FORCE_STATIC_VCRT":"0",
+        "SDL_PIPEWIRE":"1",
+        "SDL_SNDIO":"1",
+        "SDL_X11":"1",
+        "SDL_WAYLAND":"1",
+        "SDL_METAL":"1",
+        "SDL_TEST":"0",
+        "FLECS_SHARED":"0",
+        "FLECS_STATIC":"1",
+        "BOX2D_BUILD_TESTBED":"0",
+        "BOX2D_BUILD_UNIT_TESTS":"0",
+        "USE_AVX512":"1"
+      },
+      "condition":
+      {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    }
+  ]
+}

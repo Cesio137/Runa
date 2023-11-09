@@ -20,8 +20,6 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
 
 - [CMake 3.24 or above](https://cmake.org/download/)
 
-- [QT 6.5.x LTS](https://www.qt.io/download)
-
 - [Vulkan 1.3](https://vulkan.lunarg.com)
 
 - Windows only
@@ -36,12 +34,10 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
   - Build With GNU
     - GCC 9.x or above
     - Make
-    - [LLVM(Optional)](https://github.com/llvm/llvm-project/releases)
 
 - MacOS only
   - Build With Xcode
     - [Xcode](https://developer.apple.com/xcode/)
-    - [LLVM(Optional)](https://github.com/llvm/llvm-project/releases)
   
 ## Setup Repository
 
@@ -57,10 +53,10 @@ git clone https://github.com/Cesio137/Nanometro.git
 
 #### Setup Enviroment Variables
 
-* Setup QT  
-  * Create a variable called `QT_PATH`:
+* Setup Vulkan  
+  * Create a variable called `VK_SDK_PATH` and `VULKAN_SDK` if do not exist:
     * ```Path
-      <Path to Qt>/6.5.x/
+      <Path to Vulkan>/x.x.x/
       ```
 
 #### Windows

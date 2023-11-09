@@ -4,6 +4,7 @@
 #define EXAMPLE "${EXAMPLE}"
 
 #include <QObject>
+#include <QDir>
 #include <QDebug>
 #include <SDL.h>
 #include <imgui.h>

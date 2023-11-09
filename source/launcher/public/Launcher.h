@@ -22,6 +22,7 @@ private:
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
     bool p_open = true;
     void LauncherDoking();
+
 };
 
 #endif // LAUNCHER_H

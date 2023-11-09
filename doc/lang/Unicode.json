@@ -1,19 +1,14 @@
 {
-    "Launcher":
-    {
-      "Hello, world!": 
-      {
-        "pt-BR": "Olá, mundo",
-        "es": "Hola mundo"
-      }
-    },
-
-    "Engine":
-    {
-      "Hello, world!":
-      {
-        "pt-BR": "Olá, mundo",
-        "es": "Hola mundo"
-      }
+    "author": [
+        "Nathan Miguel"
+    ],
+    "locale": "en_US",
+    "messages": {
+        "Hello, world!": {
+            "pt_BR": "Olá, mundo!"
+        },
+        "Launcher": {
+            "pt_BR": "Lançador"
+        }
     }
 }

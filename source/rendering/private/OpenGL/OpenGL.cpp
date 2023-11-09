@@ -129,7 +129,7 @@ SDL_OpenGL::SDL_OpenGL()
 
             OpenGL_Version.first = OPENGL_MAJOR_VERSION;
             OpenGL_Version.second = OPENGL_MINOR_VERSION;
-            glsl_Version = "#version " + QString::number(OPENGL_MAJOR_VERSION) + QString::number(OPENGL_MINOR_VERSION) + "0";
+            glsl_Version = "#version " + QByteArray::number(OPENGL_MAJOR_VERSION) + QByteArray::number(OPENGL_MINOR_VERSION) + "0";
 
             SDL_GL_SetSwapInterval(false);
         }
@@ -171,7 +171,7 @@ void SDL_OpenGL::SDL2_ImGui_Init()
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
     ImGui_ImplSDL2_InitForOpenGL(Window, Context);
-    ImGui_ImplOpenGL3_Init(glsl_Version.toUtf8());
+    ImGui_ImplOpenGL3_Init(glsl_Version);
 
     
 }
@@ -188,7 +188,7 @@ void SDL_OpenGL::SDL2_Destroy_OpenGL()
     SDL_Quit();
 }
 
-int SDL_OpenGL::GetErrorCode(QString &log)
+int SDL_OpenGL::GetErrorCode(QByteArray &log)
 {
     log = error_log;
     return error_code;

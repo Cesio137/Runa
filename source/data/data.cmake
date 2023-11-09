@@ -1,7 +1,7 @@
 set(Data_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 project(Data)
-file(GLOB_RECURSE Data_Sources "${Data_DIR}/public/*.h")
+file(GLOB_RECURSE Data_Sources "${Data_DIR}/public/*.h" "${Data_DIR}/public/*.cpp")
 add_library(Data STATIC ${Data_Sources})
 target_include_directories(Data
         PUBLIC
@@ -9,15 +9,16 @@ target_include_directories(Data
         "${Data_DIR}/public/struct"
         "${Data_DIR}/public/enum"
         "${Data_DIR}/public/type"
+        "${Data_DIR}/public/unicode"
         INTERFACE
         "${Data_DIR}/public/config"
         "${Data_DIR}/public/struct"
         "${Data_DIR}/public/enum"
         "${Data_DIR}/public/type"
+        "${Data_DIR}/public/unicode"
 )
 target_link_libraries(Data
         Qt${QT_VERSION_MAJOR}::Core
-        Unicode
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

@@ -21,6 +21,8 @@
 /* #undef ENGINE_VERSION_MAJOR */
 /* #undef ENGINE_VERSION_MINOR */
 #define ENGINE_VERSION_PATCH 1
+#define ENGINE_PRIVATE 1
 
 /* Dictionary Data */
+#define ENGINE_LOCALE 0
 #define DICTIONARY_PATH "E:/Users/Documents/QT/Nanometro/doc/lang/Unicode.json"

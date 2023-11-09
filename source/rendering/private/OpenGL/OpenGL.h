@@ -28,7 +28,7 @@ public:
     int SDL_OpenGL_Init();
     void SDL2_ImGui_Init();
     void SDL2_Destroy_OpenGL();
-    int GetErrorCode(QString &log);
+    int GetErrorCode(QByteArray &log);
 
     static SDL_Window* GetWindow();
 
@@ -41,10 +41,10 @@ private:
     inline static SDL_Window* Window = nullptr;
 
     /* Imgui */
-    QString glsl_Version;
+    QByteArray glsl_Version;
 
     /* error */
-    QString error_log;
+    QByteArray error_log;
     int error_code = 0;
 };
 

@@ -6,7 +6,7 @@ RenderHardwareInterface::RenderHardwareInterface(QObject *parent)
     
 }
 
-int  RenderHardwareInterface::Init(Uint32 flags)
+int  RenderHardwareInterface::Init(uint8_t flags)
 {
     int code = 0;
     if (flags == 0)
@@ -26,7 +26,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
 {
     OpenGL = new SDL_OpenGL();
         
-    QString log;
+    QByteArray log;
     int error_code;
 
     if((error_code = OpenGL->GetErrorCode(log)) != 0)
@@ -108,18 +108,17 @@ void RenderHardwareInterface::SDLOpenGLRender()
 
 void RenderHardwareInterface::FrameRateLock()
 {
-    float sleep = 0.0f;
+    float sleep = 0.0;
     if ( RenderingUserSettings::GetMaxFPS() == 0 || ImGui::GetIO().Framerate > float(RenderingUserSettings::GetMaxFPS()) )
     {
         if ( ImGui::GetIO().Framerate > 500.0f )
         {
-            sleep = 2.0f - ImGui::GetIO().DeltaTime;
+            sleep = 2.0f + ImGui::GetIO().DeltaTime;
             SDL_Delay(sleep);
         }
-        
         return;
     }
 
-    sleep = (1000.0f / float(RenderingUserSettings::GetMaxFPS())) - ImGui::GetIO().DeltaTime;
+    sleep = (1000.0f / float(RenderingUserSettings::GetMaxFPS())) + ImGui::GetIO().DeltaTime;
     SDL_Delay(sleep);
 }

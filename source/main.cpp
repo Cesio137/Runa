@@ -1,4 +1,3 @@
-#include <QCoreApplication>
 #include <CoreApplication.h>
 
 int main(int argc, char *argv[])

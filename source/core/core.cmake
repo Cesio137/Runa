@@ -12,5 +12,4 @@ target_include_directories(Core
 target_link_libraries(Core
         Qt${QT_VERSION_MAJOR}::Core
         Launcher
-        Unicode
 )

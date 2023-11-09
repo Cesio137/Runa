@@ -66,14 +66,14 @@ void Launcher::LauncherDoking()
     {
         ImGui::PushFont(RenderingEngineSettings::ContextMenuFont);
         
-        if (ImGui::BeginMenu(QText("test").c_str()))
+        if (ImGui::BeginMenu("Launcher"))
         {
-            ImGui::MenuItem("Add project");
+            ImGui::MenuItem(QText(ENGINE_PRIVATE, "Add project").toByteArray());
 
             ImGui::Separator();
 
             ImGui::MenuItem("Check for updates");
-            if(ImGui::MenuItem("Source"))
+            if(ImGui::MenuItem("Source code"))
             {
                 SDL_OpenURL("https://github.com/Cesio137/Nanometro");
             }

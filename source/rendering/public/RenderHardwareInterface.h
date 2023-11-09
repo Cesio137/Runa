@@ -2,15 +2,17 @@
 #define RENDERHARDWAREINTERFACE_H
 
 #include <QObject>
+#include <QThread>
 #include <RenderingSettings/RenderingEngineSettings.h>
 #include <OpenGL/OpenGL.h>
+#include <QPair>
 
 class RenderHardwareInterface : public QObject
 {
 Q_OBJECT
 public:
     explicit RenderHardwareInterface(QObject *parent = nullptr);
-    int Init(Uint32 flags);
+    int Init(uint8_t flags);
 
     virtual void PreInitialize(ImGuiIO& io){}
     virtual void Ready(){}
@@ -35,7 +37,7 @@ private:
     void FrameRateLock();
     
 signals:
-    void on_error(int code, QString error);
+    void on_error(int code, QByteArray error);
 
 };
 

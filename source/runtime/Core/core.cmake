@@ -10,5 +10,8 @@ target_include_directories(Core
         "${Core_DIR}/public"
 )
 target_link_libraries(Core
-        Launcher
+        Data
+        boost_algorithm
+        boost_fiber
+        boost_json
 )

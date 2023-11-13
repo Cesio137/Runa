@@ -42,7 +42,6 @@ void Launcher::RenderInterface(float delta)
 void Launcher::Render(float delta)
 {
     RenderHardwareInterface::Render(delta);
-
 }
 
 void Launcher::LauncherDoking()
@@ -66,25 +65,25 @@ void Launcher::LauncherDoking()
     {
         ImGui::PushFont(RenderEngineSettings::ContextMenuFont);
         
-        if (ImGui::BeginMenu(FText("Launcher").c_str()))
+        if (ImGui::BeginMenu(Text("Launcher").c_str() ))
         {
-            ImGui::MenuItem(FText("Add project").c_str());
+            ImGui::MenuItem(Text("Add project").c_str());
 
             ImGui::Separator();
 
-            ImGui::MenuItem(FText("Check for updates").c_str());
-            if(ImGui::MenuItem(FText("Source code").c_str()))
+            ImGui::MenuItem(Text("Check for updates").c_str());
+            if(ImGui::MenuItem(Text("Source code").c_str()))
             {
                 SDL_OpenURL("https://github.com/Cesio137/Nanometro");
             }
-            if(ImGui::MenuItem(FText("Report issues").c_str()))
+            if(ImGui::MenuItem(Text("Report issues").c_str()))
             {
                 SDL_OpenURL("https://github.com/Cesio137/Nanometro/issues");
             }
 
             ImGui::Separator();
 
-            if (ImGui::MenuItem(FText("Exit").c_str()))
+            if (ImGui::MenuItem(Text("Exit").c_str()))
                 CloseApp();
             ImGui::EndMenu();
         }

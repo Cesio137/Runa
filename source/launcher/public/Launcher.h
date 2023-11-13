@@ -2,7 +2,7 @@
 #define LAUNCHER_H
 
 #include <RenderHardwareInterface.h>
-#include <Internationalization/FText.h>
+#include <Internationalization/Text.h>
 
 class Launcher : public RenderHardwareInterface
 {

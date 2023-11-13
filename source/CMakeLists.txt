@@ -1,7 +1,8 @@
 set(SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 include(${SOURCE_DIR}/data/data.cmake)
-include(${SOURCE_DIR}/core/core.cmake)
+include(${SOURCE_DIR}/runtime/runtime.cmake)
+include(${SOURCE_DIR}/coreapplication/coreapplication.cmake)
 include(${SOURCE_DIR}/launcher/launcher.cmake)
 include(${SOURCE_DIR}/rendering/rendering.cmake)
 
@@ -16,5 +17,5 @@ target_link_libraries(Render_Interface
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-        Core
+        CoreApplication
 )

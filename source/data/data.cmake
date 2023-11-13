@@ -18,6 +18,10 @@ target_include_directories(Data
         "${Data_DIR}/public/unicode"
 )
 
+target_link_libraries(Data
+        boost_json
+)
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         set(ENGINE_BUILD_DEBUG ON)
 else()   

@@ -5,14 +5,14 @@
 #ifndef NANOMETRO_OPENGL_H
 #define NANOMETRO_OPENGL_H
 
-#include <Core/FString.h>
-#include <Config.h>
+#include <string>
 #include <glad/glad.h>
 #include <SDL.h>
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 #include <RenderingConfig.h>
+#include <Config.h>
 
 
 using namespace std;
@@ -38,10 +38,10 @@ private:
     inline static SDL_Window* Window = nullptr;
 
     /* Imgui */
-    FString glsl_Version;
+    string glsl_Version;
 
     /* error */
-    FString error_log;
+    string error_log;
     int error_code = 0;
 };
 

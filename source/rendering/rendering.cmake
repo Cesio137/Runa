@@ -13,6 +13,6 @@ target_include_directories(Rendering
         "${Rendering_DIR}/private"
 )
 target_link_libraries(Rendering
-        Data
+        Core
         Render_Interface
 )

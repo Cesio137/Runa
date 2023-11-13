@@ -33,6 +33,7 @@ private:
     bool WindowShouldClose = false;
 
     /*Performance*/
+    double PreviousTime;
     void FrameRateLock();
 
 };

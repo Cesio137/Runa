@@ -29,7 +29,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
 {
     OpenGL = new SDL_OpenGL();
 
-    FString log;
+    string log;
     int error_code;
 
     if((error_code = OpenGL->GetErrorCode(log)) != 0)
@@ -50,6 +50,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
     // Main loop
     while (!WindowShouldClose)
     {
+        PreviousTime = SDL_GetTicks64();
         SDLOpenGLEventHandle();
         SDLOpenGLRender();
         FrameRateLock();
@@ -111,18 +112,17 @@ void RenderHardwareInterface::SDLOpenGLRender()
 
 void RenderHardwareInterface::FrameRateLock()
 {
-    double sleep = 0.0f;
+    double sleep = 0.0;
     if ( RenderUserSettings::GetMaxFPS() == 0 )
     {
-        if ( ImGui::GetIO().Framerate > 500.0f )
+        if ( (SDL_GetTicks64() - PreviousTime) < 2)
         {
-            sleep = 2.0f + ImGui::GetIO().DeltaTime;
+            sleep = 2.0 - (SDL_GetTicks64() - PreviousTime);
             SDL_Delay(sleep);
         }
-
         return;
     }
 
-    sleep = ( 1000.0f / float(RenderUserSettings::GetMaxFPS()) ) - ImGui::GetIO().DeltaTime;
+    sleep = ( 1000.0 / static_cast<double>(RenderUserSettings::GetMaxFPS()) ) - static_cast<double>(SDL_GetTicks() - PreviousTime);
     SDL_Delay(sleep);
 }

@@ -1,4 +1,7 @@
 #include "Launcher.h"
+#include <iostream>
+
+using namespace std;
 
 Launcher::Launcher()
 {
@@ -16,7 +19,7 @@ void Launcher::PreInitialize(ImGuiIO& io)
     RenderHardwareInterface::PreInitialize(io);
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-    RenderUserSettings::SetMaxFPS(30);
+    RenderUserSettings::SetMaxFPS(144);
 }
 
 

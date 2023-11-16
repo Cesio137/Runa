@@ -1,6 +1,8 @@
-//
-// Created by natha on 10/10/2023.
-//
+#pragma once
+
+/*
+#   Created by Nathan Miguel
+*/
 
 #ifndef NANOMETRO_OPENGL_H
 #define NANOMETRO_OPENGL_H

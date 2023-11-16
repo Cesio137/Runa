@@ -14,4 +14,6 @@ target_link_libraries(Core
         boost_algorithm
         boost_fiber
         boost_json
+        boost_thread
+        boost_chrono
 )

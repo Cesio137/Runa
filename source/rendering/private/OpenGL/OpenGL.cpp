@@ -1,5 +1,5 @@
 /*
-Created by Nathan on 10/10/2023.
+#   Created by Nathan Miguel
 */
 
 #include "OpenGL.h"

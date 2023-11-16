@@ -4,9 +4,11 @@
 
 #include "RenderHardwareInterface.h"
 
+#include <thread>
+
 RenderHardwareInterface::RenderHardwareInterface()
 {
-
+    Time = Timer();
 }
 
 void RenderHardwareInterface::CloseApp()
@@ -50,7 +52,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
     // Main loop
     while (!WindowShouldClose)
     {
-        PreviousTime = SDL_GetTicks64();
+        Time.UpdateCounter();
         SDLOpenGLEventHandle();
         SDLOpenGLRender();
         FrameRateLock();
@@ -108,21 +110,19 @@ void RenderHardwareInterface::SDLOpenGLRender()
 
     // Swap the back buffer with the front buffer
     SDL_GL_SwapWindow(OpenGL->GetWindow());
+
 }
 
 void RenderHardwareInterface::FrameRateLock()
 {
-    double sleep = 0.0;
-    if ( RenderUserSettings::GetMaxFPS() == 0 )
-    {
-        if ( (SDL_GetTicks64() - PreviousTime) < 2)
-        {
-            sleep = 2.0 - (SDL_GetTicks64() - PreviousTime);
-            SDL_Delay(sleep);
-        }
+    if (RenderUserSettings::GetMaxFPS() == 0)
         return;
+    
+    uint32_t PreferredTime = 1000 / RenderUserSettings::GetMaxFPS();
+    if (PreferredTime > Time.elapsedTime())
+    {
+        //clock();
+        //sleep_for();
     }
-
-    sleep = ( 1000.0 / static_cast<double>(RenderUserSettings::GetMaxFPS()) ) - static_cast<double>(SDL_GetTicks() - PreviousTime);
-    SDL_Delay(sleep);
+    
 }

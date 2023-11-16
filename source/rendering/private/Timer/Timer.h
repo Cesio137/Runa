@@ -17,7 +17,7 @@ public:
     float DeltaTime();
 
 private:
-    uint32_t elapsedTime();
+    uint64_t previousCounter = 0;;
 };
 
 

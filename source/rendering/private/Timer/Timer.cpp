@@ -13,8 +13,3 @@ float Timer::DeltaTime()
 {
     return ImGui::GetIO().DeltaTime;
 }
-
-uint32_t Timer::elapsedTime()
-{
-    return static_cast<uint32_t>(ImGui::GetIO().DeltaTime);
-}

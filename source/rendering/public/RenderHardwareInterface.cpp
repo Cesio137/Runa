@@ -117,7 +117,7 @@ void RenderHardwareInterface::FrameRateLock()
     if (RenderUserSettings::GetMaxFPS() == 0)
         return;
     
-    double PreferredTime = 1000.0 / (RenderUserSettings::GetMaxFPS() + 1);
+    double PreferredTime = 1000.0 / (RenderUserSettings::GetMaxFPS() + 1) ;
     PreferredTime = PreferredTime + SDL_GetTicks64();
-    while (PreferredTime > SDL_GetTicks64());
+    SDL_Delay(PreferredTime - SDL_GetTicks64());
 }

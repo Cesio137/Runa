@@ -52,7 +52,6 @@ int RenderHardwareInterface::SDLOpenGLManager()
     // Main loop
     while (!WindowShouldClose)
     {
-        Time.UpdateCounter();
         SDLOpenGLEventHandle();
         SDLOpenGLRender();
         FrameRateLock();
@@ -118,11 +117,10 @@ void RenderHardwareInterface::FrameRateLock()
     if (RenderUserSettings::GetMaxFPS() == 0)
         return;
     
-    uint32_t PreferredTime = 1000 / RenderUserSettings::GetMaxFPS();
+    uint32_t PreferredTime = static_cast<uint32_t>(1000.0f / RenderUserSettings::GetMaxFPS());
     if (PreferredTime > Time.elapsedTime())
     {
-        //clock();
-        //sleep_for();
+        SDL_Delay(PreferredTime - Time.elapsedTime());
     }
     
 }

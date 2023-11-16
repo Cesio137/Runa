@@ -9,19 +9,12 @@ Timer::Timer()
     
 }
 
-float Timer::DeltaTime() const
+float Timer::DeltaTime()
 {
-    float delta = static_cast<float>(SDL_GetTicks64() - previousCounter);
-    return delta;
+    return ImGui::GetIO().DeltaTime;
 }
 
-void Timer::UpdateCounter()
+uint32_t Timer::elapsedTime()
 {
-    previousCounter = SDL_GetTicks64();
-}
-
-uint64_t Timer::elapsedTime()
-{
-    uint64_t delta = SDL_GetTicks64() - previousCounter;
-    return delta;
+    return static_cast<uint32_t>(ImGui::GetIO().DeltaTime);
 }

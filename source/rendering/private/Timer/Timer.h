@@ -7,18 +7,17 @@
 
 #include <cstdint>
 #include <SDL.h>
+#include <imgui.h>
 
 class Timer
 {
     friend class RenderHardwareInterface;
 public:
     Timer();
-    float DeltaTime() const;
+    float DeltaTime();
 
 private:
-    uint64_t previousCounter;
-    void UpdateCounter();
-    uint64_t elapsedTime();
+    uint32_t elapsedTime();
 };
 
 

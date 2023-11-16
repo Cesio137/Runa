@@ -19,7 +19,7 @@ void Launcher::PreInitialize(ImGuiIO& io)
     RenderHardwareInterface::PreInitialize(io);
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-    RenderUserSettings::SetMaxFPS(144);
+    RenderUserSettings::SetMaxFPS(100);
 }
 
 
@@ -63,12 +63,12 @@ void Launcher::LauncherDoking()
         ImGuiID dockspace_id = ImGui::GetID("Launcher");
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
     }
-
+    float timing = ImGui::GetIO().DeltaTime;
     if (ImGui::BeginMenuBar())
     {
         ImGui::PushFont(RenderEngineSettings::ContextMenuFont);
         
-        if (ImGui::BeginMenu(Text("Launcher").c_str() ))
+        if (ImGui::BeginMenu(std::to_string(timing).c_str() ))
         {
             ImGui::MenuItem(Text("Add project").c_str());
 

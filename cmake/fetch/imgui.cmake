@@ -12,7 +12,7 @@ if(NOT imgui_POPULATED)
     FetchContent_Declare(
         imgui
         GIT_REPOSITORY https://github.com/ocornut/imgui.git
-        GIT_TAG        v1.89.9-docking # 1.89.9 docking
+        GIT_TAG        v1.90-docking # 1.90 docking
         GIT_PROGRESS TRUE
       )
   
@@ -63,6 +63,12 @@ if(NOT imgui_POPULATED)
     project(imgui-static)
     add_library(imgui-static STATIC ${imgui_sources})
     target_include_directories(imgui-static PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends PRIVATE ${sdl2_SOURCE_DIR}/include ${Vulkan_INCLUDE_DIRS})
+
+    get_all_targets(imgui_targets)
+    message("All targets: ${imgui_targets}")
+
+    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+    set_target_properties(${imgui_targets} PROPERTIES FOLDER Thirdparty)
 endif()
 
 

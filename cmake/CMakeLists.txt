@@ -2,13 +2,6 @@ include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE)
 #set(FETCHCONTENT_BASE_DIR ${THIRDPARTY_DIR})
 
-file(GLOB_RECURSE cmake_files "*.cmake")
-foreach(file ${cmake_files})
-  #... calculate ${i} to get the test name
-  add_test(validate_${i}, "validator", ${file})
-  include(${file})
-endforeach()
-
 #Set folder and group all thirdparty projects
 function(get_all_targets var)
     set(targets)
@@ -26,8 +19,17 @@ macro(get_all_targets_recursive targets dir)
     list(APPEND ${targets} ${current_targets})
 endmacro()
 
+file(GLOB_RECURSE cmake_files "*.cmake")
+foreach(file ${cmake_files})
+  #... calculate ${i} to get the test name
+  add_test(validate_${i}, "validator", ${file})
+  include(${file})
+endforeach()
+
+#[[
 get_all_targets(all_targets)
 message("All targets: ${all_targets}")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_target_properties(${all_targets} PROPERTIES FOLDER fetch)
+]]#

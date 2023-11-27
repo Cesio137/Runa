@@ -8,10 +8,5 @@ if(NOT box2d_POPULATED)
     )
 
     FetchContent_MakeAvailable(box2d)
-
-    get_all_targets(box2d_targets)
-    message("All targets: ${box2d_targets}")
-
-    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-    set_target_properties(${box2d_targets} PROPERTIES FOLDER Plugins)
+    set_target_properties(box2d PROPERTIES FOLDER Plugins)
 endif()

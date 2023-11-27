@@ -8,10 +8,5 @@ if(NOT flecs_POPULATED)
     )
   
     FetchContent_MakeAvailable(flecs)
-
-    get_all_targets(flecs_targets)
-    message("All targets: ${flecs_targets}")
-
-    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-    set_target_properties(${flecs_targets} PROPERTIES FOLDER Thirdparty)
+    set_target_properties(flecs_static PROPERTIES FOLDER Thirdparty)
 endif()

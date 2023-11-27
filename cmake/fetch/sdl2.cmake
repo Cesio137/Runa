@@ -12,10 +12,8 @@ if(NOT sdl2_POPULATED)
       )
   
     FetchContent_MakeAvailable(sdl2)
-
-    get_all_targets(sdl2_targets)
-    message("All targets: ${sdl2_targets}")
-
-    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-    set_target_properties(${sdl2_targets} PROPERTIES FOLDER Thirdparty)
+    set_target_properties(SDL2  PROPERTIES FOLDER Thirdparty)
+    set_target_properties(SDL2main PROPERTIES FOLDER Thirdparty)
+    set_target_properties(sdl_headers_copy  PROPERTIES FOLDER Thirdparty)
+    set_target_properties(uninstall PROPERTIES FOLDER Thirdparty)
 endif()

@@ -1,5 +1,6 @@
 #include "Launcher.h"
 #include <iostream>
+#include <imgui_internal.h>
 
 using namespace std;
 
@@ -40,7 +41,20 @@ void Launcher::EventHandle(SDL_Event event)
 void Launcher::RenderInterface(float delta)
 {
     RenderHardwareInterface::RenderInterface(delta);
-    LauncherDoking();
+    ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+
+    ImGui::DockBuilderRemoveNode(dockspace_id); // clear any previous layout
+    ImGui::DockBuilderAddNode(dockspace_id, dockspace_flags | ImGuiDockNodeFlags_DockSpace);
+    ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+
+    auto dock_id_left = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.5f, nullptr, &dockspace_id);
+    auto dock_id_right = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Right, 0.5f, nullptr, &dockspace_id);
+
+    ImGui::DockBuilderDockWindow("Window 1", dock_id_left);
+    ImGui::DockBuilderDockWindow("Window 2", dock_id_right);
+
+    ImGui::DockBuilderFinish(dockspace_id);
 }
 
 void Launcher::Render(float delta)

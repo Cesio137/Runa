@@ -8,7 +8,7 @@
 #define NANOMETRO_OPENGL_H
 
 #include <string>
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <SDL.h>
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>

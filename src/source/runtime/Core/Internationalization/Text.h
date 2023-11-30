@@ -6,6 +6,7 @@
 #define TEXT_H
 
 #include <Container/String.h>
+#include <cstdint>
 #include <map>
 
 class Text : public String

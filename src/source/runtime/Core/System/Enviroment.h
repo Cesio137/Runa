@@ -2,6 +2,9 @@
 
 #include <Container/String.h>
 #include <Config.h>
+#ifndef HOST_SYSTEM_WINDOWS
+#include <cstdlib>
+#endif
 
 class Enviroment
 {

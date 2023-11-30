@@ -1,6 +1,3 @@
-include($ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
-find_package(ICU REQUIRED)
-
 add_subdirectory(cmake)
 add_subdirectory(src)
 

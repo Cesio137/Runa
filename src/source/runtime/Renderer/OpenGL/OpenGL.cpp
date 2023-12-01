@@ -140,7 +140,7 @@ SDL_OpenGL::SDL_OpenGL()
 
     //SDL_AddEventWatch(WindowEventWatcher, Window);
     // Load GLAD so it configures OpenGL
-    if (!gladLoadGL())
+    if ( !gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress) )
     {
         error_log = "GLAD could not be loaded.";
         error_code = -1;

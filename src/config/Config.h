@@ -17,10 +17,10 @@
 
 /* Engine Data */
 #define ENGINE_NAME "Nanometro"
-/* #undef ENGINE_VERSION */
-/* #undef ENGINE_VERSION_MAJOR */
+#define ENGINE_VERSION "2.4.1"
+#define ENGINE_VERSION_MAJOR 2
 /* #undef ENGINE_VERSION_MINOR */
-/* #undef ENGINE_VERSION_PATCH */
+#define ENGINE_VERSION_PATCH 1
 #define ENGINE_PRIVATE 1
 
 /* Dictionary Data */

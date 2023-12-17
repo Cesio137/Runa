@@ -35,7 +35,7 @@ namespace OpenGL
 {
     class SDL
     {
-        friend class RenderHardwareInterface;
+        //friend class RenderHardwareInterface;
 
     public:
         explicit SDL();
@@ -50,7 +50,6 @@ namespace OpenGL
         /* OpenGL Window */
         bool WindowShouldClose = false;
         pair<uint8_t, uint8_t> OpenGL_Version;
-        SDL_Renderer* Renderer = nullptr;
         SDL_GLContext Context = nullptr;
         inline static SDL_Window* Window = nullptr;
 
@@ -64,7 +63,7 @@ namespace OpenGL
 
     class GLFW
     {
-        friend class RenderHardwareInterface;
+        //friend class RenderHardwareInterface;
 
     public:
         explicit GLFW();

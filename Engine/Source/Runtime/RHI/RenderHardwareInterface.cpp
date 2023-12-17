@@ -168,7 +168,7 @@ int RenderHardwareInterface::GLFWOpenGLManager()
     {
         GLFWOpenGLEventHandle();
         GLFWOpenGLRender();
-        FrameRateLock();
+        //FrameRateLock();
     }
 
     // Clean and finish
@@ -181,7 +181,7 @@ int RenderHardwareInterface::GLFWOpenGLManager()
 
 void RenderHardwareInterface::GLFWOpenGLEventHandle()
 {
-    glfwWaitEvents();
+    glfwPollEvents();
     EventHandle();
 }
 

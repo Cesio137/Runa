@@ -73,24 +73,10 @@ SDL::SDL()
                     return;
                 }
 
-                // Criar o renderizador com acelera��o de hardware
-                Renderer = SDL_CreateRenderer(Window, 0, SDL_RENDERER_ACCELERATED);
-                if (!Renderer)
-                {
-                    error_log = "SDL could not create renderer: ";
-                    error_log.append(SDL_GetError());
-                    error_code = -1;
-                    SDL_DestroyWindow(Window);
-                    SDL_GL_DeleteContext(Context);
-                    SDL_Quit();
-                    return;
-                }
-
                 OpenGL_Version.first = GL_Version[i].first;
                 OpenGL_Version.second = GL_Version[i].second;
                 string glsl = "#version " + to_string(GL_Version[i].first) + to_string(GL_Version[i].second) + "0";
                 glsl_Version = glsl.c_str();
-                SDL_GL_SetSwapInterval(false);
                 break;
             }
         }
@@ -118,23 +104,9 @@ SDL::SDL()
                 return;
             }
 
-            // Criar o renderizador com acelera��o de hardware
-            Renderer = SDL_CreateRenderer(Window, 0, SDL_RENDERER_ACCELERATED);
-            if (!Renderer)
-            {
-                error_log = "SDL could not create renderer: ";
-                error_log.append(SDL_GetError());
-                error_code = -1;
-                SDL_DestroyWindow(Window);
-                SDL_GL_DeleteContext(Context);
-                SDL_Quit();
-                return;
-            }
-
             OpenGL_Version.first = OPENGL_MAJOR_VERSION;
             OpenGL_Version.second = OPENGL_MINOR_VERSION;
             glsl_Version = "#version " + to_string(OPENGL_MAJOR_VERSION) + to_string(OPENGL_MINOR_VERSION) + "0";
-            SDL_GL_SetSwapInterval(false);
         }
         else
         {
@@ -152,10 +124,11 @@ SDL::SDL()
         error_code = -1;
         SDL_DestroyWindow(Window);
         SDL_GL_DeleteContext(Context);
-        SDL_DestroyRenderer(Renderer);
         SDL_Quit();
         return;
     }
+
+    SDL_GL_SetSwapInterval(false);
 }
 
 SDL::~SDL()
@@ -165,8 +138,6 @@ SDL::~SDL()
     ImGui::DestroyContext();
     if (Context)
         SDL_GL_DeleteContext(Context);
-    if (Renderer)
-        SDL_DestroyRenderer(Renderer);
     if (Window)
         SDL_DestroyWindow(Window);
     SDL_Quit();
@@ -201,8 +172,6 @@ void SDL::SDL2_Destroy_OpenGL()
     ImGui::DestroyContext();
     if (Context)
         SDL_GL_DeleteContext(Context);
-    if (Renderer)
-        SDL_DestroyRenderer(Renderer);
     if (Window)
         SDL_DestroyWindow(Window);
     SDL_Quit();
@@ -324,6 +293,7 @@ GLFW::GLFW()
         return;
     }
 
+    glfwSwapInterval(0);
 }
 
 GLFW::~GLFW()

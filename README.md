@@ -8,7 +8,7 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
 
 - [x] Windows
 
-- [ ] Linux(Help Wanted)
+- [x] Linux(Help Wanted)
 
 - [ ] Mac(Help Wanted)
 
@@ -20,15 +20,17 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
 
 - [CMake 3.24 or above](https://cmake.org/download/)
 
+- [VCPKG](https://vcpkg.io/en/)
+
 - [Vulkan 1.3](https://vulkan.lunarg.com)
 
 - Windows only
-  - Build With Visual Studio
+  - Build With Visual Studio 2019/2022
     - [Visual Studio 2019/2022](https://visualstudio.microsoft.com/downloads/)
     - 👇 Install the following workloads:
     - Game Development with C++
     - MSVC v142 or above | x64/x86
-    - C++ 2022 redistributable update
+    - C++ 2015/2022 redistributable update
 
 - Linux only
   - Build With GNU
@@ -52,11 +54,17 @@ git clone https://github.com/Cesio137/Nanometro.git
 ---
 
 #### Setup Enviroment Variables
-
+VCPKG_ROOT
 * Setup Vulkan  
   * Create a variable called `VK_SDK_PATH` and `VULKAN_SDK` if do not exist:
     * ```Path
       <Path to Vulkan>/x.x.x/
+      ```
+
+* Setup VCPKG  
+  * Create a variable called `VCPKG_ROOT` if do not exist:
+    * ```Path
+      <Path to VCPKG>/x.x.x/
       ```
 
 #### Windows
@@ -66,7 +74,7 @@ git clone https://github.com/Cesio137/Nanometro.git
   * Commands to generate project
     * ```bash
       cmake .. --preset=VS2022_Debug
-      make .. --preset=VS2022_Release
+      Cmake .. --preset=VS2022_Release
       ```
     * ```bash
       cmake .. --preset=VS2019_Debug
@@ -96,5 +104,5 @@ git clone https://github.com/Cesio137/Nanometro.git
     
     * ```bash
       cmake .. --preset=XCode
-      cmake .. --preset=Unix
+      cmake .. --preset=Unix_(Debug/Release)
       ```

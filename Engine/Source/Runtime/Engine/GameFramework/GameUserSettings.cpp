@@ -3,6 +3,7 @@
 //
 
 #include "GameUserSettings.h"
+#include <CoreMinimal.h>
 #include <Container/String.h>
 #include <System/Dir.h>
 #include <algorithm>

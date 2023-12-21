@@ -1,53 +1,50 @@
-#ifndef RENDERHARDWAREINTERFACE_H
-#define RENDERHARDWAREINTERFACE_H
+#pragma once
 
 #include <OpenGL/OpenGL.h>
 #include <GameFramework/GameUserSettings.h>
 
-using namespace std;
-using namespace OpenGL;
-
-class RenderHardwareInterface
+namespace Nanometro
 {
-public:
-    explicit RenderHardwareInterface();
-    int Init(uint8_t flags);
-    
-    virtual void PreInitialize(ImGuiIO& io){}
-    virtual void Ready(){}
-    virtual void EventHandle(){}
-    virtual void RenderInterface(float delta){}
-    virtual void Render(float delta){}
 
-    GameUserSettings* EngineUserSettings;
-    SDL_Event SDL_event;
+    class RenderHardwareInterface
+    {
+    public:
+        explicit RenderHardwareInterface();
+        int Init(uint8_t flags);
 
-    /*Application*/
-    void CloseApp();
-    
-private:
-    /*Graphics API*/
-    SDL *SDL_OpenGL = nullptr;
-    int SDLOpenGLManager();
-    void SDLOpenGLEventHandle();
-    void SDLOpenGLRender();
+        virtual void PreInitialize(ImGuiIO& io){}
+        virtual void Ready(){}
+        virtual void EventHandle(){}
+        virtual void RenderInterface(float delta){}
+        virtual void Render(float delta){}
 
-    /*Graphics API*/
-    GLFW *GLFW_OpenGL = nullptr;
-    int GLFWOpenGLManager();
-    void GLFWOpenGLEventHandle();
-    void GLFWOpenGLRender();
+        GameUserSettings* EngineUserSettings;
+        SDL_Event SDL_event;
 
-    /*SDL Events*/
-    bool WindowShouldClose = false;
+        /*Application*/
+        void CloseApp();
 
-    /*Performance*/
-    uint64_t previousTicks;
-    uint64_t elapsedTime();
-    void FrameRateLock();
+    private:
+        /*Graphics API*/
+        SDL *SDL_OpenGL = nullptr;
+        int SDLOpenGLManager();
+        void SDLOpenGLEventHandle();
+        void SDLOpenGLRender();
 
-};
+        /*Graphics API*/
+        GLFW *GLFW_OpenGL = nullptr;
+        int GLFWOpenGLManager();
+        void GLFWOpenGLEventHandle();
+        void GLFWOpenGLRender();
 
+        /*SDL Events*/
+        bool WindowShouldClose = false;
 
+        /*Performance*/
+        uint64_t previousTicks;
+        uint64_t elapsedTime();
+        void FrameRateLock();
 
-#endif // RHI_H
+    };
+
+}

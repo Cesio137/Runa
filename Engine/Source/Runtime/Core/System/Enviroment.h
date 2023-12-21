@@ -6,12 +6,15 @@
 #include <cstdlib>
 #endif
 
-class Enviroment
+namespace Nanometro
 {
-public:
-	static String GetVariable(String var);
-	static String GetUserName();
+    class Enviroment
+    {
+    public:
+        static String GetVariable(String var);
+        static String GetUserName();
 
-private:
+    private:
 
-};
+    };
+}

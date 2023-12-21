@@ -9,8 +9,7 @@
 #include "OpenGL.h"
 #include <vector>
 
-
-using namespace OpenGL;
+using namespace Nanometro;
 
 SDL::SDL()
 {

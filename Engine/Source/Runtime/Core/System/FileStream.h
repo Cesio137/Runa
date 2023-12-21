@@ -1,20 +1,16 @@
-//
-// Created by natha on 11/11/2023.
-//
+#pragma once
 
-#ifndef NANOMETRO_FILE_H
-#define NANOMETRO_FILE_H
-
+#include <CoreMinimal.h>
 #include <fstream>
 #include <System/Dir.h>
 #include <string>
 
-class FileStream : public std::fstream
+namespace Nanometro
 {
-public:
-    FileStream(const std::string& file);
-    FileStream(const char* file);
-};
-
-
-#endif //NANOMETRO_FILE_H
+    class FileStream : public fstream
+    {
+    public:
+        FileStream(const std::string& file);
+        FileStream(const char* file);
+    };
+}

@@ -1,12 +1,6 @@
 #pragma once
 
-/*
-#   Created by Nathan Miguel
-*/
-
-#ifndef NANOMETRO_OPENGL_H
-#define NANOMETRO_OPENGL_H
-
+#include <CoreMinimal.h>
 #include <string>
 
 #include <glad/gl.h>
@@ -28,11 +22,12 @@
 #include <RenderingConfig.h>
 #include <Config.h>
 
-
-using namespace std;
-
-namespace OpenGL
+namespace Nanometro
 {
+    static pair<uint8_t, uint8_t> OpenGL_Version;
+    static string error_log;
+    static int error_code = 0;
+
     class SDL
     {
         //friend class RenderHardwareInterface;
@@ -55,10 +50,6 @@ namespace OpenGL
 
         /* Imgui */
         string glsl_Version;
-
-        /* error */
-        string error_log;
-        int error_code = 0;
     };
 
     class GLFW
@@ -82,10 +73,5 @@ namespace OpenGL
 
         /* Imgui */
         string glsl_Version;
-
-        /* error */
-        string error_log;
-        int error_code = 0;
     };
 }
-#endif //NANOMETRO_OPENGL_H

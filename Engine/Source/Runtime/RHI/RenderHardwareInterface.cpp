@@ -1,7 +1,3 @@
-//
-// Created by natha on 09/11/2023.
-//
-
 #include "RenderHardwareInterface.h"
 
 RenderHardwareInterface::RenderHardwareInterface()

@@ -1,9 +1,6 @@
-//
-// Created by natha on 11/11/2023.
-//
+#pragma once
 
-#ifndef JSONOBJECT_H
-#define JSONOBJECT_H
+namespace Nanometro
+{
 
-
-#endif //JSONOBJECT_H
+}

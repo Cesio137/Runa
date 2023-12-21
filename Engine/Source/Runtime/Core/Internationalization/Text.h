@@ -1,27 +1,21 @@
-//
-// Created by natha on 11/11/2023.
-//
-
-#ifndef TEXT_H
-#define TEXT_H
+#pragma once
 
 #include <Container/String.h>
 #include <cstdint>
 #include <map>
 
-class Text : public String
+namespace Nanometro
 {
-public:
-    Text();
-    Text(const std::string& str);
-    Text(const char* str);
+    class Text : public String
+    {
+    public:
+        Text();
+        Text(const std::string& str);
+        Text(const char* str);
 
-private:
-    std::map<uint8_t, std::string> msgtext;
-    //void trEngineParse();
-    //void trParse();
-};
-
-
-
-#endif //TEXT_H
+    private:
+        std::map<uint8_t, std::string> msgtext;
+        //void trEngineParse();
+        //void trParse();
+    };
+}

@@ -1,4 +1,5 @@
 #include "Enviroment.h"
+#include <CoreMinimal.h>
 
 String Enviroment::GetVariable(String varname)
 {

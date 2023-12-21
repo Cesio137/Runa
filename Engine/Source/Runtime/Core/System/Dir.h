@@ -1,32 +1,27 @@
-//
-// Created by natha on 11/11/2023.
-//
+#pragma once
 
-#ifndef DIR_H
-#define DIR_H
-
+#include <CoreMinimal.h>
 #include <Container/String.h>
 #include <filesystem>
 #include <Config.h>
 
-class Dir : public std::filesystem::path
+namespace Nanometro
 {
-public:
-    Dir();
-    explicit Dir(const path& paths);
-    explicit Dir(path&& pathses);
-    explicit Dir(string_type&& _Source);
-    Dir(string_type&& _Source, format format);
+    class Dir : public filesystem::path
+    {
+    public:
+        Dir();
+        explicit Dir(const path& paths);
+        explicit Dir(path&& pathses);
+        explicit Dir(string_type&& _Source);
+        Dir(string_type&& _Source, format format);
 
-    static String nativeSeparator(String dir);
-    static String HomeLocation();
-    static String AppDataLocation();
-    static String DesktopLocation();
-    static String DownloadLocation();
-    static String DocumentsLocation();
+        static String nativeSeparator(String dir);
+        static String HomeLocation();
+        static String AppDataLocation();
+        static String DesktopLocation();
+        static String DownloadLocation();
+        static String DocumentsLocation();
 
-};
-
-
-
-#endif //DIR_H
+    };
+}

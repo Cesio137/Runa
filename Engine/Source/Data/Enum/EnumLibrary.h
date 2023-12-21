@@ -1,4 +1,6 @@
-#ifndef NANOMETRO_ENUMLIBRARY_H
-#define NANOMETRO_ENUMLIBRARY_H
+#pragma once
 
-#endif //NANOMETRO_ENUMLIBRARY_H
+namespace Nanometro
+{
+
+}

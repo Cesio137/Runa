@@ -1,10 +1,5 @@
-//
-// Created by natha on 11/11/2023.
-//
-
 #include "Text.h"
-
-using namespace std;
+#include <CoreMinimal.h>
 
 Text::Text()
 {

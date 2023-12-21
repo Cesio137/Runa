@@ -5,7 +5,7 @@
 #include "Dir.h"
 #include <System/Enviroment.h>
 
-using namespace std;
+using namespace Nanometro;
 
 Dir::Dir()
 {

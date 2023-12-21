@@ -1,24 +1,18 @@
-//
-// Created by natha on 11/11/2023.
-//
-
-#ifndef STRING_H
-#define STRING_H
+#pragma once
 
 #include <string>
 #include <cctype>
 
-class String : public std::string
+namespace Nanometro
 {
-public:
-    String();
-    String(const std::string& str);
-    String(const char* str);
+    class String : public std::string
+    {
+    public:
+        String();
+        String(const std::string& str);
+        String(const char* str);
 
-    std::string toUpper();
-    std::string toLower();
-};
-
-
-
-#endif //STRING_H
+        std::string toUpper();
+        std::string toLower();
+    };
+}

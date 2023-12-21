@@ -1,10 +1,5 @@
-//
-// Created by natha on 11/11/2023.
-//
-
 #include "String.h"
-
-using namespace std;
+#include <CoreMinimal.h>
 
 String::String()
 {
@@ -27,7 +22,7 @@ string String::toUpper()
 {
     string str = data();
     for (char& c : str) {
-        c = std::toupper(c);
+        c = toupper(c);
     }
     return str;
 }
@@ -36,7 +31,7 @@ string String::toLower()
 {
     string str = data();
     for (char& c : str) {
-        c = std::tolower(c);
+        c = tolower(c);
     }
     return str;
 }

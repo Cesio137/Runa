@@ -14,4 +14,4 @@ target_link_libraries(Core
         Nlohmann
 )
 
-set_target_properties(Core PROPERTIES FOLDER "Source")
+set_target_properties(Core PROPERTIES FOLDER "Engine/Source/Runtime")

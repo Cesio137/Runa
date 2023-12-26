@@ -8,3 +8,5 @@ target_include_directories(Data
         "${Data_DIR}/enum"
         "${Data_DIR}/struct"
 )
+
+set_target_properties(Data PROPERTIES FOLDER "Engine/Source/Data")

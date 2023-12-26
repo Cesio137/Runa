@@ -1,10 +1,10 @@
 #include <iostream>
-#include <RenderHardwareInterface.h>
+#include <Launcher.h>
 
 int main(int argc, char* argv[])
 {
     std::cout << "Hello, World!" << std::endl;
-    RenderHardwareInterface* RHI = new RenderHardwareInterface();
+    Launcher* RHI = new Launcher();
     RHI->Init(0);
     return 0;
 }

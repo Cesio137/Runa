@@ -13,15 +13,17 @@ void RenderHardwareInterface::CloseApp()
 int RenderHardwareInterface::Init(uint8_t flags)
 {
     int code = 0;
+    RenderAPI = flags;
     if (flags == 0)
     {
         code = SDLOpenGLManager();
     }
+    /*
     else if (flags == 1)
     {
         code = GLFWOpenGLManager();
     }
-
+    */
     return code;
 }
 
@@ -43,6 +45,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
     SDL_OpenGL->SDL2_ImGui_Init();
     PreInitialize(ImGui::GetIO());
     EngineUserSettings = new GameUserSettings();
+    //SDL_GL_SetSwapInterval(1);
 
     // Ready
     Ready();
@@ -50,7 +53,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
     // Main loop
     while (!WindowShouldClose)
     {
-        previousTicks = SDL_GetTicks64();
+        PreviousTick = SDL_GetPerformanceCounter() * 1000000000 / SDL_GetPerformanceFrequency();
         SDLOpenGLEventHandle();
         SDLOpenGLRender();
         FrameRateLock();
@@ -94,7 +97,7 @@ void RenderHardwareInterface::SDLOpenGLEventHandle()
         }
 
     }
-    EventHandle();
+    EventHandle(SDL_event);
 }
 
 void RenderHardwareInterface::SDLOpenGLRender()
@@ -121,22 +124,7 @@ void RenderHardwareInterface::SDLOpenGLRender()
 
 }
 
-uint64_t RenderHardwareInterface::elapsedTime()
-{
-
-    return SDL_GetTicks64() - previousTicks;
-}
-
-void RenderHardwareInterface::FrameRateLock()
-{
-    if (GameUserSettings::GetFrameRateLimit() == 0)
-        return;
-
-    uint64_t PreferredTime = 1000 / (GameUserSettings::GetFrameRateLimit() + 1);
-    if (PreferredTime > elapsedTime())
-        SDL_Delay(PreferredTime - elapsedTime());
-}
-
+/*
 int RenderHardwareInterface::GLFWOpenGLManager()
 {
     GLFW_OpenGL = new GLFW();
@@ -156,15 +144,19 @@ int RenderHardwareInterface::GLFWOpenGLManager()
     PreInitialize(ImGui::GetIO());
     EngineUserSettings = new GameUserSettings();
 
+    //glfwSwapInterval(1);
+
     // Ready
     Ready();
 
     // Main loop
     while (!glfwWindowShouldClose(GLFW_OpenGL->GetWindow()))
     {
+
+        PreviousTick = static_cast<long long int>(1000000000 * glfwGetTime());
         GLFWOpenGLEventHandle();
         GLFWOpenGLRender();
-        //FrameRateLock();
+        FrameRateLock();
     }
 
     // Clean and finish
@@ -202,6 +194,36 @@ void RenderHardwareInterface::GLFWOpenGLRender()
 
     // Swap the back buffer with the front buffer
     glfwSwapBuffers(GLFW_OpenGL->GetWindow());
+}
+*/
+
+long long int RenderHardwareInterface::elapsedTime()
+{
+    if (RenderAPI == 0)
+    {
+        return static_cast<long long int>( SDL_GetPerformanceCounter() * 1000000000 / SDL_GetPerformanceFrequency() ) - PreviousTick;
+    }
+    /*
+    else if (RenderAPI == 1)
+    {
+        return static_cast<long long int>( glfwGetTime() * 1000000000 ) - PreviousTick;
+    }
+    */
+    return 0;
+}
+
+void RenderHardwareInterface::FrameRateLock()
+{
+    if (GameUserSettings::GetFrameRateLimit() == 0)
+        return;
+
+    long long int PreferredTime = 1000000000 / GameUserSettings::GetFrameRateLimit();
+    if (PreferredTime > elapsedTime())
+    {
+        long long int nsTime = PreferredTime - elapsedTime();
+        chrono::nanoseconds delta( nsTime );
+        this_thread::sleep_for(delta);
+    }
 }
 
 

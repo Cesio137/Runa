@@ -16,4 +16,4 @@ target_link_libraries(Renderer
         imgui
 )
 
-set_target_properties(Renderer PROPERTIES FOLDER "Source")
+set_target_properties(Renderer PROPERTIES FOLDER "Engine/Source/Runtime")

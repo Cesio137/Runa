@@ -1,7 +1,11 @@
 #pragma once
 
+#include <CoreMinimal.h>
+#include <iostream>
 #include <OpenGL/OpenGL.h>
 #include <GameFramework/GameUserSettings.h>
+#include <chrono>
+#include <thread>
 
 namespace Nanometro
 {
@@ -14,7 +18,7 @@ namespace Nanometro
 
         virtual void PreInitialize(ImGuiIO& io){}
         virtual void Ready(){}
-        virtual void EventHandle(){}
+        virtual void EventHandle(SDL_Event event){}
         virtual void RenderInterface(float delta){}
         virtual void Render(float delta){}
 
@@ -25,24 +29,27 @@ namespace Nanometro
         void CloseApp();
 
     private:
-        /*Graphics API*/
+        /*Graphics API SDL*/
+        uint8_t RenderAPI = 0; 
+        //SDL
         SDL *SDL_OpenGL = nullptr;
         int SDLOpenGLManager();
         void SDLOpenGLEventHandle();
         void SDLOpenGLRender();
+        /*SDL Events*/
+        bool WindowShouldClose = false;
 
-        /*Graphics API*/
+        //GLFW
+        /*
         GLFW *GLFW_OpenGL = nullptr;
         int GLFWOpenGLManager();
         void GLFWOpenGLEventHandle();
         void GLFWOpenGLRender();
-
-        /*SDL Events*/
-        bool WindowShouldClose = false;
+        */
 
         /*Performance*/
-        uint64_t previousTicks;
-        uint64_t elapsedTime();
+        long long int PreviousTick;
+        long long int elapsedTime();
         void FrameRateLock();
 
     };

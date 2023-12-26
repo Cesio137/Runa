@@ -54,3 +54,5 @@ else()
 endif()
 
 configure_file(${Config_DIR}/Config.h.in ${Config_DIR}/Config.h @ONLY)
+
+set_target_properties(Config PROPERTIES FOLDER "Engine")

@@ -11,3 +11,5 @@ target_link_libraries(Launcher
         Core
         RHI
 )
+
+set_target_properties(Launcher PROPERTIES FOLDER "Engine")

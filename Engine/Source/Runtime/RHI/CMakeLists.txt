@@ -13,4 +13,4 @@ target_link_libraries(RHI
         Engine
 )
 
-set_target_properties(RHI PROPERTIES FOLDER "Source")
+set_target_properties(RHI PROPERTIES FOLDER "Engine/Source/Runtime")

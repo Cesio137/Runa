@@ -17,4 +17,4 @@ target_link_libraries(Engine
 
 )
 
-set_target_properties(Engine PROPERTIES FOLDER "Source")
+set_target_properties(Engine PROPERTIES FOLDER "Engine/Source/Runtime")

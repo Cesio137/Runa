@@ -4,5 +4,5 @@ add_subdirectory(Source)
 add_subdirectory(Launcher)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-        RHI
+        Launcher
 )

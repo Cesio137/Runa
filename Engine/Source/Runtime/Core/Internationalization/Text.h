@@ -1,21 +1,19 @@
 #pragma once
 
-#include <Container/String.h>
-#include <cstdint>
-#include <map>
+#include <string>
 
 namespace Nanometro
 {
-    class Text : public String
+    class Text : public std::string
     {
     public:
         Text();
         Text(const std::string& str);
         Text(const char* str);
 
+        std::string toUpper();
+        std::string toLower();
+
     private:
-        std::map<uint8_t, std::string> msgtext;
-        //void trEngineParse();
-        //void trParse();
     };
 }

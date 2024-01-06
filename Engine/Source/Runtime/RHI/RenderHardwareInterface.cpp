@@ -1,4 +1,7 @@
 #include "RenderHardwareInterface.h"
+#include "Rendering/Display.h"
+
+using namespace Nanometro;
 
 RenderHardwareInterface::RenderHardwareInterface()
 {
@@ -16,7 +19,7 @@ int RenderHardwareInterface::Init(uint8_t flags)
     RenderAPI = flags;
     if (flags == 0)
     {
-        code = SDLOpenGLManager();
+        code = OpenGLManager();
     }
     /*
     else if (flags == 1)
@@ -27,15 +30,16 @@ int RenderHardwareInterface::Init(uint8_t flags)
     return code;
 }
 
-int RenderHardwareInterface::SDLOpenGLManager()
+int RenderHardwareInterface::OpenGLManager()
 {
-    SDL_OpenGL = new SDL();
+    SDL_OpenGL = new OpenGL();
 
-    string log;
+    std::string log;
     int error_code;
 
-    if((error_code = SDL_OpenGL->GetErrorCode(log)) != 0)
+    if((error_code = SDL_OpenGL->GetErrorCode()) != 0)
     {
+
         SDL_OpenGL = nullptr;
         free(SDL_OpenGL);
         //emit on_error(error_code, log);
@@ -45,6 +49,8 @@ int RenderHardwareInterface::SDLOpenGLManager()
     SDL_OpenGL->SDL2_ImGui_Init();
     PreInitialize(ImGui::GetIO());
     EngineUserSettings = new GameUserSettings();
+    Display::Context = SDL_OpenGL->GetContext();
+    Display::Window = SDL_OpenGL->GetWindow();
     //SDL_GL_SetSwapInterval(1);
 
     // Ready
@@ -54,8 +60,8 @@ int RenderHardwareInterface::SDLOpenGLManager()
     while (!WindowShouldClose)
     {
         PreviousTick = SDL_GetPerformanceCounter() * 1000000000 / SDL_GetPerformanceFrequency();
-        SDLOpenGLEventHandle();
-        SDLOpenGLRender();
+        OpenGLEventHandle();
+        OpenGLRender();
         FrameRateLock();
     }
 
@@ -67,7 +73,7 @@ int RenderHardwareInterface::SDLOpenGLManager()
     return 0;
 }
 
-void RenderHardwareInterface::SDLOpenGLEventHandle()
+void RenderHardwareInterface::OpenGLEventHandle()
 {
     switch (GameUserSettings::GetUpdateEventMode())
     {
@@ -100,7 +106,7 @@ void RenderHardwareInterface::SDLOpenGLEventHandle()
     EventHandle(SDL_event);
 }
 
-void RenderHardwareInterface::SDLOpenGLRender()
+void RenderHardwareInterface::OpenGLRender()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(SDL_OpenGL->GetWindow());
@@ -123,79 +129,6 @@ void RenderHardwareInterface::SDLOpenGLRender()
     SDL_GL_SwapWindow(SDL_OpenGL->GetWindow());
 
 }
-
-/*
-int RenderHardwareInterface::GLFWOpenGLManager()
-{
-    GLFW_OpenGL = new GLFW();
-
-    string log;
-    int error_code;
-
-    if((error_code = GLFW_OpenGL->GetErrorCode(log)) != 0)
-    {
-        SDL_OpenGL = nullptr;
-        free(SDL_OpenGL);
-        //emit on_error(error_code, log);
-        return error_code;
-    }
-
-    GLFW_OpenGL->GLFW_ImGui_Init();
-    PreInitialize(ImGui::GetIO());
-    EngineUserSettings = new GameUserSettings();
-
-    //glfwSwapInterval(1);
-
-    // Ready
-    Ready();
-
-    // Main loop
-    while (!glfwWindowShouldClose(GLFW_OpenGL->GetWindow()))
-    {
-
-        PreviousTick = static_cast<long long int>(1000000000 * glfwGetTime());
-        GLFWOpenGLEventHandle();
-        GLFWOpenGLRender();
-        FrameRateLock();
-    }
-
-    // Clean and finish
-    GLFW_OpenGL->GLFW_Destroy_OpenGL();
-    GLFW_OpenGL = nullptr;
-    free(GLFW_OpenGL);
-
-    return 0;
-}
-
-void RenderHardwareInterface::GLFWOpenGLEventHandle()
-{
-    glfwPollEvents();
-    EventHandle();
-}
-
-void RenderHardwareInterface::GLFWOpenGLRender()
-{
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
-    // Specify the color of the background
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    // Clean the back buffer and assign the new color to it
-    glClear(GL_COLOR_BUFFER_BIT);
-    //emit render
-    Render(ImGui::GetIO().DeltaTime);
-
-    // UI Render
-    RenderInterface(ImGui::GetIO().DeltaTime);
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    // Swap the back buffer with the front buffer
-    glfwSwapBuffers(GLFW_OpenGL->GetWindow());
-}
-*/
 
 long long int RenderHardwareInterface::elapsedTime()
 {
@@ -221,9 +154,7 @@ void RenderHardwareInterface::FrameRateLock()
     if (PreferredTime > elapsedTime())
     {
         long long int nsTime = PreferredTime - elapsedTime();
-        chrono::nanoseconds delta( nsTime );
-        this_thread::sleep_for(delta);
+        std::chrono::nanoseconds delta( nsTime );
+        std::this_thread::sleep_for(delta);
     }
 }
-
-

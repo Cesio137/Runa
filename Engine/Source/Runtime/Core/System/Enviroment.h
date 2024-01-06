@@ -1,8 +1,7 @@
 #pragma once
 
-#include <Container/String.h>
-#include <Config.h>
-#ifndef HOST_SYSTEM_WINDOWS
+#include <string>
+#ifndef _WIN64
 #include <cstdlib>
 #endif
 
@@ -11,8 +10,8 @@ namespace Nanometro
     class Enviroment
     {
     public:
-        static String GetVariable(String var);
-        static String GetUserName();
+        static std::string GetVariable(std::string var);
+        static std::string GetUserName();
 
     private:
 

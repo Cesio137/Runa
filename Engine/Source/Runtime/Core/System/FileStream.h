@@ -1,13 +1,11 @@
 #pragma once
 
-#include <CoreMinimal.h>
-#include <fstream>
-#include <System/Dir.h>
 #include <string>
+#include <fstream>
 
 namespace Nanometro
 {
-    class FileStream : public fstream
+class FileStream : public std::fstream
     {
     public:
         FileStream(const std::string& file);

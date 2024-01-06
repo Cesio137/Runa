@@ -1,77 +1,49 @@
 #pragma once
 
-#include <CoreMinimal.h>
 #include <string>
 
 #include <glad/gl.h>
-#ifdef HOST_SYSTEM_LINUX
+#ifdef __linux__
 #include <glad/glx.h>
 #endif
 
 #include <SDL.h>
 #include <SDL_syswm.h>
 
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
-
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
-#include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-
-#include <RenderingConfig.h>
-#include <Config.h>
 
 namespace Nanometro
 {
-    static pair<uint8_t, uint8_t> OpenGL_Version;
-    static string error_log;
-    static int error_code = 0;
-
-    class SDL
+    class OpenGL
     {
-        //friend class RenderHardwareInterface;
-
     public:
-        explicit SDL();
-        ~SDL();
+        explicit OpenGL();
+        ~OpenGL();
         void SDL2_ImGui_Init();
         void SDL2_Destroy_OpenGL();
-        int GetErrorCode(string &log);
-        static SDL_Window* GetWindow();
+
+        SDL_GLContext GetContext();
+        SDL_Window* GetWindow();
+
+        /* OpenGL log */
+        int GetErrorCode() const;
+        std::string GetErrorLog() const;
 
     private:
 
         /* OpenGL Window */
         bool WindowShouldClose = false;
-        pair<uint8_t, uint8_t> OpenGL_Version;
         SDL_GLContext Context = nullptr;
-        inline static SDL_Window* Window = nullptr;
+        SDL_Window* Window = nullptr;
+
+        /* OpenGL log */
+        std::pair<uint8_t, uint8_t> Version;
+        std::string error_log;
+        int error_code = 0;
 
         /* Imgui */
-        string glsl_Version;
-    };
-
-    class GLFW
-    {
-        //friend class RenderHardwareInterface;
-
-    public:
-        explicit GLFW();
-        ~GLFW();
-        void GLFW_ImGui_Init();
-        void GLFW_Destroy_OpenGL();
-        int GetErrorCode(string &log);
-        static GLFWwindow* GetWindow();
-
-    private:
-
-        /* OpenGL Window */
-        bool WindowShouldClose = false;
-        pair<uint8_t, uint8_t> OpenGL_Version;
-        inline static GLFWwindow* Window = nullptr;
-
-        /* Imgui */
-        string glsl_Version;
+        std::string glsl_Version;
     };
 }

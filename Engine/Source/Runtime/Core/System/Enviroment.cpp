@@ -1,11 +1,10 @@
 #include "Enviroment.h"
-#include <CoreMinimal.h>
 
-String Enviroment::GetVariable(String varname)
+std::string Nanometro::Enviroment::GetVariable(std::string varname)
 {
-    String value;
+    std::string value;
 
-#ifdef HOST_SYSTEM_WINDOWS
+#ifdef _WIN32
     char* varbuffer = nullptr;
 	size_t size = 0;
     if (_dupenv_s(&varbuffer, &size, varname.c_str()) == 0 && varbuffer != nullptr)
@@ -23,9 +22,9 @@ String Enviroment::GetVariable(String varname)
     return "";
 }
 
-String Enviroment::GetUserName()
+std::string Nanometro::Enviroment::GetUserName()
 {
-#ifdef HOST_SYSTEM_WINDOWS
+#ifdef _WIN64
     return GetVariable("USERNAME");
 #else
     return GetVariable("HOSTNAME");

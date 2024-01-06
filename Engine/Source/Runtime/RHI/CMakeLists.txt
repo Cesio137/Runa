@@ -8,7 +8,7 @@ target_include_directories(RHI
         "${RHI_DIR}/"
 )
 target_link_libraries(RHI
-        Core
+        PUBLIC
         Renderer
         Engine
 )

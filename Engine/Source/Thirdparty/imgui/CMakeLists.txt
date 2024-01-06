@@ -9,8 +9,6 @@ file(GLOB imgui_sources
         ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
         ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.h
         ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer.cpp
-        ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.h
-        ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
         ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
         ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
         ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
@@ -51,8 +49,6 @@ target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/
 target_link_libraries(imgui
         PRIVATE
         SDL2
-        SDL2main
-        glfw
         ${Vulkan_LIBRARIES}
 )
 set_target_properties(imgui PROPERTIES FOLDER Thirdparty)

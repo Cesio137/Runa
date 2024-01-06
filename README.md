@@ -33,9 +33,18 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
     - C++ 2015/2022 redistributable update
 
 - Linux only
-  - Build With GNU
+  - Build With GNU ```install with package manager```
     - GCC 9.x or above
-    - Make
+    - make 
+    - m4 
+    - autoconf 
+    - automake 
+    - libtool
+    - Python 
+  
+  - Python packages
+    - Jinja2 ``` pip install Jinja2 ```
+    
 
 - MacOS only
   - Build With Xcode
@@ -65,6 +74,13 @@ VCPKG_ROOT
   * Create a variable called `VCPKG_ROOT` if do not exist:
     * ```Path
       <Path to VCPKG>/x.x.x/
+      ```
+
+#### Install VCPKG dependencies
+
+* sdl2-image
+  * ```Bash
+      vcpkg install sdl2-image
       ```
 
 #### Windows

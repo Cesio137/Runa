@@ -1,13 +1,13 @@
 #include "FileStream.h"
 
-FileStream::FileStream(const string& file)
-    : fstream(file)
+Nanometro::FileStream::FileStream(const std::string& file)
+    : std::fstream(file)
 {
 
 }
 
-FileStream::FileStream(const char* file)
-    : fstream(file)
+Nanometro::FileStream::FileStream(const char* file)
+    : std::fstream(file)
 {
 
 }

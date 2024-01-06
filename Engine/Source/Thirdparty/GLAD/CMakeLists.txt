@@ -31,7 +31,6 @@ target_include_directories(glad
 )
 target_link_libraries(glad
         PUBLIC
-        Config
         ${Vulkan_LIBRARIES}
 )
 

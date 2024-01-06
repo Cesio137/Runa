@@ -1,40 +1,42 @@
 #include "String.h"
-#include <CoreMinimal.h>
+#include <cctype>
 
-String::String()
+Nanometro::String::String()
 {
 
 }
 
-String::String(const string &str)
-    : string(str)
+Nanometro::String::String(const std::string &str)
+    : std::string(str)
 {
 
 }
 
-String::String(const char* str)
-    : string(str)
+Nanometro::String::String(const char* str)
+    : std::string(str)
 {
 
 }
 
-string String::toUpper()
+std::string Nanometro::String::toUpper()
 {
-    string str = data();
+    std::string str = data();
     for (char& c : str) {
         c = toupper(c);
     }
     return str;
 }
 
-string String::toLower()
+std::string Nanometro::String::toLower()
 {
-    string str = data();
+    std::string str = data();
     for (char& c : str) {
         c = tolower(c);
     }
     return str;
 }
+
+
 
 
 

@@ -8,12 +8,13 @@ target_include_directories(Renderer
         "${Renderer_DIR}/"
 )
 target_link_libraries(Renderer
-        Core
+        PUBLIC
         SDL2
-        SDL2main
-        glfw
         glad
         imgui
+        PRIVATE
+        Config
+
 )
 
 set_target_properties(Renderer PROPERTIES FOLDER "Engine/Source/Runtime")

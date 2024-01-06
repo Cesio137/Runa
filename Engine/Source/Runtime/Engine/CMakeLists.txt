@@ -13,7 +13,6 @@ target_link_libraries(Engine
         imgui
         PRIVATE
         SDL2
-        SDL2main
 
 )
 

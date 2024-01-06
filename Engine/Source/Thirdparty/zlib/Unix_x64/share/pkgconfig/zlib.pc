@@ -1,0 +1,13 @@
+prefix=/media/nathan/SeagateHD/Users/Documents/QT/Nanometro/Thirdparty/zlib/Unix_x64
+exec_prefix=/media/nathan/SeagateHD/Users/Documents/QT/Nanometro/Thirdparty/zlib/Unix_x64
+libdir=/media/nathan/SeagateHD/Users/Documents/QT/Nanometro/Thirdparty/zlib/Unix_x64/lib
+sharedlibdir=/media/nathan/SeagateHD/Users/Documents/QT/Nanometro/Thirdparty/zlib/Unix_x64/lib
+includedir=/media/nathan/SeagateHD/Users/Documents/QT/Nanometro/Thirdparty/zlib/Unix_x64/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.3
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

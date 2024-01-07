@@ -1,6 +1,6 @@
 # sdl pkg-config source file
 
-prefix=E:/Users/Documents/QT/Nanometro/Thirdparty/SDL2/Win_x64
+prefix=E:/Users/Documents/Github/Nanometro/Packages/SDL2/Win_x64
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

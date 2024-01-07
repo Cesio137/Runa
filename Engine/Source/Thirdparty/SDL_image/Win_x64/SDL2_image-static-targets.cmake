@@ -46,14 +46,8 @@ unset(_cmake_targets_not_defined)
 unset(_cmake_expected_targets)
 
 
-# Compute the installation prefix relative to this file.
-get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
-get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
-get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
-get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
-if(_IMPORT_PREFIX STREQUAL "/")
-  set(_IMPORT_PREFIX "")
-endif()
+# The installation prefix configured by this project.
+set(_IMPORT_PREFIX "E:/Users/Documents/Github/Nanometro/Packages/SDL_image/Win_x64")
 
 # Create imported target SDL2_image::SDL2_image-static
 add_library(SDL2_image::SDL2_image-static STATIC IMPORTED)

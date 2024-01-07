@@ -5,6 +5,8 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86_64)|(amd64)|(AMD64)")
     elseif(UNIX)
         set(SDL2_DIR ${CMAKE_CURRENT_LIST_DIR}/Unix_x64 CACHE STRING "sdl2 library dir")
     endif()
+
+    set(SDL2_SHARE_LIBRARY ${SDL2_DIR}/bin/SDL2.dll CACHE STRING "sdl2 dynamic link dir")
     
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(aarch64)|(arm64)|(AARCH64)|(ARM64)")
 
@@ -13,6 +15,8 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(aarch64)|(arm64)|(AARCH64)|(ARM64)")
     elseif(UNIX)
         set(SDL2_DIR ${CMAKE_CURRENT_LIST_DIR}/Unix_arm64 CACHE STRING "sdl2 library dir")
     endif()
+
+    set(SDL2_SHARE_LIBRARY ${SDL2_DIR}/bin/SDL2.so CACHE STRING "sdl2 dynamic link dir")
 
 endif()
 

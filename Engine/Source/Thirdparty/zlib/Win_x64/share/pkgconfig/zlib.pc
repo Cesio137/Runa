@@ -1,8 +1,8 @@
-prefix=E:/Users/Documents/QT/Nanometro/Thirdparty/zlib/Win_x64
-exec_prefix=E:/Users/Documents/QT/Nanometro/Thirdparty/zlib/Win_x64
-libdir=E:/Users/Documents/QT/Nanometro/zlib-1.3/../Thirdparty/zlib/Win_x64/lib
-sharedlibdir=E:/Users/Documents/QT/Nanometro/zlib-1.3/../Thirdparty/zlib/Win_x64/lib
-includedir=E:/Users/Documents/QT/Nanometro/zlib-1.3/../Thirdparty/zlib/Win_x64/include
+prefix=E:/Users/Documents/Github/Nanometro/Packages/zlib/Win_x64
+exec_prefix=E:/Users/Documents/Github/Nanometro/Packages/zlib/Win_x64
+libdir=E:/Users/Documents/Github/Nanometro/Packages/zlib/Win_x64/lib
+sharedlibdir=E:/Users/Documents/Github/Nanometro/Packages/zlib/Win_x64/lib
+includedir=E:/Users/Documents/Github/Nanometro/Packages/zlib/Win_x64/include
 
 Name: zlib
 Description: zlib compression library

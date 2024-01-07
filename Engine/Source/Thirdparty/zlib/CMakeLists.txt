@@ -26,7 +26,6 @@ target_include_directories(zlib
 if(WIN32)
     target_link_libraries(zlib
             INTERFACE
-            ${ZLIB_DIR}/lib/zlib.lib
             ${ZLIB_DIR}/lib/zlibstatic.lib
     )
 elseif(UNIX)

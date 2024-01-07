@@ -1,4 +1,4 @@
-prefix=E:/Users/Documents/QT/Nanometro/Thirdparty/SDL_Image/Win_x64
+prefix=E:/Users/Documents/Github/Nanometro/Packages/SDL_image/Win_x64
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

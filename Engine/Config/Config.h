@@ -3,12 +3,12 @@
 /* #undef ENGINE_BUILD_RELEASE */
 
 /* Toolset Data */
-#define C_COMPILER_ID "GNU"
-#define CXX_COMPILER_ID "GNU"
+#define C_COMPILER_ID "MSVC"
+#define CXX_COMPILER_ID "MSVC"
 
 /* System Data */
-/* #undef HOST_SYSTEM_WINDOWS */
-#define HOST_SYSTEM_LINUX
+#define HOST_SYSTEM_WINDOWS
+/* #undef HOST_SYSTEM_LINUX */
 /* #undef HOST_SYSTEM_DARWIN */
 
 /* Archteture Data */

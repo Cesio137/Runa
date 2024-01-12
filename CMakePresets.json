@@ -23,12 +23,7 @@
       },
       "cacheVariables":
       {
-        "CMAKE_BUILD_TYPE":"Debug",
-        "FLECS_SHARED":"0",
-        "FLECS_STATIC":"1",
-        "BOX2D_BUILD_TESTBED":"0",
-        "BOX2D_BUILD_UNIT_TESTS":"0",
-        "USE_AVX512":"1"
+        "CMAKE_BUILD_TYPE":"Debug"
       },
       "condition":
       {
@@ -51,12 +46,7 @@
       },
       "cacheVariables":
       {
-        "CMAKE_BUILD_TYPE":"Release",
-        "FLECS_SHARED":"0",
-        "FLECS_STATIC":"1",
-        "BOX2D_BUILD_TESTBED":"0",
-        "BOX2D_BUILD_UNIT_TESTS":"0",
-        "USE_AVX512":"1"
+        "CMAKE_BUILD_TYPE":"Release"
       },
       "condition":
       {
@@ -79,12 +69,7 @@
       },
       "cacheVariables":
       {
-        "CMAKE_BUILD_TYPE":"Debug",
-        "FLECS_SHARED":"0",
-        "FLECS_STATIC":"1",
-        "BOX2D_BUILD_TESTBED":"0",
-        "BOX2D_BUILD_UNIT_TESTS":"0",
-        "USE_AVX512":"1"
+        "CMAKE_BUILD_TYPE":"Debug"
       },
       "condition":
       {
@@ -107,12 +92,7 @@
       },
       "cacheVariables":
       {
-        "CMAKE_BUILD_TYPE":"Release",
-        "FLECS_SHARED":"0",
-        "FLECS_STATIC":"1",
-        "BOX2D_BUILD_TESTBED":"0",
-        "BOX2D_BUILD_UNIT_TESTS":"0",
-        "USE_AVX512":"1"
+        "CMAKE_BUILD_TYPE":"Release"
       },
       "condition":
       {
@@ -154,12 +134,7 @@
       "binaryDir": "${sourceDir}/build/Unix_Release",
       "cacheVariables":
       {
-        "CMAKE_BUILD_TYPE":"Release",
-        "FLECS_SHARED":"0",
-        "FLECS_STATIC":"1",
-        "BOX2D_BUILD_TESTBED":"0",
-        "BOX2D_BUILD_UNIT_TESTS":"0",
-        "USE_AVX512":"1"
+        "CMAKE_BUILD_TYPE":"Release"
       },
       "condition":
       {
@@ -177,11 +152,7 @@
       "binaryDir": "${sourceDir}/build/XCode",
       "cacheVariables":
       {
-        "FLECS_SHARED":"0",
-        "FLECS_STATIC":"1",
-        "BOX2D_BUILD_TESTBED":"0",
-        "BOX2D_BUILD_UNIT_TESTS":"0",
-        "USE_AVX512":"1"
+        "CMAKE_BUILD_TYPE":"Release"
       },
       "condition":
       {

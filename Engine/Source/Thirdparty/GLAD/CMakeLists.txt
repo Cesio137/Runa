@@ -27,11 +27,10 @@ add_library(glad STATIC ${Glad_Sources})
 target_include_directories(glad
         PUBLIC
         ${GLAD_DIR}/include
-        ${Vulkan_INCLUDE_DIRS}
 )
 target_link_libraries(glad
         PUBLIC
-        ${Vulkan_LIBRARIES}
+        Vulkan
 )
 
 set_target_properties(glad PROPERTIES FOLDER "Thirdparty")

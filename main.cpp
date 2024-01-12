@@ -8,10 +8,11 @@ int main(int argc, char* argv[])
 
     lua_State *L = luaL_newstate();
     luaL_openlibs(L);
+    luaopen_jit(L);
     luaL_dostring(L, "print('helloworld from lua')");
     lua_close(L);
 
     Nanometro::Launcher* RHI = new Nanometro::Launcher();
-    RHI->Init(0);
-    return 0;
+
+    return RHI->Init(0);
 }

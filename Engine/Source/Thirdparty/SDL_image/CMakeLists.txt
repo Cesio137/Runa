@@ -1,20 +1,4 @@
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86_64)|(amd64)|(AMD64)")
-
-    if(WIN32)
-        set(SDLIMAGE_DIR ${CMAKE_CURRENT_LIST_DIR}/Win_x64)
-    elseif(UNIX)
-        set(SDLIMAGE_DIR ${CMAKE_CURRENT_LIST_DIR}/Unix_x64)
-    endif()
-    
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(aarch64)|(arm64)|(AARCH64)|(ARM64)")
-
-    if(WIN32)
-        set(SDLIMAGE_DIR ${CMAKE_CURRENT_LIST_DIR}/Win_arm64)
-    elseif(UNIX)
-        set(SDLIMAGE_DIR ${CMAKE_CURRENT_LIST_DIR}/Unix_arm64)
-    endif()
-
-endif()
+set(SDLIMAGE_DIR ${CMAKE_CURRENT_LIST_DIR}/${TARGET_SYSTEM})
 
 project(SDL_image)
 add_library(SDL_image INTERFACE)

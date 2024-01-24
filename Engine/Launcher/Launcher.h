@@ -1,6 +1,5 @@
 #pragma once
 
-#include <CoreMinimal.h>
 #include <RenderHardwareInterface.h>
 
 namespace Nanometro
@@ -14,8 +13,8 @@ namespace Nanometro
         void PreInitialize(ImGuiIO &io) override;
         void Ready() override;
         void EventHandle(SDL_Event event) override;
-        void RenderInterface(float delta) override;
-        void Render(float delta) override;
+        void RenderInterface(double delta) override;
+        void Render(double delta) override;
 
     private:
         ImGuiWindowFlags winFlags;

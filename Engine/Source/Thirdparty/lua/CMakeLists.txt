@@ -1,20 +1,9 @@
-set(LUA_DIR ${CMAKE_CURRENT_LIST_DIR}/${TARGET_SYSTEM})
+set(LUA_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 project(Lua)
-add_library(Lua INTERFACE)
+file(GLOB_RECURSE Lua_Sources "${LUA_DIR}/include/*.h" "${LUA_DIR}/src/*.c")
+add_library(Lua STATIC ${Lua_Sources})
 target_include_directories(Lua
-        INTERFACE
-        ${LUA_DIR}/include
+        PUBLIC
+        "${LUA_DIR}/include"
 )
-
-if(WIN32)
-    target_link_libraries(Lua
-            INTERFACE
-            ${LUA_DIR}/lib/lua.lib
-    )
-elseif(UNIX)
-    target_link_libraries(Lua
-            INTERFACE
-            ${LUA_DIR}/lib/liblua.a
-    )
-endif()

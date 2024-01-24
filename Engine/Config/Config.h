@@ -12,7 +12,7 @@
 /* #undef HOST_SYSTEM_DARWIN */
 
 /* Archteture Data */
-#define HOST_ARCH_X64
+/* #undef HOST_ARCH_X64 */
 /* #undef HOST_ARCH_ARM64 */
 
 /* Engine Data */

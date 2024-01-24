@@ -13,14 +13,15 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(aarch64)|(arm64)|(AARCH64)|(ARM64)")
     set(TARGET_SYSTEM ${TARGET_SYSTEM}arm64)
 endif()
 
-add_subdirectory(${THIRDPARTY_DIR}/Vulkan)
-add_subdirectory(${THIRDPARTY_DIR}/SDL2)
-add_subdirectory(${THIRDPARTY_DIR}/SDL_image)
-add_subdirectory(${THIRDPARTY_DIR}/zlib)
-add_subdirectory(${THIRDPARTY_DIR}/GLAD)
-add_subdirectory(${THIRDPARTY_DIR}/imgui)
+# Scrips Language
 add_subdirectory(${THIRDPARTY_DIR}/lua)
 add_subdirectory(${THIRDPARTY_DIR}/luajit)
-add_subdirectory(${THIRDPARTY_DIR}/nlohmann)
+# Graphics API
+add_subdirectory(${THIRDPARTY_DIR}/Vulkan)
+add_subdirectory(${THIRDPARTY_DIR}/GLAD)
+# User Interface
+add_subdirectory(${THIRDPARTY_DIR}/imgui)
+
+
 
 set_target_properties(imgui PROPERTIES FOLDER "Engine/Source/Thirdparty")

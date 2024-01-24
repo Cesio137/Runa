@@ -26,16 +26,17 @@ void Nanometro::Launcher::EventHandle(SDL_Event event)
     RenderHardwareInterface::EventHandle(event);
 }
 
-void Nanometro::Launcher::RenderInterface(float delta)
+void Nanometro::Launcher::RenderInterface(double delta)
 {
     RenderHardwareInterface::RenderInterface(delta);
 
     ImGui::Begin("Framerate");
-    ImGui::Text(std::to_string(ImGui::GetIO().Framerate).c_str());
+    auto test = static_cast<float>(delta);
+    ImGui::Text("%f", test);
     ImGui::End();
 }
 
-void Nanometro::Launcher::Render(float delta)
+void Nanometro::Launcher::Render(double delta)
 {
     RenderHardwareInterface::Render(delta);
 }

@@ -7,21 +7,15 @@ elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
     set(TARGET_SYSTEM "Darwin_")
 endif ()
 
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86_64)|(amd64)|(AMD64)")
-    set(TARGET_SYSTEM ${TARGET_SYSTEM}x64)
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86_64)|(amd64)|(AMD64)|(x64)")
+    set(TARGET_SYSTEM "${TARGET_SYSTEM}x64")
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(aarch64)|(arm64)|(AARCH64)|(ARM64)")
-    set(TARGET_SYSTEM ${TARGET_SYSTEM}arm64)
+    set(TARGET_SYSTEM "${TARGET_SYSTEM}arm64")
 endif()
 
-# Scrips Language
-add_subdirectory(${THIRDPARTY_DIR}/lua)
-add_subdirectory(${THIRDPARTY_DIR}/luajit)
 # Graphics API
 add_subdirectory(${THIRDPARTY_DIR}/Vulkan)
 add_subdirectory(${THIRDPARTY_DIR}/GLAD)
+add_subdirectory(${THIRDPARTY_DIR}/SDL2)
 # User Interface
 add_subdirectory(${THIRDPARTY_DIR}/imgui)
-
-
-
-set_target_properties(imgui PROPERTIES FOLDER "Engine/Source/Thirdparty")

@@ -7,11 +7,10 @@ target_include_directories(Core
         PUBLIC
         "${Core_DIR}/include"
 )
-target_link_libraries(Core
-        PUBLIC
-        Nlohmann
-)
 
+set_target_properties(Core PROPERTIES FOLDER "Engine/Source/Runtime")
+
+#[[
 add_custom_command(TARGET Core POST_BUILD
         COMMAND  ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:Core> ${RUNTIME_OUTPUT_DIRECTORY}/Engine/Source/Runtime/Core/lib
 )
@@ -23,3 +22,4 @@ set_target_properties( Core
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Engine/Source/Runtime/Core/lib"
         #RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
+]]

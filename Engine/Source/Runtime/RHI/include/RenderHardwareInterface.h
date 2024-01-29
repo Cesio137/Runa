@@ -1,10 +1,7 @@
 #pragma once
 
-#include <Renderer.h>
-#include <iostream>
+#include <Opengl/Opengl.h>
 #include <GameFramework/GameUserSettings.h>
-#include <chrono>
-#include <thread>
 
 namespace Nanometro
 {
@@ -31,7 +28,7 @@ namespace Nanometro
         /*Graphics API SDL*/
         uint8_t RenderAPI = 0; 
         //SDL
-        OpenGL *SDL_OpenGL = nullptr;
+        Opengl *SDL_Opengl;
         int OpenGLManager();
         void OpenGLEventHandle();
         void OpenGLRender();

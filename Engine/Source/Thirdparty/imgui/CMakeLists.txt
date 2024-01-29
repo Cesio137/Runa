@@ -42,8 +42,9 @@ add_library(imgui STATIC ${imgui_sources})
 target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR}/include ${imgui_SOURCE_DIR}/include/backends)
 target_link_libraries(imgui
         PRIVATE
+        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
         glad
-        SDL2
         Vulkan
 )
 set_target_properties(imgui PROPERTIES FOLDER Thirdparty)

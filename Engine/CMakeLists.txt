@@ -4,5 +4,4 @@ add_subdirectory(Launcher)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
         Launcher
-        LuaJit
 )

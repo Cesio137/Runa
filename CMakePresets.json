@@ -13,6 +13,7 @@
       "displayName": "Windows Debug x64",
       "description": "Default build using VS 2022 Debug",
       "generator": "Visual Studio 17 2022",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
       "architecture":{ "value": "x64", "strategy": "external" },
       "binaryDir": "${sourceDir}/build/Windows_Debug-x64",
       "vendor": {
@@ -26,7 +27,8 @@
         "CMAKE_SYSTEM_NAME":"Windows",
         "CMAKE_SYSTEM_PROCESSOR":"x64",
         "C_COMPILER_ID":"MSVC",
-        "CXX_COMPILER_ID":"MSVC"
+        "CXX_COMPILER_ID":"MSVC",
+        "VCPKG_TARGET_TRIPLET":"x64-Windows"
       },
       "condition":
       {

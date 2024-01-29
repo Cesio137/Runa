@@ -1,5 +1,11 @@
 #include "RenderHardwareInterface.h"
-#include "Rendering/Display.h"
+
+#include <imgui_impl_sdl2.h>
+#include <imgui_impl_opengl3.h>
+
+#include <thread>
+
+#include <Rendering/Display.h>
 
 Nanometro::RenderHardwareInterface::RenderHardwareInterface()
 {
@@ -30,25 +36,22 @@ int Nanometro::RenderHardwareInterface::Init(uint8_t flags)
 
 int Nanometro::RenderHardwareInterface::OpenGLManager()
 {
-    SDL_OpenGL = new OpenGL();
+    SDL_Opengl = new Opengl();
+    int error_code = SDL_Opengl->GetErrorCode();
 
-    std::string log;
-    int error_code;
-
-    if((error_code = SDL_OpenGL->GetErrorCode()) != 0)
+    if(error_code != 0)
     {
-
-        SDL_OpenGL = nullptr;
-        free(SDL_OpenGL);
+        delete SDL_Opengl;
         //emit on_error(error_code, log);
         return error_code;
     }
 
-    SDL_OpenGL->SDL2_ImGui_Init();
+    SDL_Opengl->Opengl_ImGuiInit();
+
     PreInitialize(ImGui::GetIO());
     EngineUserSettings = new GameUserSettings();
-    Display::Context = SDL_OpenGL->GetContext();
-    Display::Window = SDL_OpenGL->GetWindow();
+    Display::Context = SDL_Opengl->GetContext();
+    Display::Window = SDL_Opengl->GetWindow();
     //SDL_GL_SetSwapInterval(1);
 
     // Ready
@@ -64,9 +67,8 @@ int Nanometro::RenderHardwareInterface::OpenGLManager()
     }
 
     // Clean and finish
-    SDL_OpenGL->SDL2_Destroy_OpenGL();
-    SDL_OpenGL = nullptr;
-    free(SDL_OpenGL);
+    delete SDL_Opengl;
+    delete EngineUserSettings;
 
     return 0;
 }
@@ -107,7 +109,7 @@ void Nanometro::RenderHardwareInterface::OpenGLEventHandle()
 void Nanometro::RenderHardwareInterface::OpenGLRender()
 {
     ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame(SDL_OpenGL->GetWindow());
+    ImGui_ImplSDL2_NewFrame(SDL_Opengl->GetWindow());
     ImGui::NewFrame();
 
     // Specify the color of the background
@@ -124,7 +126,7 @@ void Nanometro::RenderHardwareInterface::OpenGLRender()
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     // Swap the back buffer with the front buffer
-    SDL_GL_SwapWindow(SDL_OpenGL->GetWindow());
+    SDL_GL_SwapWindow(SDL_Opengl->GetWindow());
 
 }
 
@@ -147,7 +149,7 @@ double Nanometro::RenderHardwareInterface::WorldDeltaTime() const
 {
     if (RenderAPI == 0)
     {
-        return static_cast<double>(SDL_GetPerformanceCounter() - PreviousTick) / SDL_GetPerformanceFrequency();
+        return static_cast<double>(SDL_GetPerformanceCounter() - PreviousTick) / static_cast<double>(SDL_GetPerformanceFrequency());
     }
     return 0.0;
 }

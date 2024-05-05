@@ -1,6 +1,6 @@
 #include "Rendering/Display.h"
 
-SDL_Window *Nanometro::Display::GetWindow()
+std::shared_ptr<SDL_Window> Nanometro::Display::GetWindow()
 {
     return Window;
 }

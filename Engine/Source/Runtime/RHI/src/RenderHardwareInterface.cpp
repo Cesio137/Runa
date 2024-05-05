@@ -41,15 +41,13 @@ int Nanometro::RenderHardwareInterface::OpenGLManager()
 
     if(error_code != 0)
     {
-        //delete SDL_Opengl;
-        //emit on_error(error_code, log);
         return error_code;
     }
 
     SDL_Opengl->Opengl_ImGuiInit();
 
     PreInitialize(ImGui::GetIO());
-    EngineUserSettings = new GameUserSettings();
+    EngineUserSettings = std::make_shared<GameUserSettings>();
     Display::Context = SDL_Opengl->GetContext();
     Display::Window = SDL_Opengl->GetWindow();
     //SDL_GL_SetSwapInterval(1);
@@ -65,10 +63,6 @@ int Nanometro::RenderHardwareInterface::OpenGLManager()
         OpenGLRender();
         FrameRateLock();
     }
-
-    // Clean and finish
-    //delete SDL_Opengl;
-    delete EngineUserSettings;
 
     return 0;
 }
@@ -126,7 +120,7 @@ void Nanometro::RenderHardwareInterface::OpenGLRender()
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     // Swap the back buffer with the front buffer
-    SDL_GL_SwapWindow(SDL_Opengl->GetWindow());
+    SDL_GL_SwapWindow(SDL_Opengl->GetWindow().get());
 
 }
 

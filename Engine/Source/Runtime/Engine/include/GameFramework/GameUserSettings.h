@@ -15,7 +15,7 @@ namespace Nanometro
         std::shared_ptr<ImFont> ContextMenuFont;
         float ContextMenuFontSize = 14.0f;
 
-        ImFont* DefaultFont;
+        std::shared_ptr<ImFont> DefaultFont;
         float DefaultFontSize = 16.0f;
 
         static void SetUpdateEventMode(uint8_t EventMode);

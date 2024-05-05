@@ -6,6 +6,7 @@
 #endif
 #include <SDL.h>
 #include <imgui.h>
+#include <memory>
 
 #include <string>
 
@@ -19,7 +20,7 @@ namespace Nanometro
         void Opengl_ImGuiInit();
         void Opengl_ImGuiDestroy();
 
-        SDL_Window* GetWindow();
+        std::shared_ptr<SDL_Window> GetWindow();
         SDL_GLContext GetContext();
         std::pair<uint8_t, uint8_t> GetOpenglVersion();
         std::string GetGlslVersion();
@@ -32,7 +33,7 @@ namespace Nanometro
 
         /* OpenGL Window */
         int WindowShouldClose = 0;
-        SDL_Window* Window;
+        std::shared_ptr<SDL_Window> Window;
         SDL_GLContext Context;
 
         /* OpenGL log */

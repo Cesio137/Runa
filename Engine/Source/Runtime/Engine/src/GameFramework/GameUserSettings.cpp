@@ -14,14 +14,13 @@ Nanometro::GameUserSettings::GameUserSettings()
 
     std::string DefaultFontPath = SDL_GetBasePath();
     DefaultFontPath.append(Path::nativeSeparator("Engine/Misc/Fonts/Fira_Code/ttf/FiraCode-Medium.ttf"));
-    DefaultFont = ImGui::GetIO().Fonts->AddFontFromFileTTF(DefaultFontPath.c_str(), DefaultFontSize, NULL, ImGui::GetIO().Fonts->GetGlyphRangesJapanese());
+    DefaultFont = std::shared_ptr<ImFont>( ImGui::GetIO().Fonts->AddFontFromFileTTF(DefaultFontPath.c_str(), DefaultFontSize, NULL, ImGui::GetIO().Fonts->GetGlyphRangesJapanese()) );
     IM_ASSERT(DefaultFont != NULL);
 }
 
 Nanometro::GameUserSettings::~GameUserSettings()
 {
-    delete ContextMenuFont;
-    delete DefaultFont;
+
 }
 
 void Nanometro::GameUserSettings::SetUpdateEventMode(uint8_t EventMode)

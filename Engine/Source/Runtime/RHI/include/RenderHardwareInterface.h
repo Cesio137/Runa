@@ -37,7 +37,7 @@ namespace Nanometro
         bool WindowShouldClose = false;
 
         /*Performance*/
-        GameUserSettings* EngineUserSettings;
+        std::shared_ptr<GameUserSettings> EngineUserSettings;
         long long int PreviousTick;
         double WorldDeltaTime() const;
         long long int elapsedTime() const;

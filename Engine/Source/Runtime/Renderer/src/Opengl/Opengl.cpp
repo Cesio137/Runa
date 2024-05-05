@@ -50,17 +50,16 @@ Nanometro::Opengl::Opengl()
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, GL_Version[i].second);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
             // Create a GLFW window
-            Window = SDL_CreateWindow(ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+            Window = std::shared_ptr<SDL_Window>( SDL_CreateWindow(ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE), SDL_DestroyWindow );
             if (Window)
             {
                 // Make the window's context current
-                Context = SDL_GL_CreateContext(Window);
+                Context = SDL_GL_CreateContext(Window.get());
                 if (!Context)
                 {
                     error_log = "SDL could not create context: ";
                     error_log.append(SDL_GetError());
                     error_code = -1;
-                    SDL_DestroyWindow(Window);
                     SDL_Quit();
                     return;
                 }
@@ -80,18 +79,17 @@ Nanometro::Opengl::Opengl()
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OPENGL_MINOR_VERSION);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-        Window = SDL_CreateWindow(ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+        Window = std::shared_ptr<SDL_Window>( SDL_CreateWindow(ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE), SDL_DestroyWindow );
 
         if (Window)
         {
             // Make the window's context current
-            Context = SDL_GL_CreateContext(Window);
+            Context = SDL_GL_CreateContext(Window.get());
             if (!Context)
             {
                 error_log = "SDL could not create context: ";
                 error_log.append(SDL_GetError());
                 error_code = -1;
-                SDL_DestroyWindow(Window);
                 SDL_Quit();
                 return;
             }
@@ -114,7 +112,6 @@ Nanometro::Opengl::Opengl()
     {
         error_log = "GLAD could not be loaded.";
         error_code = -1;
-        SDL_DestroyWindow(Window);
         SDL_GL_DeleteContext(Context);
         SDL_Quit();
         return;
@@ -128,8 +125,6 @@ Nanometro::Opengl::~Opengl()
     ImGui::DestroyContext();
     if (Context)
         SDL_GL_DeleteContext(Context);
-    if (Window)
-        SDL_DestroyWindow(Window);
     SDL_Quit();
 }
 
@@ -140,7 +135,7 @@ void Nanometro::Opengl::Opengl_ImGuiInit()
     ImGui::StyleColorsDark();
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
-    ImGui_ImplSDL2_InitForOpenGL(Window, Context);
+    ImGui_ImplSDL2_InitForOpenGL(Window.get(), Context);
     ImGui_ImplOpenGL3_Init(glsl_Version.c_str());
 }
 
@@ -156,7 +151,7 @@ SDL_GLContext Nanometro::Opengl::GetContext()
     return Context;
 }
 
-SDL_Window* Nanometro::Opengl::GetWindow()
+std::shared_ptr<SDL_Window> Nanometro::Opengl::GetWindow()
 {
     return Window;
 }

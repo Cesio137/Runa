@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <SDL.h>
 
 namespace Nanometro
@@ -8,11 +9,11 @@ namespace Nanometro
     {
         friend class RenderHardwareInterface;
     public:
-        static SDL_Window* GetWindow();
+        static std::shared_ptr<SDL_Window> GetWindow();
         static SDL_GLContext GetContext();
 
     private:
-        inline static SDL_Window* Window = nullptr;
-        inline static SDL_GLContext Context = nullptr;
+        inline static std::shared_ptr<SDL_Window> Window;
+        inline static SDL_GLContext Context;
     };
 }

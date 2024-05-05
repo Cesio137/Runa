@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <imgui.h>
+#include <memory>
 
 namespace Nanometro
 {
@@ -11,7 +12,7 @@ namespace Nanometro
         GameUserSettings();
         ~GameUserSettings();
 
-        ImFont* ContextMenuFont;
+        std::shared_ptr<ImFont> ContextMenuFont;
         float ContextMenuFontSize = 14.0f;
 
         ImFont* DefaultFont;

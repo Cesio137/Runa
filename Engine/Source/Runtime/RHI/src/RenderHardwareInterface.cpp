@@ -36,12 +36,12 @@ int Nanometro::RenderHardwareInterface::Init(uint8_t flags)
 
 int Nanometro::RenderHardwareInterface::OpenGLManager()
 {
-    SDL_Opengl = new Opengl();
+    SDL_Opengl = std::make_shared<Opengl>();
     int error_code = SDL_Opengl->GetErrorCode();
 
     if(error_code != 0)
     {
-        delete SDL_Opengl;
+        //delete SDL_Opengl;
         //emit on_error(error_code, log);
         return error_code;
     }
@@ -67,7 +67,7 @@ int Nanometro::RenderHardwareInterface::OpenGLManager()
     }
 
     // Clean and finish
-    delete SDL_Opengl;
+    //delete SDL_Opengl;
     delete EngineUserSettings;
 
     return 0;
@@ -109,7 +109,7 @@ void Nanometro::RenderHardwareInterface::OpenGLEventHandle()
 void Nanometro::RenderHardwareInterface::OpenGLRender()
 {
     ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame(SDL_Opengl->GetWindow());
+    ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
     // Specify the color of the background

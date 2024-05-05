@@ -9,7 +9,7 @@ Nanometro::GameUserSettings::GameUserSettings()
 
     std::string ContextMenuFontPath = SDL_GetBasePath();
     ContextMenuFontPath.append(Path::nativeSeparator("Engine/Misc/Fonts/Fira_Code/ttf/FiraCode-SemiBold.ttf"));
-    ContextMenuFont = ImGui::GetIO().Fonts->AddFontFromFileTTF(ContextMenuFontPath.c_str(), ContextMenuFontSize, NULL, ImGui::GetIO().Fonts->GetGlyphRangesJapanese());
+    ContextMenuFont = std::shared_ptr<ImFont>( ImGui::GetIO().Fonts->AddFontFromFileTTF(ContextMenuFontPath.c_str(), ContextMenuFontSize, NULL, ImGui::GetIO().Fonts->GetGlyphRangesJapanese()) );
     IM_ASSERT(ContextMenuFont != NULL);
 
     std::string DefaultFontPath = SDL_GetBasePath();

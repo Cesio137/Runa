@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <Opengl/Opengl.h>
 #include <GameFramework/GameUserSettings.h>
 
@@ -28,7 +29,7 @@ namespace Nanometro
         /*Graphics API SDL*/
         uint8_t RenderAPI = 0; 
         //SDL
-        Opengl *SDL_Opengl;
+        std::shared_ptr<Opengl> SDL_Opengl;
         int OpenGLManager();
         void OpenGLEventHandle();
         void OpenGLRender();

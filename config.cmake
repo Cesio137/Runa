@@ -4,7 +4,7 @@ set_target_properties(Nanometro PROPERTIES
 
 
 
-#set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Nanometro)
+set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Nanometro)
 
 add_subdirectory(Engine)
 

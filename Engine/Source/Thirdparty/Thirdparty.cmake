@@ -16,6 +16,5 @@ endif()
 # Graphics API
 add_subdirectory(${THIRDPARTY_DIR}/Vulkan)
 add_subdirectory(${THIRDPARTY_DIR}/GLAD)
-add_subdirectory(${THIRDPARTY_DIR}/SDL2)
 # User Interface
 add_subdirectory(${THIRDPARTY_DIR}/imgui)

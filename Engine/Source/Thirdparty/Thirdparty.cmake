@@ -18,3 +18,6 @@ add_subdirectory(${THIRDPARTY_DIR}/Vulkan)
 add_subdirectory(${THIRDPARTY_DIR}/GLAD)
 # User Interface
 add_subdirectory(${THIRDPARTY_DIR}/imgui)
+
+add_subdirectory(${THIRDPARTY_DIR}/nlohmann)
+add_subdirectory(${THIRDPARTY_DIR}/Pybind11)

@@ -3,10 +3,10 @@
 
 int main(int argc, char* argv[])
 {
-    Nanometro::RenderInterface interface(OPENGL_INIT_330);
-    int code = interface.exec();
+    Nanometro::RenderInterface RHI(OPENGL_INIT_330);
+    int code = RHI.exec();
     if (!code)
-        std::cout << interface.GetErrorLog() << "\n";
+        std::cout << RHI.GetErrorLog() << "\n";
 
     return code;
 }

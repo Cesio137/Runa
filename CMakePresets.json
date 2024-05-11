@@ -63,59 +63,6 @@
         "rhs": "Windows"
       }
     },
-    {
-      "name": "Windows_Debug-arm64",
-      "displayName": "Windows Debug arm64",
-      "description": "Default build using VS 2022 Debug",
-      "generator": "Visual Studio 17 2022",
-      "architecture":{ "value": "arm64", "strategy": "external" },
-      "binaryDir": "${sourceDir}/build/Windows_Debug-arm64",
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "defaultProject": "Nanometro"
-        }
-      },
-      "cacheVariables":
-      {
-        "CMAKE_BUILD_TYPE":"Debug",
-        "CMAKE_SYSTEM_NAME":"Windows",
-        "CMAKE_SYSTEM_PROCESSOR":"ARM64",
-        "C_COMPILER_ID":"MSVC",
-        "CXX_COMPILER_ID":"MSVC"
-      },
-      "condition":
-      {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
-    },
-    {
-      "name": "Windows_Release-arm64",
-      "displayName": "Windows Release arm64",
-      "description": "Default build using VS 2022 Release",
-      "generator": "Visual Studio 17 2022",
-      "architecture":{ "value": "arm64", "strategy": "external" },
-      "binaryDir": "${sourceDir}/build/Windows_Release-arm64",
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "defaultProject": "Nanometro"
-        }
-      },
-      "cacheVariables":
-      {
-        "CMAKE_BUILD_TYPE":"Release",
-        "CMAKE_SYSTEM_PROCESSOR":"ARM64",
-        "C_COMPILER_ID":"MSVC",
-        "CXX_COMPILER_ID":"MSVC"
-      },
-      "condition":
-      {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
-    },
 
     {
       "name": "Unix_Debug-x64",
@@ -160,68 +107,7 @@
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
       }
-    },
-    {
-      "name": "Unix_Debug-arm64",
-      "displayName": "Unix Debug arm64",
-      "description": "Default build using Unix Makefiles Debug",
-      "generator": "Unix Makefiles",
-      "architecture":{ "value": "arm64", "strategy": "external" },
-      "binaryDir": "${sourceDir}/build/Unix_Debug-arm64",
-      "cacheVariables":
-      {
-        "CMAKE_BUILD_TYPE":"Debug",
-        "CMAKE_SYSTEM_NAME":"Unix",
-        "CMAKE_SYSTEM_PROCESSOR":"ARM64",
-        "C_COMPILER_ID":"GNU",
-        "CXX_COMPILER_ID":"GNU"
-      },
-      "condition":
-      {
-        "type": "notEquals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
-    },
-    {
-      "name": "Unix_Release-arm64",
-      "displayName": "Unix Release arm64",
-      "description": "Default build using Unix Makefiles Release",
-      "generator": "Unix Makefiles",
-      "architecture":{ "value": "arm64", "strategy": "external" },
-      "binaryDir": "${sourceDir}/build/Unix_Release-arm64",
-      "cacheVariables":
-      {
-        "CMAKE_BUILD_TYPE":"Release",
-        "CMAKE_SYSTEM_NAME":"Unix",
-        "CMAKE_SYSTEM_PROCESSOR":"ARM64",
-        "C_COMPILER_ID":"GNU",
-        "CXX_COMPILER_ID":"GNU"
-      },
-      "condition":
-      {
-        "type": "notEquals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
-    },
-
-    {
-      "name": "XCode",
-      "displayName": "XCode",
-      "description": "Default build using XCode",
-      "generator": "XCode",
-      "binaryDir": "${sourceDir}/build/XCode",
-      "cacheVariables":
-      {
-        "CMAKE_BUILD_TYPE":"Release"
-      },
-      "condition":
-      {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin"
-      }
     }
+
   ]
 }

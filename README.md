@@ -18,11 +18,9 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
 
 - [Git](https://git-scm.com)
 
-- [CMake 3.24 or above](https://cmake.org/download/)
+- [CMake 3.25 or above](https://cmake.org/download/)
 
 - [VCPKG](https://vcpkg.io/en/)
-
-- [Vulkan 1.3](https://vulkan.lunarg.com)
 
 - Windows only
   - Build With Visual Studio 2019/2022
@@ -44,11 +42,6 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
   
   - Python packages
     - Jinja2 ``` pip install Jinja2 ```
-    
-
-- MacOS only
-  - Build With Xcode
-    - [Xcode](https://developer.apple.com/xcode/)
   
 ## Setup Repository
 
@@ -64,23 +57,10 @@ git clone https://github.com/Cesio137/Nanometro.git
 
 #### Setup Enviroment Variables
 VCPKG_ROOT
-* Setup Vulkan  
-  * Create a variable called `VK_SDK_PATH` and `VULKAN_SDK` if do not exist:
-    * ```Path
-      <Path to Vulkan>/x.x.x/
-      ```
-
 * Setup VCPKG  
   * Create a variable called `VCPKG_ROOT` if do not exist:
     * ```Path
       <Path to VCPKG>/x.x.x/
-      ```
-
-#### Install VCPKG dependencies
-
-* sdl2-image
-  * ```Bash
-      vcpkg install sdl2-image
       ```
 
 #### Windows
@@ -89,12 +69,8 @@ VCPKG_ROOT
   * Create a `build` folder and open terminal inside.
   * Commands to generate project
     * ```bash
-      cmake .. --preset=VS2022_Debug
-      Cmake .. --preset=VS2022_Release
-      ```
-    * ```bash
-      cmake .. --preset=VS2019_Debug
-      cmake .. --preset=VS2019_Release
+      cmake .. --preset=Windows_Debug-x64
+      cmake .. --preset=Windows_Release-x64
       ```
 
 #### Linux
@@ -106,19 +82,6 @@ VCPKG_ROOT
   * Commands to generate project
     
     * ```bash
-      cmake .. --preset=Unix_Debug
-      cmake .. --preset=Unix_Release
-      ```    
-
-#### Mac OS
-
-* Setup Project.
-  
-  * Create a `build` folder and open terminal inside.
-  
-  * to generate project using XCode
-    
-    * ```bash
-      cmake .. --preset=XCode
-      cmake .. --preset=Unix_(Debug/Release)
-      ```
+      cmake .. --preset=Unix_Debug-x64
+      cmake .. --preset=Unix_Release-x64
+      ``` 

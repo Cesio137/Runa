@@ -1,9 +1,12 @@
 #include <iostream>
-#include <Launcher.h>
+#include <RenderInterface.h>
 
 int main(int argc, char* argv[])
 {
-    std::shared_ptr<Nanometro::Launcher> RHI = std::make_shared<Nanometro::Launcher>();
+    Nanometro::RenderInterface interface(OPENGL_INIT_330);
+    int code = interface.exec();
+    if (!code)
+        std::cout << interface.GetErrorLog() << "\n";
 
-    return RHI->Init(0);
+    return code;
 }

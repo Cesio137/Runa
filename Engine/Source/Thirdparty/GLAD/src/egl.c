@@ -90,6 +90,7 @@ int GLAD_EGL_EXT_platform_xcb = 0;
 int GLAD_EGL_EXT_present_opaque = 0;
 int GLAD_EGL_EXT_protected_content = 0;
 int GLAD_EGL_EXT_protected_surface = 0;
+int GLAD_EGL_EXT_query_reset_notification_strategy = 0;
 int GLAD_EGL_EXT_stream_consumer_egloutput = 0;
 int GLAD_EGL_EXT_surface_CTA861_3_metadata = 0;
 int GLAD_EGL_EXT_surface_SMPTE2086_metadata = 0;
@@ -823,6 +824,7 @@ static int glad_egl_find_extensions_egl(EGLDisplay display) {
     GLAD_EGL_EXT_present_opaque = glad_egl_has_extension(extensions, "EGL_EXT_present_opaque");
     GLAD_EGL_EXT_protected_content = glad_egl_has_extension(extensions, "EGL_EXT_protected_content");
     GLAD_EGL_EXT_protected_surface = glad_egl_has_extension(extensions, "EGL_EXT_protected_surface");
+    GLAD_EGL_EXT_query_reset_notification_strategy = glad_egl_has_extension(extensions, "EGL_EXT_query_reset_notification_strategy");
     GLAD_EGL_EXT_stream_consumer_egloutput = glad_egl_has_extension(extensions, "EGL_EXT_stream_consumer_egloutput");
     GLAD_EGL_EXT_surface_CTA861_3_metadata = glad_egl_has_extension(extensions, "EGL_EXT_surface_CTA861_3_metadata");
     GLAD_EGL_EXT_surface_SMPTE2086_metadata = glad_egl_has_extension(extensions, "EGL_EXT_surface_SMPTE2086_metadata");

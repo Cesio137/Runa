@@ -1,7 +1,8 @@
 {
   "dependencies": [
-    "sdl2-image",
-    "zlib",
-    "sdl2"
+    {
+      "name": "sdl2",
+      "version>=": "2.30.1"
+    }
   ]
 }

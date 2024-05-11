@@ -69,27 +69,30 @@ namespace Nanometro {
         // Main loop
         while (!WindowShouldClose)
         {
-            SDL_Event SDL_event;
-            SDL_WaitEvent(&SDL_event);
-            ImGui_ImplSDL2_ProcessEvent(&SDL_event);
-            if (SDL_event.type == SDL_WINDOWEVENT) {
-                switch (SDL_event.window.event)
+            SDL_Event event;
+            if (SDL_WaitEvent(&event))
+            {
+
+                ImGui_ImplSDL2_ProcessEvent(&event);
+                if (event.type == SDL_WINDOWEVENT)
                 {
-                    case SDL_WINDOWEVENT_CLOSE:
-                        WindowShouldClose = true;
-                    break;
+                    switch (event.window.event)
+                    {
+                        case SDL_WINDOWEVENT_CLOSE:
+                            WindowShouldClose = true;
+                        break;
 
-                    case SDL_WINDOWEVENT_SIZE_CHANGED:
-                        glViewport(0, 0, SDL_event.window.data1, SDL_event.window.data2); // Set viewport size
-
+                        case SDL_WINDOWEVENT_RESIZED:
+                            glViewport(0, 0, event.window.data1, event.window.data2);
+                        break;
+                    }
                 }
+                EventHandle(event);
             }
-            EventHandle(SDL_event);
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplSDL2_NewFrame();
             ImGui::NewFrame();
-
             // Specify the color of the background
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             // Clean the back buffer and assign the new color to it

@@ -44,7 +44,6 @@ namespace Nanometro {
         void Opengl_Render();
         /* SDL Events */
         bool WindowShouldClose = false;
-
     };
 
 } // Nanometro

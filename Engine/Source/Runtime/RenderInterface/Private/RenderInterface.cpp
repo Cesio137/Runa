@@ -1,5 +1,5 @@
 #include "RenderInterface.h"
-#include "Opengl/OpenglContext.h"
+#include "Opengl/SDL_OpenglContext.h"
 #include <iostream>
 
 namespace Nanometro {
@@ -14,8 +14,8 @@ namespace Nanometro {
         if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
         {
             if (SDL_WasInit(SDL_INIT_VIDEO))
-                Opengl_ImGuiDestroy();
-            DestroyOpengl(SDL_Opengl);
+                SDL_ImGuiDestroy();
+            DestroyOpengl(Opengl);
         }
     }
 
@@ -24,7 +24,7 @@ namespace Nanometro {
 
         if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
         {
-            SDL_Opengl = ConstructOpengl(Flags);
+            Opengl = ConstructOpengl(Flags);
             if (Opengl_GetError().code == 0)
                 Opengl_Render();
             return Opengl_GetError().code;
@@ -38,17 +38,8 @@ namespace Nanometro {
         WindowShouldClose = true;
     }
 
-    uint32_t RenderInterface::GetFlags() const
-    {
-        return Flags;
-    }
-
     std::pair<uint8_t, uint8_t> RenderInterface::GetOpenglVersion() const {
-        return SDL_Opengl.Version;
-    }
-
-    std::string RenderInterface::GetGlsl() const {
-        return SDL_Opengl.glsl_Version;
+        return Opengl.version;
     }
 
     std::string RenderInterface::GetErrorLog() const {
@@ -60,54 +51,36 @@ namespace Nanometro {
 
     void RenderInterface::Opengl_Render()
     {
-        Opengl_ImGuiInit(SDL_Opengl);
-
+        SDL_ImGuiInit(Opengl);
         PreInitialize(ImGui::GetIO());
         // Ready
         Ready();
-
         // Main loop
+        SDL_Event event;
         while (!WindowShouldClose)
         {
-            SDL_Event event;
             if (SDL_WaitEvent(&event))
             {
-
                 ImGui_ImplSDL2_ProcessEvent(&event);
-                if (event.type == SDL_WINDOWEVENT)
-                {
-                    switch (event.window.event)
-                    {
-                        case SDL_WINDOWEVENT_CLOSE:
-                            WindowShouldClose = true;
-                        break;
-
-                        case SDL_WINDOWEVENT_RESIZED:
-                            glViewport(0, 0, event.window.data1, event.window.data2);
-                        break;
-                    }
-                }
+                if (event.type == SDL_QUIT)
+                    WindowShouldClose = true;
+                
                 EventHandle(event);
             }
 
-            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplSDLRenderer2_NewFrame();
             ImGui_ImplSDL2_NewFrame();
             ImGui::NewFrame();
-            // Specify the color of the background
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-            // Clean the back buffer and assign the new color to it
-            glClear(GL_COLOR_BUFFER_BIT);
-            //emit render
-            Render(ImGui::GetIO().DeltaTime);
-
-            // UI Render
-            RenderUI(ImGui::GetIO().DeltaTime);
-
+            RenderImgui(ImGui::GetIO().DeltaTime);
             ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-            // Swap the back buffer with the front buffer
-            SDL_GL_SwapWindow(SDL_Opengl.Window);
+            SDL_RenderClear(Opengl.renderer_ptr);
+            SDL_SetRenderDrawColor(Opengl.renderer_ptr, 32, 32, 32, 255);
+            // Render behind imgui
+            Render(ImGui::GetIO().DeltaTime);
+            ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+            // Render in front of imgui
+            SDL_RenderPresent(Opengl.renderer_ptr);
         }
     }
 }

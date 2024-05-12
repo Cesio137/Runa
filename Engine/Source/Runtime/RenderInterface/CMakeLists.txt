@@ -15,10 +15,8 @@ target_link_libraries(RenderInterface
         $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
         $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
         imgui
-        glad
+        PRIVATE
         Config
-
-
 )
 
 set_target_properties(RenderInterface PROPERTIES FOLDER "Engine/Source/Runtime" LINKER_LANGUAGE CXX)

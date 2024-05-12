@@ -3,9 +3,9 @@
 
 int main(int argc, char* argv[])
 {
-    Nanometro::RenderInterface RHI(OPENGL_INIT_330);
-    int code = RHI.exec();
+    Nanometro::RenderInterface RHI(OPENGL_INIT_460);
     size_t size = sizeof(RHI);
+    int code = RHI.exec();
     std::cout << size << "\n";
     if (!code)
         std::cout << RHI.GetErrorLog() << "\n";

@@ -20,3 +20,5 @@ add_subdirectory(${THIRDPARTY_DIR}/imgui)
 
 add_subdirectory(${THIRDPARTY_DIR}/nlohmann)
 add_subdirectory(${THIRDPARTY_DIR}/Pybind11)
+
+add_subdirectory(${THIRDPARTY_DIR}/asio)

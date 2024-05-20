@@ -19,10 +19,11 @@ int main(int argc, char* argv[])
 
     Request req;
     req.SetHost("localhost", "3000");
-    req.SetRequest("GET", "1.1");
-    req.OnRequestProgress = [](int BytesSent, int BytesReceived){ std::cout << BytesSent << "\n" << BytesReceived << "\n"; };
+    req.SetRequest(EHttpVerb::GET, "2.0");
+    req.SyncConstructRequest();
+    //req.OnRequestProgress = [](int BytesSent, int BytesReceived){ std::cout << BytesSent << "\n" << BytesReceived << "\n"; };
     int result = req.SyncProcessRequest();
     std::cout << result;
 
-    return result;
+    return 0;
 }

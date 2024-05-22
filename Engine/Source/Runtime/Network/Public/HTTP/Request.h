@@ -9,48 +9,81 @@ namespace Nanometro {
 
     class Request {
     public:
-        Request();
-        ~Request();
+        Request()
+        {
+            request.headers.insert_or_assign("Accept", "*/*");
+            request.headers.insert_or_assign("User-Agent", "ASIO 2.30.2");
+            request.headers.insert_or_assign("Connection", "close");
+        }
+        Request(const Request& req) 
+        {
+            request.host = req.GetHost();
+            request.path = req.GetPath();
+            request.body = req.GetBody();
+            request.content = req.GetContent();
 
-        void SetHost(const std::string& url = "localhost", const std::string& service = "");
-        std::string GetHost() const { return Req.host; }
+            ClearParams();
+            request.params = req.GetParams();
+            ClearHeaders();
+            request.headers = req.GetHeaders();
+        }
+        Request& operator=(const Request& req) {
+            if (this != &req) {
+                request.host = req.GetHost();
+                request.path = req.GetPath();
+                request.body = req.GetBody();
+                request.content = req.GetContent();
+            }
+            return *this;
+        }
+        ~Request() {}
 
-        void SetRequest(EHttpVerb request_method = EHttpVerb::GET, const std::string& http_version = "2.0");
-        EHttpVerb GetRequestMethod() const { return Req.verb; }
-        std::string GetHttpVersion() const { return Req.version; }
+        void SetHost(const std::string& url = "localhost", const std::string& service = "") { request.host = url; request.service = service; }
+        std::string GetHost() const { return request.host; }
 
-        void SetPath(const std::string& path = "/");
-        std::string GetPath() const { return Req.path; }
+        void SetRequest(EHttpVerb request_method = EHttpVerb::GET, const std::string& http_version = "2.0")
+        {
+            request.verb = request_method;
+            request.version = http_version;
+        }
+        EHttpVerb GetRequestMethod() const { return request.verb; }
+        std::string GetHttpVersion() const { return request.version; }
 
-        void AppendParams(const std::string& key, const std::string& value);
-        void ClearParams();
-        void RemoveParam(const std::string& key) { Req.params.erase(key); }
-        std::map<std::string, std::string> GetParams() const { return Req.params; }
+        void SetPath(const std::string& path = "/") 
+        {
+            if (path.empty()) request.path = "/";
+            else request.path = path;
+        }
+        std::string GetPath() const { return request.path; }
 
-        void AppendHeader(const std::string& key, const std::string& value);
-        void ClearHeader();
-        void RemoveHeader(const std::string& key) { Req.headers.erase(key); }
-        std::map<std::string, std::string> GetHeader() const { return Req.params; }
+        void AppendParams(const std::string& key, const std::string& value) { request.params.insert_or_assign(key, value); }
+        void ClearParams() { request.params.clear(); }
+        void RemoveParam(const std::string& key) { request.params.erase(key); }
+        std::map<std::string, std::string> GetParams() const { return request.params; }
 
-        void SetBody(const std::string& value);
-        void ClearBody();
-        std::string GetBody() const { return Req.body; }
+        void AppendHeaders(const std::string& key, const std::string& value) { request.params.insert_or_assign(key, value); }
+        void ClearHeaders() { request.params.clear(); }
+        void RemoveHeader(const std::string& key) { request.headers.erase(key); }
+        std::map<std::string, std::string> GetHeaders() const { return request.params; }
 
-        void SetContent(const std::string& value);
-        void ClearContent();
-        std::string GetContent() const { return Req.content; }
+        void SetBody(const std::string& value) { request.body = value; }
+        void ClearBody() { request.body.clear(); }
+        std::string GetBody() const { return request.body; }
 
-        int SyncConstructRequest();
-        int SyncProcessRequest();
+        void SetContent(const std::string& value) { request.content = value; }
+        void ClearContent() { request.content.clear(); }
+        std::string GetContent() const { return request.content; }
+
+        void SyncConstructRequest();
+        //int SyncProcessRequest();
 
         std::function<void(const asio::streambuf& res)> OnProcessRequestComplete;
         std::function<void(int BytesSent, int BytesReceived)> OnRequestProgress;
 
     private:
         std::string exceptions;
-        FAsio HttpContext;
-        FHttpRequest Req;
-        std::map<EHttpVerb, std::string> const verb = { 
+        FHttpRequest request;
+        const std::map<EHttpVerb, std::string> verb = {
             {EHttpVerb::GET     , "GET"},
             {EHttpVerb::POST    , "POST"},
             {EHttpVerb::PUT     , "PUT"},
@@ -63,8 +96,7 @@ namespace Nanometro {
             {EHttpVerb::UNLOCK  , "UNLOCK"},
             {EHttpVerb::PROPFIND, "PROPFIND"}, 
         };
-        asio::streambuf request;
-        std::ostream request_stream;
+        asio::streambuf request_buffer;
     };
 
 } // Nanometro

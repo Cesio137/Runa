@@ -18,7 +18,7 @@ add_subdirectory(${THIRDPARTY_DIR}/Vulkan)
 # User Interface
 add_subdirectory(${THIRDPARTY_DIR}/imgui)
 
-add_subdirectory(${THIRDPARTY_DIR}/nlohmann)
+add_subdirectory(${THIRDPARTY_DIR}/simdjson)
 add_subdirectory(${THIRDPARTY_DIR}/Pybind11)
 
 add_subdirectory(${THIRDPARTY_DIR}/asio)

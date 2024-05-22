@@ -7,3 +7,5 @@ target_include_directories(Vulkan
         INTERFACE
         "${VULKAN_DIR}/Public"
 )
+
+set_target_properties(Vulkan PROPERTIES FOLDER "Engine/Source/Thirdparty")

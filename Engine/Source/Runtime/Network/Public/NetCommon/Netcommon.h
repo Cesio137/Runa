@@ -25,13 +25,12 @@ namespace Nanometro
 
     struct FAsio
     {
-        FAsio() : resolver(context), socket(context) {}
         asio::error_code error_code;
         std::string exceptions;
         asio::io_context context;
-        asio::ip::tcp::resolver resolver;
+        std::optional<asio::ip::tcp::resolver> resolver;
         asio::ip::tcp::resolver::results_type endpoints;
-        asio::ip::tcp::socket socket;
+        std::optional<asio::ip::tcp::socket> socket;
     };
 
     struct FHttpRequest

@@ -2,117 +2,41 @@
 #include <iostream>
 
 namespace Nanometro {
-    Request::Request() : request_stream(&request)
-    {
-        Req.headers.insert_or_assign("Accept", "*/*");
-        Req.headers.insert_or_assign("User-Agent", "ASIO 2.30.2");
-        Req.headers.insert_or_assign("Connection", "close");
-    }
-
-    Request::~Request()
-    {
-    }
-
-    void Request::SetHost(const std::string &url, const std::string &service)
-    {
-        Req.host = url;
-        Req.service = service;
-    }
-
-    void Request::SetRequest(EHttpVerb request_method, const std::string& http_version)
-    {
-        Req.verb = request_method;
-        Req.version = http_version;
-    }
-
-    void Request::SetPath(const std::string &path)
-    {
-        if (path.empty())
-        {
-             Req.path = "/";
-             return;
-        }
-        
-        Req.path = path;
-    }
-
-    void Request::AppendParams(const std::string & key, const std::string & value)
-    {
-        Req.params.insert_or_assign(key, value);
-    }
-
-    void Request::ClearParams()
-    {
-        Req.params.clear();
-    }
-
-    void Request::AppendHeader(const std::string & key, const std::string & value)
-    {
-        Req.headers.insert_or_assign(key, value);
-    }
-
-    void Request::ClearHeader()
-    {
-        Req.headers.clear();
-    }
-
-    void Request::SetBody(const std::string & value)
-    {
-        Req.body = value;
-    }
-
-    void Request::ClearBody()
-    {
-        Req.body.clear();
-    }
-
-    void Request::SetContent(const std::string & value)
-    {
-        Req.content = value;
-    }
-
-    void Request::ClearContent()
-    {
-        Req.content.clear();
-    }
-
-    int Request::SyncConstructRequest()
+    void Request::SyncConstructRequest()
     {
         // HTTP request
-        request_stream.clear();
+        std::ostream request_stream(&request_buffer);
 
-        request_stream << verb.at(Req.verb) << " " << Req.path;
-        if (!Req.params.empty())
+        request_stream << verb.at(request.verb) << " " << request.path;
+        if (!request.params.empty())
         {
             request_stream << "?";
             int i = 0;
-            for (std::pair<std::string, std::string> params : Req.params) {
+            for (std::pair<std::string, std::string> params : request.params) {
                 if (i > 0) request_stream << "&";
                 request_stream << params.first << "=" << params.second;
                 if (i == 0) ++i;
             } 
         }
-        request_stream << " HTTP/" << Req.version << "\r\n";
+        request_stream << " HTTP/" << request.version << "\r\n";
         
-        request_stream << "Host: " << Req.host << ":" << Req.service << "\r\n";
-        if (!Req.headers.empty())
+        request_stream << "Host: " << request.host << ":" << request.service << "\r\n";
+        if (!request.headers.empty())
         {
-            for (std::pair<std::string, std::string> header : Req.headers) {
+            for (std::pair<std::string, std::string> header : request.headers) {
                 request_stream << header.first << ": " << header.second << "\r\n";
             } 
             request_stream << "\r\n";
         }
 
-        if (Req.headers["Content-Type"] == "application/json" || Req.headers["Content-Type"] == "application/javascript")
-            if (!Req.body.empty())
-                request_stream << Req.body;
-        else if (Req.headers["Content-Type"] == "text/html")
-            if (!Req.content.empty())
-                request_stream << Req.content;
-
-        return 0;
+        if (request.headers["Content-Type"] == "application/json" || request.headers["Content-Type"] == "application/javascript")
+            if (!request.body.empty())
+                request_stream << request.body;
+        else if (request.headers["Content-Type"] == "text/html")
+            if (!request.content.empty())
+                request_stream << request.content;
     }
-
+    /*
     int Request::SyncProcessRequest() 
     {
         try {
@@ -124,7 +48,7 @@ namespace Nanometro {
             }
                 
             // Do http request
-            size_t bytes_sent = asio::write(HttpContext.socket, request);
+            size_t bytes_sent = 
             OnRequestProgress(bytes_sent, 0);
 
             asio::streambuf response;
@@ -183,4 +107,5 @@ namespace Nanometro {
 
         return 0;
     }
+    */
 } // Nanometro

@@ -1,5 +1,4 @@
-#ifndef RENDERINTERFACE_H
-#define RENDERINTERFACE_H
+#pragma once
 
 #include "Opengl/SDL_Opengl.h"
 #include <imgui.h>
@@ -40,5 +39,3 @@ namespace Nanometro {
     };
 
 } // Nanometro
-
-#endif //RENDERINTERFACE_H

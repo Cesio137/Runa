@@ -14,11 +14,11 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(aarch64)|(arm64)|(AARCH64)|(ARM64)")
 endif()
 
 # Graphics API
-add_subdirectory(${THIRDPARTY_DIR}/Vulkan)
+add_subdirectory(${THIRDPARTY_DIR}/vulkan)
 # User Interface
 add_subdirectory(${THIRDPARTY_DIR}/imgui)
 
 add_subdirectory(${THIRDPARTY_DIR}/simdjson)
-add_subdirectory(${THIRDPARTY_DIR}/Pybind11)
+add_subdirectory(${THIRDPARTY_DIR}/pybind11)
 
 add_subdirectory(${THIRDPARTY_DIR}/asio)

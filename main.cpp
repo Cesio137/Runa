@@ -1,10 +1,9 @@
 #include <iostream>
 //#include <RenderInterface.h>
 #define ASIO_STANDALONE
-#include <HTTP/Request.h>
+#include <HTTP/HttpClient.h>
 
 using namespace Nanometro;
-using asio::ip::tcp;
 
 int main(int argc, char* argv[])
 {
@@ -17,13 +16,23 @@ int main(int argc, char* argv[])
         std::cout << RHI.GetErrorLog() << "\n";
     */
 
-    Request req;
-    req.SetHost("localhost", "3000");
-    req.SetRequest(EHttpVerb::GET, "2.0");
-    req.SyncConstructRequest();
-    //req.OnRequestProgress = [](int BytesSent, int BytesReceived){ std::cout << BytesSent << "\n" << BytesReceived << "\n"; };
-    int result = req.SyncProcessRequest();
-    std::cout << result;
-
+    //WebsocketClient client;
+    //client.Connect("localhost", "3000");
+    HttpClient client;
+    client.setHost("localhost", "3000");
+    std::cout << client.getData();
+    client.SyncProcessRequest();
+    
+    
+    
+    std::string input;
+    std::cout << "Digite algo: ";
+    while (std::getline(std::cin, input)) {
+        if (input == "quit")
+        {
+            break;
+        }
+    }
+    
     return 0;
 }

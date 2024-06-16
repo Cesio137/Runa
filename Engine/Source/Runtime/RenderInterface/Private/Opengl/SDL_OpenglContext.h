@@ -1,5 +1,4 @@
-#ifndef SDL_OPENGLCONTEXT_H
-#define SDL_OPENGLCONTEXT_H
+#pragma once
 
 #include "Opengl/SDL_Opengl.h"
 #include <Config.h>
@@ -117,5 +116,3 @@ namespace Nanometro{
     }
 
 }
-
-#endif //SDL_OPENGLCONTEXT_H

@@ -1,9 +1,4 @@
-//
-// Created by natha on 10/05/2024.
-//
-
-#ifndef ENVIROMENT_H
-#define ENVIROMENT_H
+#pragma once
 
 #include <string>
 
@@ -16,5 +11,3 @@ namespace Nanometro {
     };
 
 } // Nanometro
-
-#endif //ENVIROMENT_H

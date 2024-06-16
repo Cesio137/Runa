@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef RENDERSETTINGS_H
-#define RENDERSETTINGS_H
-
 namespace Nanometro
 {
     /* OpenGL */
@@ -21,5 +18,3 @@ namespace Nanometro
     }
 
 }
-
-#endif //RENDERSETTINGS_H

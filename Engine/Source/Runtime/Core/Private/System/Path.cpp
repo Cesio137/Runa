@@ -1,7 +1,3 @@
-//
-// Created by natha on 10/05/2024.
-//
-
 #include "System/Path.h"
 #include <filesystem>
 #include "System/Enviroment.h"

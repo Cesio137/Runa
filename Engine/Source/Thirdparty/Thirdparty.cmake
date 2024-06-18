@@ -15,6 +15,7 @@ endif()
 
 # Graphics API
 add_subdirectory(${THIRDPARTY_DIR}/vulkan)
+add_subdirectory(${THIRDPARTY_DIR}/opencl)
 # User Interface
 add_subdirectory(${THIRDPARTY_DIR}/imgui)
 

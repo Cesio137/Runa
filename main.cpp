@@ -1,6 +1,5 @@
 #include <iostream>
 //#include <RenderInterface.h>
-#define ASIO_STANDALONE
 #include <HTTP/HttpClient.h>
 
 using namespace Nanometro;
@@ -20,8 +19,7 @@ int main(int argc, char* argv[])
     //client.Connect("localhost", "3000");
     HttpClient client;
     client.setHost("localhost", "3000");
-    std::cout << client.getData();
-    client.SyncProcessRequest();
+    client.processRequest();
     
     
     

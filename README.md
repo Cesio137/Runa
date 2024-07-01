@@ -38,7 +38,7 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
     - autoconf 
     - automake 
     - libtool
-    - Python 
+    - Perl
   
   - Python packages
     - Jinja2 ``` pip install Jinja2 ```

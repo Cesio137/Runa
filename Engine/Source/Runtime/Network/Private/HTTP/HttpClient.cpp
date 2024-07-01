@@ -1,5 +1,4 @@
-#include <HTTP/HttpClient.h>
-#include <iostream>
+#include "HTTP/HttpClient.h"
 
 namespace Nanometro {
 	void HttpClient::preparePayload()
@@ -171,13 +170,13 @@ namespace Nanometro {
 		if (!response_stream || http_version.substr(0, 5) != "HTTP/")
 		{
 			if (onResponseFail)
-				onResponseFail(EStatusCode::Invalid_0);
+				onResponseFail(-1);
 			return;
 		}
 		if (status_code != 200)
 		{
 			if (onResponseFail)
-				onResponseFail(static_cast<EStatusCode>(status_code));
+				onResponseFail(status_code);
 			return;
 		}
 		// Read the response headers, which are terminated by a blank line.
@@ -227,7 +226,6 @@ namespace Nanometro {
 		// Write all of the data that has been read so far.
 		std::ostringstream stream_buffer;
 		stream_buffer << &response_buffer;
-		std::cout << "stream_Buffer: " << stream_buffer.str() << std::endl;
 		if (!stream_buffer.str().empty())
 			response.setContent(stream_buffer.str());
 		// Continue reading remaining data until EOF.

@@ -78,7 +78,7 @@ namespace Nanometro {
             SDL_SetRenderDrawColor(Opengl.renderer_ptr, 32, 32, 32, 255);
             // Render behind imgui
             Render(ImGui::GetIO().DeltaTime);
-            ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+            ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), Opengl.renderer_ptr);
             // Render in front of imgui
             SDL_RenderPresent(Opengl.renderer_ptr);
         }

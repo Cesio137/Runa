@@ -98,7 +98,7 @@ namespace Nanometro {
 		std::function<void(int, int)> onRequestProgress;
 		std::function<void(int, int)> onRequestWillRetry;
 		std::function<void(int, const std::string&)> onRequestFail;
-		std::function<void(EStatusCode)> onResponseFail;
+		std::function<void(int)> onResponseFail;
 		
 	private:
 		std::unique_ptr<asio::thread_pool> pool = std::make_unique<asio::thread_pool>(2);

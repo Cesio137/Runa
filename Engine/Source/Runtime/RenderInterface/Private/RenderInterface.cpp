@@ -4,10 +4,7 @@
 
 namespace Nanometro {
 
-    RenderInterface::RenderInterface(uint32_t flags)
-    {
-        Flags = flags;
-    }
+    RenderInterface::RenderInterface(uint32_t flags) { Flags = flags; }
 
     RenderInterface::~RenderInterface()
     {
@@ -15,7 +12,7 @@ namespace Nanometro {
         {
             if (SDL_WasInit(SDL_INIT_VIDEO))
                 SDL_ImGuiDestroy();
-            DestroyOpengl(Opengl);
+            Opengl.destroy();
         }
     }
 
@@ -24,13 +21,13 @@ namespace Nanometro {
 
         if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
         {
-            Opengl = ConstructOpengl(Flags);
-            if (Opengl_GetError().code == 0)
+            Opengl.init(Flags);
+            if (Opengl.getErrorCode() == 0)
                 Opengl_Render();
-            return Opengl_GetError().code;
+            return Opengl.getErrorCode();
         }
 
-        return 0;
+        return -1;
     }
 
     void RenderInterface::CloseApp()
@@ -44,7 +41,7 @@ namespace Nanometro {
 
     std::string RenderInterface::GetErrorLog() const {
         if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
-            return Opengl_GetError().log;
+            return Opengl.getErrorMessage();
 
         return "";
     }

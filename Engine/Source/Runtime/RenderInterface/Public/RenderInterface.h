@@ -8,7 +8,7 @@ namespace Nanometro {
     class RenderInterface
     {
     public:
-        explicit RenderInterface(uint32_t flags);
+        explicit RenderInterface(uint32_t flags = OPENGL_INIT_330);
         ~RenderInterface();
 
         int exec();
@@ -32,7 +32,7 @@ namespace Nanometro {
         uint32_t Flags = 0;
 
         /* SDL */
-        SDL_Opengl Opengl;
+        FSDL_Opengl Opengl;
         void Opengl_Render();
         /* SDL Events */
         bool WindowShouldClose = false;

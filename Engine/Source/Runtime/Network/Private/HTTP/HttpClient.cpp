@@ -66,25 +66,29 @@ namespace Nanometro {
 			tcp.context.restart();
 		tcp.context.run();
 		clearStreamBuffers();
-		if (getErrorCode() != 0 && maxretry > 0 && retrytime > 0) {
-			int i = 0;
-			while (getErrorCode() != 0 && i < maxretry) {
-				i++;
+		if (tcp.error_code && maxAttemp > 0 && timeout > 0) {
+			uint8_t attemp = 0;
+			while(attemp < maxAttemp) {
 				if (onRequestWillRetry)
-					onRequestWillRetry(i, retrytime);
-				std::this_thread::sleep_for(std::chrono::seconds(retrytime));
-				tcp.resolver.async_resolve(getHost(),
-					getPort(),
-				std::bind(&HttpClient::resolve, this, asio::placeholders::error, asio::placeholders::results)
-				);
-				if (tcp.context.stopped())
-					tcp.context.restart();
+					onRequestWillRetry(attemp + 1);
+				tcp.error_code.clear();
+				tcp.context.restart();
+				asio::steady_timer timer(tcp.context, asio::chrono::seconds(timeout));
+				timer.async_wait([this](const std::error_code& error) {
+					if (error) {
+						if (onRequestFail)
+							onRequestFail(tcp.error_code.value(), tcp.error_code.message());
+					}
+					tcp.resolver.async_resolve(getHost(), getPort(),
+						std::bind(&HttpClient::resolve, this, asio::placeholders::error, asio::placeholders::results)
+					);
+				});
 				tcp.context.run();
+				attemp += 1;
+				if(!tcp.error_code)
+					break;
 			}
-			clearStreamBuffers();
 		}
-		if (tcp.socket.is_open())
-			tcp.socket.close();
 		mutexIO.unlock();
     }
 
@@ -106,31 +110,27 @@ namespace Nanometro {
 		);
     }
 
-    void HttpClient::connect(const std::error_code& err)
+    void HttpClient::connect(const std::error_code& error)
     {
-        if (err)
-		{
-			tcp.error_code = err;
+        if (error) {
+			tcp.error_code = error;
 			if (onRequestFail)
 				onRequestFail(tcp.error_code.value(), tcp.error_code.message());
 			return;
 		}
-		if (onConnected)
-			onConnected();
 		// The connection was successful. Send the request.;
 		std::ostream request_stream(&request_buffer);
 		request_stream << payload;
 		asio::async_write(tcp.socket,
 			request_buffer,
-			std::bind(&HttpClient::write_request, this, asio::placeholders::error)
+			std::bind(&HttpClient::write_request, this, asio::placeholders::error, asio::placeholders::bytes_transferred)
 		);
     }
 
-    void HttpClient::write_request(const std::error_code& err)
+    void HttpClient::write_request(const std::error_code& error, std::size_t bytes_sent)
     {
-        if (err)
-		{
-			tcp.error_code = err;
+        if (error) {
+			tcp.error_code = error;
 			if (onRequestFail)
 				onRequestFail(tcp.error_code.value(), tcp.error_code.message());
 			return;
@@ -141,25 +141,22 @@ namespace Nanometro {
 		bytes_sent = request_buffer.size();
 		if (onRequestProgress)
 			onRequestProgress(bytes_sent, bytes_sent);
-		asio::async_read_until(tcp.socket,
-			response_buffer, "\r\n",
-			std::bind(&HttpClient::read_status_line, this, asio::placeholders::error)
+		asio::async_read_until(tcp.socket, response_buffer, "\r\n",
+			std::bind(&HttpClient::read_status_line, this, asio::placeholders::error, bytes_sent, asio::placeholders::bytes_transferred)
 		);
     }
 
-    void HttpClient::read_status_line(const std::error_code& err)
+    void HttpClient::read_status_line(const std::error_code& error, std::size_t bytes_sent, std::size_t bytes_recvd)
     {
-        if (err)
-		{
-			tcp.error_code = err;
+        if (error) {
+			tcp.error_code = error;
 			if (onRequestFail)
 				onRequestFail(tcp.error_code.value(), tcp.error_code.message());
 			return;
 		}
 		// Check that response is OK.
-		bytes_received = response_buffer.size();
 		if (onRequestProgress)
-			onRequestProgress(bytes_sent, bytes_received);
+			onRequestProgress(bytes_sent, bytes_recvd);
 		std::istream response_stream(&response_buffer);
 		std::string http_version;
 		response_stream >> http_version;
@@ -186,11 +183,10 @@ namespace Nanometro {
 		);
     }
 
-    void HttpClient::read_headers(const std::error_code& err)
+    void HttpClient::read_headers(const std::error_code& error)
     {
-        if (err)
-		{
-			tcp.error_code = err;
+        if (error) {
+			tcp.error_code = error;
 			if (onRequestFail)
 				onRequestFail(tcp.error_code.value(), tcp.error_code.message());
 			return;
@@ -215,10 +211,9 @@ namespace Nanometro {
 		);
     }
 
-    void HttpClient::read_content(const std::error_code& err)
+    void HttpClient::read_content(const std::error_code& error)
     {
-        if (err)
-		{
+        if (error) {
 			if (onRequestComplete)
 				onRequestComplete(response);
 			return;

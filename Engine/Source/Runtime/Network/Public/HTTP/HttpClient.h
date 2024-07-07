@@ -27,13 +27,11 @@ namespace Nanometro {
 		std::string getHost() const { return host; }
 		std::string getPort() const { return service; }
 
-		void setRetryTime(int value = 3.) { retrytime = value; }
-		void resetRetryTime() { retrytime = 5; }
-		int getRetryTime() const { return retrytime; }
+		void setTimeout(uint8_t value = 4) { timeout = value; }
+		uint8_t getTimeout() const { return timeout; }
 
-		void setMaxRetry(int value = 1) { maxretry = value; }
-		void resetMaxRetry() { maxretry = 1; }
-		int getMaxRetry() const { return  maxretry; }
+		void setMaxAttemp(uint8_t value = 3) { maxAttemp = value; }
+		uint8_t getMaxAttemp() const { return timeout; }
 		
 		/*REQUEST DATA*/
 		void setRequest(const FRequest& value) { request = value; }
@@ -79,7 +77,6 @@ namespace Nanometro {
 
 		/*CONNECTION*/
 		int processRequest();
-
 		void cancelRequest() { tcp.context.stop(); }
 
 		/*MEMORY MANAGER*/
@@ -92,11 +89,10 @@ namespace Nanometro {
 		std::string getErrorMessage() const { return tcp.error_code.message(); }
 
 		/*EVENTS*/
-		std::function<void()> onConnected;
 		std::function<void()> onAsyncPayloadFinished;
 		std::function<void(const FResponse)> onRequestComplete;
 		std::function<void(int, int)> onRequestProgress;
-		std::function<void(int, int)> onRequestWillRetry;
+		std::function<void(int)> onRequestWillRetry;
 		std::function<void(int, const std::string&)> onRequestFail;
 		std::function<void(int)> onResponseFail;
 		
@@ -106,16 +102,14 @@ namespace Nanometro {
 		std::mutex mutexIO;
 		std::string host = "localhost";
 		std::string service;
-		int maxretry = 1;
-		int retrytime = 3;
+		uint8_t timeout = 4;
+		uint8_t maxAttemp = 3;
 		FRequest request;
 		FAsioTcp tcp;
 		std::string payload;
 		asio::streambuf request_buffer;
 		asio::streambuf response_buffer;
 		FResponse response;
-		int bytes_sent = 0;
-		int bytes_received = 0;
 		const std::map<EVerb, std::string> verb = {
 			{EVerb::GET     , "GET"},
 			{EVerb::POST    , "POST"},
@@ -135,16 +129,14 @@ namespace Nanometro {
 		{
 			request_buffer.consume(request_buffer.size());
 			response_buffer.consume(request_buffer.size());
-			bytes_sent = 0;
-			bytes_received = 0;
 		}
 		
-		void resolve(const std::error_code& err, const asio::ip::tcp::resolver::results_type& endpoints);
-		void connect(const std::error_code& err);
-		void write_request(const std::error_code& err);
-		void read_status_line(const std::error_code& err);
-		void read_headers(const std::error_code& err);
-		void read_content(const std::error_code& err);
+		void resolve(const std::error_code& error, const asio::ip::tcp::resolver::results_type& endpoints);
+		void connect(const std::error_code& error);
+		void write_request(const std::error_code& error, std::size_t bytes_sent);
+		void read_status_line(const std::error_code& error, std::size_t bytes_sent, std::size_t bytes_recvd);
+		void read_headers(const std::error_code& error);
+		void read_content(const std::error_code& error);
 	};
     
 } // namespace Nanometro

@@ -1,4 +1,4 @@
-#include "UDPClient.h"
+#include "UDP/UDPClient.h"
 
 namespace Nanometro {
     void UDPClient::send(const std::string &message)
@@ -42,6 +42,29 @@ namespace Nanometro {
             std::bind(&UDPClient::resolve, this, asio::placeholders::error, asio::placeholders::results)
         );
         udp.context.run();
+        if (udp.error_code && maxAttemp > 0 && timeout > 0) {
+            uint8_t attemp = 0;
+            while(attemp < maxAttemp) {
+                if (onConnectionRetry)
+                    onConnectionRetry(attemp + 1);
+                udp.error_code.clear();
+                udp.context.restart();
+                asio::steady_timer timer(udp.context, asio::chrono::seconds(timeout));
+                timer.async_wait([this](const std::error_code& error) {
+                    if (error) {
+                        if (onConnectionError)
+                            onConnectionError(error.value(), error.message());
+                    }
+                    udp.resolver.async_resolve(asio::ip::udp::v4(), host, service,
+                        std::bind(&UDPClient::resolve, this, asio::placeholders::error, asio::placeholders::results)
+                    );
+                });
+                udp.context.run();
+                attemp += 1;
+                if(!udp.error_code)
+                    break;
+            }
+        }
         mutexIO.unlock();
     }
 
@@ -75,15 +98,16 @@ namespace Nanometro {
     void UDPClient::package_buffer(const std::vector<char> &buffer)
     {
         mutexBuffer.lock();
-        if (buffer.size() <= 1024) {
+        if (!splitBuffer || buffer.size() <= maxBufferSize) {
             udp.socket.async_send_to(asio::buffer(buffer.data(), buffer.size()), udp.endpoints,
                 std::bind(&UDPClient::send_to, this, asio::placeholders::error, asio::placeholders::bytes_transferred)
             );
             mutexBuffer.unlock();
             return;
         }
+
         size_t buffer_offset = 0;
-        const size_t max_size = 1023;
+        const size_t max_size = maxBufferSize - 1;
         while (buffer_offset < buffer.size()) {
             size_t package_size = std::min(max_size, buffer.size() - buffer_offset);
             std::vector<char> sbuffer = std::vector<char>(buffer.begin() + buffer_offset, buffer.begin() + buffer_offset + package_size);

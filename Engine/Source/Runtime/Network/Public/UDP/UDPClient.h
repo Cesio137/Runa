@@ -46,7 +46,7 @@ namespace Nanometro
             return host;
         }
 
-        std::string getRemovePort() const
+        std::string getRemotePort() const
         {
             if (isConnected())
                 return std::to_string(udp.socket.remote_endpoint().port());

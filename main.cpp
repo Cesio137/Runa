@@ -19,10 +19,13 @@ int main(int argc, char* argv[])
     //client.Connect("localhost", "3000");
     HttpClient client;
     client.setHost("localhost", "3000");
+    client.setRequestMethod();
+    client.onRequestComplete = [&](const FResponse response) {
+        std::cout << response.content << std::endl;
+    };
+    client.preparePayload();
     client.processRequest();
-    
-    
-    
+
     std::string input;
     std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {

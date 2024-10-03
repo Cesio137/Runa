@@ -1,7 +1,11 @@
 {
   "dependencies": [
     {
-      "name": "sdl2"
+      "name": "sdl2",
+      "version>=": "2.30.7"
+    },
+    {
+      "name": "openssl"
     }
   ]
 }

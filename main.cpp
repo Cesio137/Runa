@@ -1,39 +1,16 @@
 #include <iostream>
-//#include <RenderInterface.h>
-#include <HTTP/HttpClient.h>
+#include <RenderInterface.h>
 
 using namespace Nanometro;
 
 int main(int argc, char* argv[])
 {
-    /*
-    Nanometro::RenderInterface RHI(OPENGL_INIT_460);
-    size_t size = sizeof(RHI);
+    RenderInterface RHI(OPENGL_INIT_460);
     int code = RHI.exec();
-    std::cout << size << "\n";
-    if (!code)
+    if (!code) {
         std::cout << RHI.GetErrorLog() << "\n";
-    */
-
-    //WebsocketClient client;
-    //client.Connect("localhost", "3000");
-    HttpClient client;
-    client.setHost("localhost", "3000");
-    client.setRequestMethod();
-    client.onRequestComplete = [&](const FResponse response) {
-        std::cout << response.content << std::endl;
-    };
-    client.preparePayload();
-    client.processRequest();
-
-    std::string input;
-    std::cout << "Digite algo: ";
-    while (std::getline(std::cin, input)) {
-        if (input == "quit")
-        {
-            break;
-        }
+        return code;
     }
-    
-    return 0;
+
+    return code;
 }

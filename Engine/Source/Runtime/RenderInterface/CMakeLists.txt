@@ -12,11 +12,10 @@ target_include_directories(RenderInterface
 )
 target_link_libraries(RenderInterface
         PUBLIC
+        Config
         $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
         $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
-        imgui
-        PRIVATE
-        Config
+        imgui        
 )
 
 set_target_properties(RenderInterface PROPERTIES FOLDER "Engine/Source/Runtime" LINKER_LANGUAGE CXX)

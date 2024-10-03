@@ -71,6 +71,8 @@ namespace Nanometro
                 destroy();
                 return false;
             }
+
+            return true;
         }
 
         void destroy() {
@@ -88,7 +90,7 @@ namespace Nanometro
 
     private:
         std::string error_message;
-        int error_code;
+        int error_code = 0;
     };
 
     inline std::pair<uint8_t, uint8_t> GetLastOpenglVersionSupported()

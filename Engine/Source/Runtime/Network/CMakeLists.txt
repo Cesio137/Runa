@@ -12,8 +12,11 @@ target_include_directories(Network
 target_link_libraries(Network
         PUBLIC
         asio
+        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
         PRIVATE
         Config
+        $<TARGET_NAME_IF_EXISTS:OpenSSL::SSL>
+        $<TARGET_NAME_IF_EXISTS:OpenSSL::Crypto>
 )
 
 set_target_properties(Network PROPERTIES FOLDER "Engine/Source/Runtime" LINKER_LANGUAGE CXX)

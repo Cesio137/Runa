@@ -28,7 +28,7 @@
         "CMAKE_SYSTEM_PROCESSOR":"x64",
         "C_COMPILER_ID":"MSVC",
         "CXX_COMPILER_ID":"MSVC",
-        "VCPKG_TARGET_TRIPLET":"x64-Windows"
+        "VCPKG_TARGET_TRIPLET":"x64-windows"
       },
       "condition":
       {
@@ -57,7 +57,7 @@
         "CMAKE_SYSTEM_PROCESSOR":"x64",
         "C_COMPILER_ID":"MSVC",
         "CXX_COMPILER_ID":"MSVC",
-        "VCPKG_TARGET_TRIPLET":"x64-Windows"
+        "VCPKG_TARGET_TRIPLET":"x64-windows"
       },
       "condition":
       {

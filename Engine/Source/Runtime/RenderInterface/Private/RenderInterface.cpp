@@ -18,7 +18,6 @@ namespace Nanometro {
 
     int RenderInterface::exec()
     {
-
         if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
         {
             Opengl.init(Flags);

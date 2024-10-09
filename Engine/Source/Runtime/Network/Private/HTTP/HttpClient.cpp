@@ -283,17 +283,7 @@ namespace Nanometro {
         // Attempt a connection to each endpoint in the list until we
         // successfully establish a connection.
         tcp.endpoints = endpoints;
-        tcp.ssl_socket.async_handshake(asio::ssl::stream_base::client,
-                                       std::bind(&HttpClientSsl::ssl_handshake, this, asio::placeholders::error));
-    }
 
-    void HttpClientSsl::ssl_handshake(const std::error_code &error) {
-        if (error) {
-            tcp.error_code = error;
-            if (onRequestFail)
-                onRequestFail(tcp.error_code.value(), tcp.error_code.message());
-            return;
-        }
         asio::async_connect(tcp.ssl_socket.lowest_layer(), tcp.endpoints,
                             std::bind(&HttpClientSsl::connect, this, asio::placeholders::error)
         );
@@ -306,14 +296,26 @@ namespace Nanometro {
                 onRequestFail(tcp.error_code.value(), tcp.error_code.message());
             return;
         }
-        // The connection was successful. Send the request.;
+        // The connection was successful. Send the request.
+        tcp.ssl_socket.async_handshake(asio::ssl::stream_base::client,
+                                       std::bind(&HttpClientSsl::ssl_handshake, this, asio::placeholders::error));
+    }
+
+    void HttpClientSsl::ssl_handshake(const std::error_code &error) {
+        if (error) {
+            tcp.error_code = error;
+            if (onRequestFail)
+                onRequestFail(tcp.error_code.value(), tcp.error_code.message());
+            return;
+        }
         std::ostream request_stream(&request_buffer);
         request_stream << payload;
-        asio::async_write(tcp.ssl_socket.lowest_layer(), request_buffer,
+        asio::async_write(tcp.ssl_socket, request_buffer,
                           std::bind(&HttpClientSsl::write_request, this, asio::placeholders::error,
                                     asio::placeholders::bytes_transferred)
         );
     }
+
 
     void HttpClientSsl::write_request(const std::error_code &error, const size_t bytes_sent) {
         if (error) {
@@ -327,7 +329,7 @@ namespace Nanometro {
         // limited by passing a maximum size to the streambuf constructor.
         if (onRequestProgress)
             onRequestProgress(bytes_sent, 0);
-        asio::async_read_until(tcp.ssl_socket.lowest_layer(), response_buffer, "\r\n",
+        asio::async_read_until(tcp.ssl_socket, response_buffer, "\r\n",
                                std::bind(&HttpClientSsl::read_status_line, this, asio::placeholders::error, bytes_sent,
                                          asio::placeholders::bytes_transferred)
         );
@@ -363,7 +365,7 @@ namespace Nanometro {
         }
 
         // Read the response headers, which are terminated by a blank line.
-        asio::async_read_until(tcp.ssl_socket.lowest_layer(), response_buffer, "\r\n\r\n",
+        asio::async_read_until(tcp.ssl_socket, response_buffer, "\r\n\r\n",
                                std::bind(&HttpClientSsl::read_headers, this, asio::placeholders::error)
         );
     }
@@ -391,7 +393,7 @@ namespace Nanometro {
         }
 
         // Start reading remaining data until EOF.
-        asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(1),
+        asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(1),
                          std::bind(&HttpClientSsl::read_content, this, asio::placeholders::error)
         );
     }
@@ -410,7 +412,7 @@ namespace Nanometro {
 
 
         // Continue reading remaining data until EOF.
-        asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(1),
+        asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(1),
                          std::bind(&HttpClientSsl::read_content, this, asio::placeholders::error)
         );
     }

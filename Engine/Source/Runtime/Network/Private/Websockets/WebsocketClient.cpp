@@ -516,7 +516,7 @@ namespace Nanometro {
         if (!isConnected())
             return false;
 
-        asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(2),
+        asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(2),
                          std::bind(&WebsocketClientSsl::read, this, asio::placeholders::error,
                                    asio::placeholders::bytes_transferred)
         );
@@ -524,7 +524,7 @@ namespace Nanometro {
     }
 
     bool WebsocketClientSsl::connect() {
-        if (!pool && isConnected() && !isCALoaded)
+        if (!pool && isConnected())
             return false;
 
         asio::post(*pool, std::bind(&WebsocketClientSsl::run_context_thread, this));
@@ -546,7 +546,7 @@ namespace Nanometro {
         } else if (opcode == EOpcode::PING || opcode == EOpcode::PONG) {
             std::vector<std::byte> p_buffer = buffer;
             encode_buffer_payload(p_buffer);
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(p_buffer.data(), p_buffer.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(p_buffer.data(), p_buffer.size()),
                               std::bind(&WebsocketClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred));
         }
@@ -558,7 +558,7 @@ namespace Nanometro {
         if (!splitBuffer || str.size() + get_frame_encode_size(str.size()) <= maxSendBufferSize) {
             sDataFrame.fin = true;
             payload = encode_string_payload(str);
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(payload.data(), payload.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(payload.data(), payload.size()),
                               std::bind(&WebsocketClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred)
             );
@@ -573,7 +573,7 @@ namespace Nanometro {
             size_t package_size = std::min(max_size, str.size() - string_offset);
             payload.assign(str.begin() + string_offset, str.begin() + string_offset + package_size);
             payload = encode_string_payload(payload);
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(payload, payload.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(payload, payload.size()),
                               std::bind(&WebsocketClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred)
             );
@@ -635,7 +635,7 @@ namespace Nanometro {
         if (!splitBuffer || buffer.size() + get_frame_encode_size(buffer.size()) <= maxSendBufferSize) {
             sDataFrame.fin = true;
             payload = encode_buffer_payload(buffer);
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(payload.data(), payload.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(payload.data(), payload.size()),
                               std::bind(&WebsocketClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred)
             );
@@ -650,7 +650,7 @@ namespace Nanometro {
             size_t package_size = std::min(max_size, buffer.size() - buffer_offset);
             payload.assign(buffer.begin() + buffer_offset, buffer.begin() + buffer_offset + package_size);
             encode_buffer_payload(payload);
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(payload, payload.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(payload, payload.size()),
                               std::bind(&WebsocketClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred)
             );
@@ -823,18 +823,6 @@ namespace Nanometro {
         // Attempt a connection to each endpoint in the list until we
         // successfully establish a connection.
         tcp.endpoints = endpoints;
-        tcp.ssl_socket.async_handshake(asio::ssl::stream_base::client,
-                                       std::bind(&WebsocketClientSsl::ssl_handshake, this,
-                                                 asio::placeholders::error));
-    }
-
-    void WebsocketClientSsl::ssl_handshake(const std::error_code &error) {
-        if (error) {
-            tcp.error_code = error;
-            if (onError)
-                onError(tcp.error_code.value(), tcp.error_code.message());
-            return;
-        }
         asio::async_connect(tcp.ssl_socket.lowest_layer(), tcp.endpoints,
                             std::bind(&WebsocketClientSsl::conn, this, asio::placeholders::error)
         );
@@ -847,8 +835,19 @@ namespace Nanometro {
                 onError(tcp.error_code.value(), tcp.error_code.message());
             return;
         }
-
         // The connection was successful;
+        tcp.ssl_socket.async_handshake(asio::ssl::stream_base::client,
+                                       std::bind(&WebsocketClientSsl::ssl_handshake, this,
+                                                 asio::placeholders::error));
+    }
+
+    void WebsocketClientSsl::ssl_handshake(const std::error_code &error) {
+        if (error) {
+            tcp.error_code = error;
+            if (onError)
+                onError(tcp.error_code.value(), tcp.error_code.message());
+            return;
+        }
         std::string request;
         request = "GET /" + handshake.path + " HTTP/" + handshake.version + "\r\n";
         request += "Host: " + host + "\r\n";
@@ -861,7 +860,7 @@ namespace Nanometro {
         request += "\r\n";
         std::ostream request_stream(&request_buffer);
         request_stream << request;
-        asio::async_write(tcp.ssl_socket.lowest_layer(), request_buffer,
+        asio::async_write(tcp.ssl_socket, request_buffer,
                           std::bind(&WebsocketClientSsl::write_handshake, this, asio::placeholders::error,
                                     asio::placeholders::bytes_transferred)
         );
@@ -877,7 +876,7 @@ namespace Nanometro {
         // Read the response status line. The response_ streambuf will
         // automatically grow to accommodate the entire line. The growth may be
         // limited by passing a maximum size to the streambuf constructor.
-        asio::async_read_until(tcp.ssl_socket.lowest_layer(), response_buffer, "\r\n",
+        asio::async_read_until(tcp.ssl_socket, response_buffer, "\r\n",
                                std::bind(&WebsocketClientSsl::read_handshake, this, asio::placeholders::error,
                                          bytes_sent, asio::placeholders::bytes_transferred)
         );
@@ -912,7 +911,7 @@ namespace Nanometro {
             return;
         }
 
-        asio::async_read_until(tcp.ssl_socket.lowest_layer(), response_buffer, "\r\n\r\n",
+        asio::async_read_until(tcp.ssl_socket, response_buffer, "\r\n\r\n",
                                std::bind(&WebsocketClientSsl::consume_header_buffer, this,
                                          asio::placeholders::error)
         );
@@ -920,7 +919,7 @@ namespace Nanometro {
 
     void WebsocketClientSsl::consume_header_buffer(const std::error_code &error) {
         consume_response_buffer();
-        asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(1),
+        asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(1),
                          std::bind(&WebsocketClientSsl::read, this, asio::placeholders::error,
                                    asio::placeholders::bytes_transferred));
 
@@ -951,7 +950,7 @@ namespace Nanometro {
         FWsMessage rDataFrame;
         if (!decode_payload(rDataFrame)) {
             response_buffer.consume(response_buffer.size());
-            asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(1),
+            asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(1),
                              std::bind(&WebsocketClientSsl::read, this, asio::placeholders::error,
                                        asio::placeholders::bytes_transferred)
             );
@@ -977,7 +976,7 @@ namespace Nanometro {
         }
 
         consume_response_buffer();
-        asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(1),
+        asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(1),
                          std::bind(&WebsocketClientSsl::read, this, asio::placeholders::error,
                                    asio::placeholders::bytes_transferred)
         );

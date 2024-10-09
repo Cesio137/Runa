@@ -79,12 +79,21 @@ namespace Nanometro {
         /*CONNECTION*/
         bool processRequest();
 
-        void cancelRequest() {
+        void cancelRequest(bool forceClose = false) {
             tcp.context.stop();
-            tcp.socket.shutdown(asio::ip::tcp::socket::shutdown_both);
-            tcp.socket.close(tcp.error_code);
+            if (forceClose) {
+                tcp.socket.close(tcp.error_code);
+                if (tcp.error_code && onError)
+                    onError(tcp.error_code.value(), tcp.error_code.message());
+            } else {
+                tcp.socket.shutdown(asio::ip::tcp::socket::shutdown_both, tcp.error_code);
+                if (tcp.error_code && onError)
+                    onError(tcp.error_code.value(), tcp.error_code.message());
+                tcp.socket.close(tcp.error_code);
+                if (tcp.error_code && onError)
+                    onError(tcp.error_code.value(), tcp.error_code.message());
+            }
             pool->join();
-            if (tcp.error_code && onRequestFail) onRequestFail(tcp.error_code.value(), tcp.error_code.message());
             if (onRequestCanceled) onRequestCanceled();
         }
 
@@ -105,6 +114,7 @@ namespace Nanometro {
         std::function<void(const int)> onRequestWillRetry;
         std::function<void(const int, const std::string &)> onRequestFail;
         std::function<void(const int)> onResponseFail;
+        std::function<void(const int, const std::string &)> onError;
 
     private:
         std::unique_ptr<asio::thread_pool> pool = std::make_unique<asio::thread_pool>(
@@ -218,18 +228,80 @@ namespace Nanometro {
 
         FRequest getRequestData() const { return request; }
 
-        /*PEM FILE*/
-        bool loadVerifyFile(const std::string &filename) {
+        /*SECURITY LAYER*/
+        bool load_private_key_data(const std::string &key_data) {
             try {
-                tcp.ssl_context.load_verify_file(filename);
-                isCALoaded = true;
-            } catch (const std::exception &error) {
-                isCALoaded = false;
+                const asio::const_buffer buffer(key_data.data(), key_data.size());
+                tcp.ssl_context.use_private_key(buffer, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
             }
-            return isCALoaded;
+            return true;
         }
 
-        bool hasCA() const { return isCALoaded; }
+        bool load_private_key_file(const std::string &filename) {
+            try {
+                tcp.ssl_context.use_private_key_file(filename, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_data(const std::string &cert_data) {
+            try {
+                const asio::const_buffer buffer(cert_data.data(), cert_data.size());
+                tcp.ssl_context.use_certificate(buffer, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_file(const std::string &filename) {
+            try {
+                tcp.ssl_context.use_certificate_file(filename, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_chain_data(const std::string &cert_chain_data) {
+            try {
+                const asio::const_buffer buffer(cert_chain_data.data(),
+                                                cert_chain_data.size());
+                tcp.ssl_context.use_certificate_chain(buffer);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_chain_file(const std::string &filename) {
+            try {
+                tcp.ssl_context.use_certificate_chain_file(filename);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_verify_file(const std::string &filename) {
+            try {
+                tcp.ssl_context.load_verify_file(filename);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
 
         /*PAYLOAD*/
         void preparePayload();
@@ -244,13 +316,31 @@ namespace Nanometro {
         /*CONNECTION*/
         bool processRequest();
 
-        void cancelRequest() {
+        void cancelRequest(bool forceClose = false) {
             tcp.context.stop();
-            tcp.socket.shutdown(asio::ip::tcp::socket::shutdown_both);
-            tcp.socket.close(tcp.error_code);
-            pool->join();
-            if (tcp.error_code && onRequestFail) onRequestFail(tcp.error_code.value(), tcp.error_code.message());
-            if (onRequestCanceled) onRequestCanceled();
+            tcp.ssl_socket.shutdown(tcp.error_code);
+            tcp.ssl_socket.async_shutdown([&](const std::error_code &error) {
+                if (error) {
+                    tcp.error_code = error;
+                    if (onError) onError(error.value(), error.message());
+                }
+
+                if (forceClose) {
+                    tcp.ssl_socket.lowest_layer().close(tcp.error_code);
+                    if (tcp.error_code && onError)
+                        onError(tcp.error_code.value(), tcp.error_code.message());
+                } else {
+                    tcp.ssl_socket.lowest_layer().shutdown(
+                        asio::ip::tcp::socket::shutdown_both, tcp.error_code);
+                    if (tcp.error_code && onError)
+                        onError(tcp.error_code.value(), tcp.error_code.message());
+
+                    tcp.ssl_socket.lowest_layer().close(tcp.error_code);
+                    if (tcp.error_code && onError)
+                        onError(tcp.error_code.value(), tcp.error_code.message());
+                }
+                if (onRequestCanceled) onRequestCanceled();
+            });
         }
 
         /*MEMORY MANAGER*/
@@ -270,6 +360,7 @@ namespace Nanometro {
         std::function<void(const int)> onRequestWillRetry;
         std::function<void(const int, const std::string &)> onRequestFail;
         std::function<void(const int)> onResponseFail;
+        std::function<void(const int, const std::string &)> onError;
 
     private:
         std::unique_ptr<asio::thread_pool> pool = std::make_unique<asio::thread_pool>(
@@ -282,7 +373,6 @@ namespace Nanometro {
         uint8_t maxAttemp = 3;
         FRequest request;
         FAsioTcpSsl tcp;
-        bool isCALoaded = false;
         std::string payload;
         asio::streambuf request_buffer;
         asio::streambuf response_buffer;
@@ -310,9 +400,9 @@ namespace Nanometro {
 
         void resolve(const std::error_code &error, const asio::ip::tcp::resolver::results_type &endpoints);
 
-        void ssl_handshake(const std::error_code &error);
-
         void connect(const std::error_code &error);
+
+        void ssl_handshake(const std::error_code &error);
 
         void write_request(const std::error_code &error, const size_t bytes_sent);
 

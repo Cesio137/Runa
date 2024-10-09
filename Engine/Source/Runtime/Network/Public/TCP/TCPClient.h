@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "Net/Messages.h"
 
 namespace Nanometro {
@@ -21,8 +23,7 @@ namespace Nanometro {
         }
 
         std::string getLocalAdress() const {
-            if (isConnected())
-                return tcp.socket.local_endpoint().address().to_string();
+            if (isConnected()) return tcp.socket.local_endpoint().address().to_string();
             return "";
         }
 
@@ -66,15 +67,21 @@ namespace Nanometro {
 
         bool isConnected() const { return tcp.socket.is_open(); }
 
-        void close() {
+        void close(bool forceClose = false) {
             tcp.context.stop();
-            tcp.socket.shutdown(asio::ip::tcp::socket::shutdown_both, tcp.error_code);
-            if (tcp.error_code && onError) onError(tcp.error_code.value(), tcp.error_code.message());
-
-            tcp.socket.close(tcp.error_code);
+            if (forceClose) {
+                tcp.socket.close(tcp.error_code);
+                if (tcp.error_code && onError)
+                    onError(tcp.error_code.value(), tcp.error_code.message());
+            } else {
+                tcp.socket.shutdown(asio::ip::tcp::socket::shutdown_both, tcp.error_code);
+                if (tcp.error_code && onError)
+                    onError(tcp.error_code.value(), tcp.error_code.message());
+                tcp.socket.close(tcp.error_code);
+                if (tcp.error_code && onError)
+                    onError(tcp.error_code.value(), tcp.error_code.message());
+            }
             pool->join();
-            if (tcp.error_code && onError) onError(tcp.error_code.value(), tcp.error_code.message());
-            if (onClose) onClose();
         }
 
         /*ERRORS*/
@@ -90,8 +97,8 @@ namespace Nanometro {
         std::function<void(const int, const std::string &)> onError;
 
     private:
-        std::unique_ptr<asio::thread_pool> pool = std::make_unique<asio::thread_pool>(
-            std::thread::hardware_concurrency());
+        std::unique_ptr<asio::thread_pool> pool =
+                std::make_unique<asio::thread_pool>(std::thread::hardware_concurrency());
         std::mutex mutexIO;
         std::mutex mutexBuffer;
         FAsioTcp tcp;
@@ -113,7 +120,8 @@ namespace Nanometro {
 
         void run_context_thread();
 
-        void resolve(const std::error_code &error, const asio::ip::tcp::resolver::results_type &endpoints);
+        void resolve(const std::error_code &error,
+                     const asio::ip::tcp::resolver::results_type &endpoints);
 
         void conn(const std::error_code &error);
 
@@ -141,25 +149,33 @@ namespace Nanometro {
 
         std::string getLocalAdress() const {
             if (isConnected())
-                return tcp.ssl_socket.lowest_layer().local_endpoint().address().to_string();
+                return tcp.ssl_socket.lowest_layer()
+                        .local_endpoint()
+                        .address()
+                        .to_string();
             return "";
         }
 
         std::string getLocalPort() const {
             if (isConnected())
-                return std::to_string(tcp.ssl_socket.lowest_layer().local_endpoint().port());
+                return std::to_string(
+                    tcp.ssl_socket.lowest_layer().local_endpoint().port());
             return "";
         }
 
         std::string getRemoteAdress() const {
             if (isConnected())
-                return tcp.ssl_socket.lowest_layer().remote_endpoint().address().to_string();
+                return tcp.ssl_socket.lowest_layer()
+                        .remote_endpoint()
+                        .address()
+                        .to_string();
             return host;
         }
 
         std::string getRemotePort() const {
             if (isConnected())
-                return std::to_string(tcp.ssl_socket.lowest_layer().remote_endpoint().port());
+                return std::to_string(
+                    tcp.ssl_socket.lowest_layer().remote_endpoint().port());
             return service;
         }
 
@@ -173,18 +189,80 @@ namespace Nanometro {
         void setSplitPackage(bool value = true) { splitBuffer = value; }
         bool getSplitPackage() const { return splitBuffer; }
 
-        /*PEM FILE*/
+        /*SECURITY LAYER*/
+        bool load_private_key_data(const std::string &key_data) {
+            try {
+                const asio::const_buffer buffer(key_data.data(), key_data.size());
+                tcp.ssl_context.use_private_key(buffer, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_private_key_file(const std::string &filename) {
+            try {
+                tcp.ssl_context.use_private_key_file(filename, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_data(const std::string &cert_data) {
+            try {
+                const asio::const_buffer buffer(cert_data.data(), cert_data.size());
+                tcp.ssl_context.use_certificate(buffer, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_file(const std::string &filename) {
+            try {
+                tcp.ssl_context.use_certificate_file(filename, asio::ssl::context::pem);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_chain_data(const std::string &cert_chain_data) {
+            try {
+                const asio::const_buffer buffer(cert_chain_data.data(),
+                                                cert_chain_data.size());
+                tcp.ssl_context.use_certificate_chain(buffer);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
+        bool load_certificate_chain_file(const std::string &filename) {
+            try {
+                tcp.ssl_context.use_certificate_chain_file(filename);
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
+            }
+            return true;
+        }
+
         bool load_verify_file(const std::string &filename) {
             try {
                 tcp.ssl_context.load_verify_file(filename);
-                isCALoaded = true;
-            } catch (const std::exception &error) {
-                isCALoaded = false;
+            } catch (const std::exception &e) {
+                if (onError) onError(-1, e.what());
+                return false;
             }
-            return isCALoaded;
+            return true;
         }
-
-        bool hasCA() const { return isCALoaded; }
 
         /*MESSAGE*/
         bool send(const std::string &message);
@@ -198,15 +276,31 @@ namespace Nanometro {
 
         bool isConnected() const { return tcp.ssl_socket.lowest_layer().is_open(); }
 
-        void close() {
+        void close(bool forceClose = false) {
             tcp.context.stop();
-            tcp.ssl_socket.lowest_layer().shutdown(asio::ip::tcp::socket::shutdown_both, tcp.error_code);
-            if (tcp.error_code && onError) onError(tcp.error_code.value(), tcp.error_code.message());
+            tcp.ssl_socket.shutdown(tcp.error_code);
+            tcp.ssl_socket.async_shutdown([&](const std::error_code &error) {
+                if (error) {
+                    tcp.error_code = error;
+                    if (onError) onError(error.value(), error.message());
+                }
 
-            tcp.ssl_socket.lowest_layer().close(tcp.error_code);
-            pool->join();
-            if (tcp.error_code && onError) onError(tcp.error_code.value(), tcp.error_code.message());
-            if (onClose) onClose();
+                if (forceClose) {
+                    tcp.ssl_socket.lowest_layer().close(tcp.error_code);
+                    if (tcp.error_code && onError)
+                        onError(tcp.error_code.value(), tcp.error_code.message());
+                } else {
+                    tcp.ssl_socket.lowest_layer().shutdown(
+                        asio::ip::tcp::socket::shutdown_both, tcp.error_code);
+                    if (tcp.error_code && onError)
+                        onError(tcp.error_code.value(), tcp.error_code.message());
+
+                    tcp.ssl_socket.lowest_layer().close(tcp.error_code);
+                    if (tcp.error_code && onError)
+                        onError(tcp.error_code.value(), tcp.error_code.message());
+                }
+                if (onClose) onClose();
+            });
         }
 
         /*ERRORS*/
@@ -222,12 +316,11 @@ namespace Nanometro {
         std::function<void(const int, const std::string &)> onError;
 
     private:
-        std::unique_ptr<asio::thread_pool> pool = std::make_unique<asio::thread_pool>(
-            std::thread::hardware_concurrency());
+        std::unique_ptr<asio::thread_pool> pool =
+                std::make_unique<asio::thread_pool>(std::thread::hardware_concurrency());
         std::mutex mutexIO;
         std::mutex mutexBuffer;
         FAsioTcpSsl tcp;
-        bool isCALoaded = false;
         std::string host = "localhost";
         std::string service;
         uint8_t timeout = 3;
@@ -246,14 +339,15 @@ namespace Nanometro {
 
         void run_context_thread();
 
-        void resolve(const std::error_code &error, const asio::ip::tcp::resolver::results_type &endpoints);
-
-        void ssl_handshake(const std::error_code &error);
+        void resolve(const std::error_code &error,
+                     const asio::ip::tcp::resolver::results_type &endpoints);
 
         void conn(const std::error_code &error);
+
+        void ssl_handshake(const std::error_code &error);
 
         void write(const std::error_code &error, const size_t bytes_sent);
 
         void read(const std::error_code &error, const size_t bytes_recvd);
     };
-} //Nanometro
+} // namespace Nanometro

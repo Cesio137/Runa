@@ -7,5 +7,9 @@ target_include_directories(asio
         INTERFACE
         "${Asio_DIR}/Public"
 )
-
+target_link_libraries(asio
+        INTERFACE
+        $<TARGET_NAME_IF_EXISTS:OpenSSL::SSL>
+        $<TARGET_NAME_IF_EXISTS:OpenSSL::Crypto>
+)
 set_target_properties(asio PROPERTIES FOLDER "Engine/Source/Thirdparty")

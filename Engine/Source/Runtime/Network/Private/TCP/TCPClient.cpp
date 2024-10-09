@@ -1,4 +1,5 @@
 #include "TCP/TCPClient.h"
+#include "iostream"
 
 namespace Nanometro {
     bool TCPClient::send(const std::string &message) {
@@ -194,7 +195,7 @@ namespace Nanometro {
         if (!isConnected())
             return false;
 
-        asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(1),
+        asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(1),
                          std::bind(&TCPClientSsl::read, this, asio::placeholders::error,
                                    asio::placeholders::bytes_transferred)
         );
@@ -202,7 +203,7 @@ namespace Nanometro {
     }
 
     bool TCPClientSsl::connect() {
-        if (!pool && isConnected() && isCALoaded)
+        if (!pool && isConnected())
             return false;
 
         asio::post(*pool, std::bind(&TCPClientSsl::run_context_thread, this));
@@ -212,7 +213,7 @@ namespace Nanometro {
     void TCPClientSsl::package_string(const std::string &str) {
         mutexBuffer.lock();
         if (!splitBuffer || str.size() <= maxSendBufferSize) {
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(str.data(), str.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(str.data(), str.size()),
                               std::bind(&TCPClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred));
             mutexBuffer.unlock();
@@ -225,7 +226,7 @@ namespace Nanometro {
             size_t package_size = std::min(max_size, str.size() - string_offset);
             std::string strshrink(str.begin() + string_offset,
                                   str.begin() + string_offset + package_size);
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(strshrink.data(), strshrink.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(strshrink.data(), strshrink.size()),
                               std::bind(&TCPClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred)
             );
@@ -237,7 +238,7 @@ namespace Nanometro {
     void TCPClientSsl::package_buffer(const std::vector<std::byte> &buffer) {
         mutexBuffer.lock();
         if (!splitBuffer || buffer.size() <= maxSendBufferSize) {
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(buffer.data(), buffer.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(buffer.data(), buffer.size()),
                               std::bind(&TCPClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred)
             );
@@ -251,7 +252,7 @@ namespace Nanometro {
             size_t package_size = std::min(max_size, buffer.size() - buffer_offset);
             std::vector<std::byte> sbuffer(buffer.begin() + buffer_offset,
                                            buffer.begin() + buffer_offset + package_size);
-            asio::async_write(tcp.ssl_socket.lowest_layer(), asio::buffer(sbuffer.data(), sbuffer.size()),
+            asio::async_write(tcp.ssl_socket, asio::buffer(sbuffer.data(), sbuffer.size()),
                               std::bind(&TCPClientSsl::write, this, asio::placeholders::error,
                                         asio::placeholders::bytes_transferred));
             buffer_offset += package_size;
@@ -289,6 +290,18 @@ namespace Nanometro {
         // Attempt a connection to each endpoint in the list until we
         // successfully establish a connection.
         tcp.endpoints = endpoints;
+        asio::async_connect(tcp.ssl_socket.lowest_layer(), tcp.endpoints,
+                            std::bind(&TCPClientSsl::conn, this, asio::placeholders::error));
+    }
+
+    void TCPClientSsl::conn(const std::error_code &error) {
+        if (error) {
+            tcp.error_code = error;
+            if (onError)
+                onError(tcp.error_code.value(), tcp.error_code.message());
+            return;
+        }
+
         tcp.ssl_socket.async_handshake(asio::ssl::stream_base::client,
                                        std::bind(&TCPClientSsl::ssl_handshake, this, asio::placeholders::error));
     }
@@ -300,22 +313,8 @@ namespace Nanometro {
                 onError(tcp.error_code.value(), tcp.error_code.message());
             return;
         }
-        asio::async_connect(tcp.ssl_socket.lowest_layer(), tcp.endpoints,
-                            std::bind(&TCPClientSsl::conn, this, asio::placeholders::error)
-        );
-    }
-
-    void TCPClientSsl::conn(const std::error_code &error) {
-        if (error) {
-            tcp.error_code = error;
-            if (onError)
-                onError(tcp.error_code.value(), tcp.error_code.message());
-            return;
-        }
-
-        // The connection was successful;
         consume_response_buffer();
-        asio::async_read(tcp.ssl_socket.lowest_layer(), response_buffer, asio::transfer_at_least(1),
+        asio::async_read(tcp.ssl_socket, response_buffer, asio::transfer_at_least(1),
                          std::bind(&TCPClientSsl::read, this, asio::placeholders::error,
                                    asio::placeholders::bytes_transferred)
         );

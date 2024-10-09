@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     RenderInterface RHI(OPENGL_INIT_460);
     int code = RHI.exec();
     if (!code) {
-        std::cout << RHI.GetErrorLog() << "\n";
+        std::cout << RHI.GetErrorLog() << "/n";
         return code;
     }
 

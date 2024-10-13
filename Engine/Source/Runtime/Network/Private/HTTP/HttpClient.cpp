@@ -247,7 +247,7 @@ namespace Nanometro {
     }
 
     bool HttpClientSsl::processRequest() {
-        if (!pool && !payload.empty() && !isCALoaded)
+        if (!pool && !payload.empty())
             return false;
 
         asio::post(*pool, std::bind(&HttpClientSsl::run_context_thread, this));

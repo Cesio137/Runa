@@ -1,5 +1,3 @@
-find_package(OpenSSL REQUIRED)
-
 add_subdirectory(Config)
 add_subdirectory(Source)
 

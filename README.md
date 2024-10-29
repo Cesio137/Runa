@@ -18,7 +18,7 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
 
 - [Git](https://git-scm.com)
 
-- [CMake 3.25 or above](https://cmake.org/download/)
+- [CMake 3.20 or above](https://cmake.org/download/)
 
 - [VCPKG](https://vcpkg.io/en/)
 
@@ -63,25 +63,12 @@ VCPKG_ROOT
       <Path to VCPKG>/x.x.x/
       ```
 
-#### Windows
+#### Any OS
 
 * Setup Project.
   * Create a `build` folder and open terminal inside.
   * Commands to generate project
     * ```bash
-      cmake .. --preset=Windows_Debug-x64
-      cmake .. --preset=Windows_Release-x64
-      ```
-
-#### Linux
-
-* Setup Project.
-  
-  * Create a `build` folder and open terminal inside.
-  
-  * Commands to generate project
-    
-    * ```bash
-      cmake .. --preset=Unix_Debug-x64
-      cmake .. --preset=Unix_Release-x64
+      cmake .. --preset=debug
+      cmake .. --preset=release
       ``` 

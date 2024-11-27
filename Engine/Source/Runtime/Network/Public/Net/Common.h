@@ -12,6 +12,8 @@
 #endif
 
 #define ASIO_STANDALONE
+#define ASIO_NO_EXCEPTIONS
+#define ASIO_DISABLE_CXX11_MACROS
 #include <asio.hpp>
 #include <asio/ssl.hpp>
 

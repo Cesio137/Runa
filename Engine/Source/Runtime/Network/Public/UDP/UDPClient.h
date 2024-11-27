@@ -117,8 +117,8 @@ namespace Nanometro
 
         void consume_receive_buffer()
         {
-            rbuffer.rawData.clear();
-            rbuffer.rawData.resize(maxReceiveBufferSize);
+            rbuffer.raw_data.clear();
+            rbuffer.raw_data.resize(maxReceiveBufferSize);
         }
 
         /*ASYNC HANDLER FUNCTIONS*/

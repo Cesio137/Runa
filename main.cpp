@@ -3,14 +3,14 @@
 
 using namespace Nanometro;
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    RenderInterface RHI(OPENGL_INIT_330);
-    int code = RHI.exec();
-    if (code != 0) {
-        std::cout << RHI.GetErrorLog() << "\n";
+    RenderInterface RHI(EOpenglVersion::CORE_460);
+    int code = RHI.Exec();
+    if (code) {
+        std::cerr <<RHI.GetErrorLog() << std::endl;
         return code;
     }
-
+    
     return 0;
 }

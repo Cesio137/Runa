@@ -8,15 +8,17 @@
 #include <imgui_impl_sdlrenderer2.h>
 #include <memory>
 
-namespace Nanometro{
+namespace Nanometro
+{
     inline void SDL_ImGuiInit(FSDL_Opengl &opengl)
     {
         if (!opengl.window_ptr || !opengl.renderer_ptr)
             return;
-        
+
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        ImGuiIO &io = ImGui::GetIO();
+        (void)io;
         ImGui_ImplSDL2_InitForSDLRenderer(opengl.window_ptr, opengl.renderer_ptr);
         ImGui_ImplSDLRenderer2_Init(opengl.renderer_ptr);
     }

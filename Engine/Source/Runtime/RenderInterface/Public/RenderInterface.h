@@ -3,21 +3,22 @@
 #include "Opengl/SDL_Opengl.h"
 #include <imgui.h>
 
-namespace Nanometro {
+namespace Nanometro
+{
 
     class RenderInterface
     {
     public:
-        explicit RenderInterface(uint32_t flags = OPENGL_INIT_330);
+        RenderInterface(uint8_t flags = 0x2Eu);
         ~RenderInterface();
 
-        int exec();
+        int Exec();
 
-        virtual void PreInitialize(ImGuiIO& io){}
-        virtual void Ready(){}
-        virtual void EventHandle(SDL_Event event){};
-        virtual void RenderImgui(double delta){}
-        virtual void Render(double delta){}
+        virtual void PreInitialize(ImGuiIO &io) {}
+        virtual void Ready() {}
+        virtual void EventHandle(SDL_Event event) {};
+        virtual void RenderImgui(double delta) {}
+        virtual void Render(double delta) {}
 
         /*Application*/
         void CloseApp();
@@ -27,9 +28,10 @@ namespace Nanometro {
 
         /* Errors */
         std::string GetErrorLog() const;
+
     private:
         /* Flags */
-        uint32_t Flags = 0;
+        uint8_t Flags = 0;
 
         /* SDL */
         FSDL_Opengl Opengl;

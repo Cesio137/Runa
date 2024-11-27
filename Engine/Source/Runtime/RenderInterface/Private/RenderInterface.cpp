@@ -4,29 +4,29 @@
 
 namespace Nanometro {
 
-    RenderInterface::RenderInterface(uint32_t flags) { Flags = flags; }
+    RenderInterface::RenderInterface(uint8_t flags) { Flags = flags; }
 
     RenderInterface::~RenderInterface()
     {
-        if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
-        {
-            if (SDL_WasInit(SDL_INIT_VIDEO))
-                SDL_ImGuiDestroy();
-            Opengl.destroy();
+        if (Flags == 0x21u || Flags == 0x2Eu)
+        {   
+            SDL_ImGuiDestroy();
+            DestroyOpengl(Opengl);
         }
     }
 
-    int RenderInterface::exec()
+    int RenderInterface::Exec()
     {
-        if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
+        if (Flags == 0x21u || Flags == 0x2Eu)
         {
-            Opengl.init(Flags);
-            if (Opengl.getErrorCode() == 0)
-                Opengl_Render();
-            return Opengl.getErrorCode();
+            EOpenglVersion opengl_flags = static_cast<EOpenglVersion>(Flags);
+            int code = InitOpengl(Opengl, opengl_flags);
+            if (code) return code;
+            Opengl_Render();
+            return 0;
         }
-
-        return -1;
+        
+        return 1;
     }
 
     void RenderInterface::CloseApp()
@@ -39,8 +39,8 @@ namespace Nanometro {
     }
 
     std::string RenderInterface::GetErrorLog() const {
-        if (Flags == OPENGL_INIT_330 || Flags == OPENGL_INIT_460)
-            return Opengl.getErrorMessage();
+        if (Flags == 0x21u || Flags == 0x2Eu)
+            return SDL_GetError();
 
         return "";
     }

@@ -15,10 +15,10 @@ file(GLOB imgui_sources
         ${imgui_SOURCE_DIR}/Private/imgui_tables.cpp
         ${imgui_SOURCE_DIR}/Private/imgui_widgets.cpp
 
-        ${imgui_SOURCE_DIR}/Public/imgui_impl_sdl2.h
-        ${imgui_SOURCE_DIR}/Private/imgui_impl_sdl2.cpp
-        ${imgui_SOURCE_DIR}/Public/imgui_impl_sdlrenderer2.h
-        ${imgui_SOURCE_DIR}/Private/imgui_impl_sdlrenderer2.cpp
+        ${imgui_SOURCE_DIR}/Public/imgui_impl_sdl3.h
+        ${imgui_SOURCE_DIR}/Private/imgui_impl_sdl3.cpp
+        ${imgui_SOURCE_DIR}/Public/imgui_impl_sdlrenderer3.h
+        ${imgui_SOURCE_DIR}/Private/imgui_impl_sdlrenderer3.cpp
     )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -56,8 +56,7 @@ add_library(imgui STATIC ${imgui_sources})
 target_include_directories(imgui PUBLIC "${imgui_SOURCE_DIR}/Public" "${imgui_SOURCE_DIR}/Private")
 target_link_libraries(imgui
         PRIVATE
-        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
-        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+        SDL3::SDL3
         Vulkan
 )
 set_target_properties(imgui PROPERTIES FOLDER "Engine/Source/Thirdparty")

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Config.h>
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <string>
 
 namespace Nanometro
@@ -25,11 +25,12 @@ namespace Nanometro
         /* Init SDL Video */
         if (!SDL_WasInit(SDL_INIT_VIDEO))
         {
-            if (SDL_InitSubSystem(SDL_INIT_VIDEO))
+            if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
                 return SDL_INIT_VIDEO;
         }
 
         // Configure oepngl attribute
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         if (version == EOpenglVersion::CORE_460)
         {
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -44,14 +45,13 @@ namespace Nanometro
             opengl.version.first = 3;
             opengl.version.second = 3;
         }
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
         // Create a SDL window
-        opengl.window_ptr = SDL_CreateWindow(ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_RESIZABLE);
+        opengl.window_ptr = SDL_CreateWindow(ENGINE_NAME, 1024, 576, SDL_WINDOW_RESIZABLE);
         if (!opengl.window_ptr)
             return 1;
 
-        opengl.renderer_ptr = SDL_CreateRenderer(opengl.window_ptr, -1, 0);
+        opengl.renderer_ptr = SDL_CreateRenderer(opengl.window_ptr, "opengl");
         if (!opengl.renderer_ptr)
             return 1;
 
@@ -102,7 +102,7 @@ namespace Nanometro
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
             // Create a SDL window
-            SDL_Window *_window = SDL_CreateWindow("LastOpenglVersionSupported", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+            SDL_Window *_window = SDL_CreateWindow("LastOpenglVersionSupported", 1024, 576, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
             if (_window)
             {
                 version.first = GL_Version[i].first;

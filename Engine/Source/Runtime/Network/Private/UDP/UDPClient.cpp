@@ -25,7 +25,7 @@ namespace Nanometro
         if (!isConnected())
             return false;
 
-        udp.socket.async_receive_from(asio::buffer(rbuffer.rawData, rbuffer.rawData.size()), udp.endpoints,
+        udp.socket.async_receive_from(asio::buffer(rbuffer.raw_data, rbuffer.raw_data.size()), udp.endpoints,
                                       std::bind(&UDPClient::receive_from, this, asio::placeholders::error,
                                                 asio::placeholders::bytes_transferred));
         return true;
@@ -138,7 +138,7 @@ namespace Nanometro
             return;
         }
         consume_receive_buffer();
-        udp.socket.async_receive_from(asio::buffer(rbuffer.rawData, rbuffer.rawData.size()), udp.endpoints,
+        udp.socket.async_receive_from(asio::buffer(rbuffer.raw_data, rbuffer.raw_data.size()), udp.endpoints,
                                       std::bind(&UDPClient::receive_from, this, asio::placeholders::error,
                                                 asio::placeholders::bytes_transferred));
 
@@ -170,12 +170,12 @@ namespace Nanometro
 
         udp.attemps_fail = 0;
         rbuffer.size = bytes_recvd;
-        rbuffer.rawData.resize(bytes_recvd);
+        rbuffer.raw_data.resize(bytes_recvd);
         if (onMessageReceived)
             onMessageReceived(bytes_recvd, rbuffer);
 
         consume_receive_buffer();
-        udp.socket.async_receive_from(asio::buffer(rbuffer.rawData, rbuffer.rawData.size()), udp.endpoints,
+        udp.socket.async_receive_from(asio::buffer(rbuffer.raw_data, rbuffer.raw_data.size()), udp.endpoints,
                                       std::bind(&UDPClient::receive_from, this, asio::placeholders::error,
                                                 asio::placeholders::bytes_transferred));
     }

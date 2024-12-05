@@ -1,26 +1,20 @@
 {
   "dependencies": [
     {
-      "name": "sdl2",
-      "version>=": "2.30.8",
+      "name": "sdl3",
+      "default-features": false,
       "features": [
         {
-          "name": "wayland",
-          "platform": "linux"
+          "name": "vulkan"
         },
         {
-          "name": "x11",
+          "name": "wayland",
           "platform": "linux"
         }
       ]
     },
     {
       "name": "openssl"
-    },
-    {
-      "name": "dbus",
-      "default-features": false,
-      "platform": "linux"
     }
   ]
 }

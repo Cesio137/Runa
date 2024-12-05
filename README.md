@@ -1,6 +1,6 @@
-# Nanometro
+# Runa
 
-Nanometro (Decimal Metric System) is a set of tools planned to be an open-source, real-time, cross-platform 2D and 3D engine.
+Runa is a set of tools planned to be an open-source, real-time, cross-platform 2D and 3D engine.
 
 ## Suported Platforms
 
@@ -48,7 +48,7 @@ Nanometro (Decimal Metric System) is a set of tools planned to be an open-source
 ---
 
 ```shell
-git clone https://github.com/Cesio137/Nanometro.git
+git clone https://github.com/Cesio137/Runa.git
 ```
 
 ## Building the Engine

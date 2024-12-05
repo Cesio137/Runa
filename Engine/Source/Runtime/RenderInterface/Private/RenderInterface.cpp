@@ -57,15 +57,15 @@ namespace Nanometro {
         {
             if (SDL_WaitEvent(&event))
             {
-                ImGui_ImplSDL2_ProcessEvent(&event);
-                if (event.type == SDL_QUIT)
+                ImGui_ImplSDL3_ProcessEvent(&event);
+                if (event.type == SDL_EVENT_QUIT)
                     WindowShouldClose = true;
                 
                 EventHandle(event);
             }
 
-            ImGui_ImplSDLRenderer2_NewFrame();
-            ImGui_ImplSDL2_NewFrame();
+            ImGui_ImplSDLRenderer3_NewFrame();
+            ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
             RenderImgui(ImGui::GetIO().DeltaTime);
             ImGui::Render();
@@ -74,7 +74,7 @@ namespace Nanometro {
             SDL_SetRenderDrawColor(Opengl.renderer_ptr, 32, 32, 32, 255);
             // Render behind imgui
             Render(ImGui::GetIO().DeltaTime);
-            ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), Opengl.renderer_ptr);
+            ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), Opengl.renderer_ptr);
             // Render in front of imgui
             SDL_RenderPresent(Opengl.renderer_ptr);
         }

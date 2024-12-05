@@ -1,5 +1,4 @@
 set(RenderInterface_DIR ${CMAKE_CURRENT_LIST_DIR})
-find_package(SDL2 CONFIG REQUIRED)
 
 project(RenderInterface)
 file(GLOB_RECURSE RenderInterface_Sources "${RenderInterface_DIR}/Public/*.h" "${RenderInterface_DIR}/Public/*.cpp" "${RenderInterface_DIR}/Private/*.h" "${RenderInterface_DIR}/Private/*.cpp")
@@ -13,8 +12,7 @@ target_include_directories(RenderInterface
 target_link_libraries(RenderInterface
         PUBLIC
         Config
-        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
-        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+        SDL3::SDL3
         imgui        
 )
 

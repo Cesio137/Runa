@@ -1,4 +1,4 @@
-find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
 find_package(OpenSSL REQUIRED)
 
 add_subdirectory(Engine)

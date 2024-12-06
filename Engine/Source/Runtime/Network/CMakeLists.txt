@@ -1,13 +1,11 @@
 set(Network_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 project(Network)
-file(GLOB_RECURSE Network_Sources "${Network_DIR}/Public/*.h" "${Network_DIR}/Public/*.cpp" "${Network_DIR}/Private/*.h" "${Network_DIR}/Private/*.cpp")
+file(GLOB_RECURSE Network_Sources "${Network_DIR}/Public/*.hpp")
 add_library(Network STATIC ${Network_Sources})
 target_include_directories(Network
         PUBLIC
         "${Network_DIR}/Public"
-        PRIVATE
-        "${Network_DIR}/Private"
 )
 target_link_libraries(Network
         PUBLIC

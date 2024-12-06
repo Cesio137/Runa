@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Nanometro {
+namespace Runa {
 
     class Path {
     public:

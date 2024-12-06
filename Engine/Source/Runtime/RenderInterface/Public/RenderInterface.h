@@ -1,18 +1,16 @@
 #pragma once
 
-#include "Opengl/SDL_Opengl.h"
+#include "Backend/SDL_Backend.h"
 #include <imgui.h>
 
-namespace Nanometro
+namespace Runa
 {
 
     class RenderInterface
     {
     public:
-        RenderInterface(uint8_t flags = 0x2Eu);
+        RenderInterface(ESDL_Driver driver = ESDL_Driver::CORE_330);
         ~RenderInterface();
-
-        int Exec();
 
         virtual void PreInitialize(ImGuiIO &io) {}
         virtual void Ready() {}
@@ -21,21 +19,16 @@ namespace Nanometro
         virtual void Render(double delta) {}
 
         /*Application*/
+        int Exec();
         void CloseApp();
-
-        /* SDL */
-        std::pair<uint8_t, uint8_t> GetOpenglVersion() const;
-
-        /* Errors */
-        std::string GetErrorLog() const;
 
     private:
         /* Flags */
-        uint8_t Flags = 0;
+        ESDL_Driver Driver;
 
         /* SDL */
-        FSDL_Opengl Opengl;
-        void Opengl_Render();
+        FSDL_Backend Backend;
+        void Render();
         /* SDL Events */
         bool WindowShouldClose = false;
     };

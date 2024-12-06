@@ -1,32 +1,23 @@
 #include "RenderInterface.h"
-#include "Opengl/SDL_OpenglContext.h"
+#include "Backend/SDL_ImGui.h"
 #include <iostream>
 
-namespace Nanometro {
+namespace Runa {
 
-    RenderInterface::RenderInterface(uint8_t flags) { Flags = flags; }
+    RenderInterface::RenderInterface(ESDL_Driver driver) { Driver = driver; }
 
     RenderInterface::~RenderInterface()
     {
-        if (Flags == 0x21u || Flags == 0x2Eu)
-        {   
-            SDL_ImGuiDestroy();
-            DestroyOpengl(Opengl);
-        }
+        SDL_ImGuiDestroy();
+        SDL_Quit();
     }
 
     int RenderInterface::Exec()
     {
-        if (Flags == 0x21u || Flags == 0x2Eu)
-        {
-            EOpenglVersion opengl_flags = static_cast<EOpenglVersion>(Flags);
-            int code = InitOpengl(Opengl, opengl_flags);
-            if (code) return code;
-            Opengl_Render();
-            return 0;
-        }
-        
-        return 1;
+        int code = InitDriver(Backend, Driver);
+        if (code) return code;
+        Render();
+        return 0;
     }
 
     void RenderInterface::CloseApp()
@@ -34,20 +25,9 @@ namespace Nanometro {
         WindowShouldClose = true;
     }
 
-    std::pair<uint8_t, uint8_t> RenderInterface::GetOpenglVersion() const {
-        return Opengl.version;
-    }
-
-    std::string RenderInterface::GetErrorLog() const {
-        if (Flags == 0x21u || Flags == 0x2Eu)
-            return SDL_GetError();
-
-        return "";
-    }
-
-    void RenderInterface::Opengl_Render()
+    void RenderInterface::Render()
     {
-        SDL_ImGuiInit(Opengl);
+        SDL_ImGuiInit(Backend);
         PreInitialize(ImGui::GetIO());
         // Ready
         Ready();
@@ -70,13 +50,13 @@ namespace Nanometro {
             RenderImgui(ImGui::GetIO().DeltaTime);
             ImGui::Render();
 
-            SDL_RenderClear(Opengl.renderer_ptr);
-            SDL_SetRenderDrawColor(Opengl.renderer_ptr, 32, 32, 32, 255);
+            SDL_RenderClear(Backend.renderer_ptr);
+            SDL_SetRenderDrawColor(Backend.renderer_ptr, 32, 32, 32, 255);
             // Render behind imgui
             Render(ImGui::GetIO().DeltaTime);
-            ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), Opengl.renderer_ptr);
+            ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), Backend.renderer_ptr);
             // Render in front of imgui
-            SDL_RenderPresent(Opengl.renderer_ptr);
+            SDL_RenderPresent(Backend.renderer_ptr);
         }
     }
 }

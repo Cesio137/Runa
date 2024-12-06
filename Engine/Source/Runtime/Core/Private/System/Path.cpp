@@ -2,7 +2,7 @@
 #include <filesystem>
 #include "System/Enviroment.h"
 
-namespace Nanometro {
+namespace Runa {
     std::string Path::nativeSeparator(std::string dir)
     {
         if (dir.empty())

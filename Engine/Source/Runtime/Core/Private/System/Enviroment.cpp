@@ -1,6 +1,6 @@
 #include "System/Enviroment.h"
 
-namespace Nanometro {
+namespace Runa {
     std::string Enviroment::GetVariable(std::string varname)
     {
         std::string value;

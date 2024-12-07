@@ -9,15 +9,21 @@ int main(int argc, char *argv[])
     int w, h;
     float x, y;
     float scale = 1.0f;
+    bool imgui_showdenowindow = true;
+    rhi.OnPreInitialize = [&](ImGuiIO &io) {
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    };
     rhi.OnReady = [&]() {
         rhi.SetVSync(1);
     };
     rhi.OnRenderImgui = [&](ImGuiIO &io) {
-        ImGui::Begin("Runa Interface");
+        bool show = true;
+        ImGui::Begin("Runa Interface", &show, ImGuiWindowFlags_NoTitleBar | ImGuiDockNodeFlags_PassthruCentralNode);
         std::string text = "FPS: " + std::to_string(io.Framerate);
         ImGui::Text(text.c_str());
         ImGui::SliderFloat("Triangle scale", &scale, 0.0f, 2.0f);
         ImGui::End();
+        ImGui::ShowDemoWindow(&imgui_showdenowindow);
     };
     rhi.OnRender = [&](float delta) {
         SDL_GetWindowSizeInPixels(rhi.GetBackend()->window_ptr, &w, &h);

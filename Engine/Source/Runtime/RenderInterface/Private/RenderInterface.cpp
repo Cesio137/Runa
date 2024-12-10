@@ -43,13 +43,6 @@ namespace Runa {
         return &m_Backend;
     }
 
-    int RenderInterface::m_GetSwapInterval(const char *name) {
-        int interval = 0;
-        if (name == "opengl")
-            SDL_GL_GetSwapInterval(&interval);
-        return interval;
-    }
-
     void RenderInterface::m_Renderer() {
         SDL_ImGuiInit(m_Backend);
         PreInitialize(ImGui::GetIO());

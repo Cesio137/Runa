@@ -54,7 +54,6 @@ namespace Runa
 
         /*Application*/
         int m_FrameRateLimit = 0;
-        int m_GetSwapInterval(const char* name);
 
         /* SDL */
         FSDL_Backend m_Backend;

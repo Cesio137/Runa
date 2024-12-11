@@ -1,19 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "sdl3",
-      "default-features": false,
-      "features": [
-        {
-          "name": "vulkan"
-        },
-        {
-          "name": "wayland",
-          "platform": "linux"
-        }
-      ]
-    },
-    {
       "name": "openssl"
     }
   ]

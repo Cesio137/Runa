@@ -9,36 +9,14 @@
 namespace Runa {
     class UDPClient {
     public:
-        ~UDPClient() {
-            should_stop_context = true;
-            udp.resolver.cancel();
-            if (is_connected()) close();
-            thread_pool->stop();
-            rbuffer.raw_data.clear();
-            rbuffer.raw_data.shrink_to_fit();
-        }
+        ~UDPClient();
 
         /*HOST | LOCAL*/
         void set_host(const std::string &ip = "localhost", const std::string &port = "80") {
             host = ip;
             service = port;
         }
-
-        std::string get_local_adress() const {
-            return udp.socket.local_endpoint().address().to_string();
-        }
-
-        int get_local_port() const {
-            return udp.socket.local_endpoint().port();
-        }
-
-        std::string get_remote_adress() const {
-            return udp.socket.remote_endpoint().address().to_string();
-        }
-
-        int get_remote_port() const {
-            return udp.socket.remote_endpoint().port();
-        }
+        const asio::ip::udp::socket &get_socket() const { return udp.socket; };
 
         /*SETTINGS*/
         void set_timeout(uint8_t value = 3) { timeout = value; }
@@ -54,7 +32,7 @@ namespace Runa {
 
         /*MESSAGE*/
         bool send(const std::string &message) {
-            if (!thread_pool && !is_connected() && !message.empty())
+            if (!thread_pool && !get_socket().is_open() && !message.empty())
                 return false;
 
             asio::post(*thread_pool, std::bind(&UDPClient::package_string, this, message));
@@ -62,7 +40,7 @@ namespace Runa {
         }
 
         bool send_raw(const std::vector<std::byte> &buffer) {
-            if (!thread_pool && !is_connected() && !buffer.empty())
+            if (!thread_pool && !get_socket().is_open() && !buffer.empty())
                 return false;
 
             asio::post(*thread_pool, std::bind(&UDPClient::package_buffer, this, buffer));
@@ -70,7 +48,7 @@ namespace Runa {
         }
 
         bool async_read() {
-            if (!is_connected())
+            if (!get_socket().is_open())
                 return false;
 
             udp.socket.async_receive_from(asio::buffer(rbuffer.raw_data, rbuffer.raw_data.size()), udp.endpoints,
@@ -81,14 +59,12 @@ namespace Runa {
 
         /*CONNECTION*/
         bool connect() {
-            if (!thread_pool && is_connected())
+            if (!thread_pool && get_socket().is_open())
                 return false;
 
             asio::post(*thread_pool, std::bind(&UDPClient::run_context_thread, this));
             return true;
         }
-
-        bool is_connected() const { return udp.socket.is_open(); }
 
         void close() {
             asio::error_code ec_shutdown;

@@ -1,8 +1,8 @@
 set(ASIO_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 project(asio)
-file(GLOB_RECURSE Asio_Sources "${ASIO_DIR}/include/*.h")
-add_library(asio INTERFACE ${Asio_Sources})
+file(GLOB_RECURSE ASIO_SOURCES "${ASIO_DIR}/include/*.h")
+add_library(asio INTERFACE ${ASIO_SOURCES})
 target_include_directories(asio
         INTERFACE
         "${ASIO_DIR}/include"

@@ -59,5 +59,5 @@ target_link_libraries(imgui
         SDL3-static
         vulkan
 )
-
+set_target_properties(imgui PROPERTIES FOLDER "/engine/thirdparty" LINKER_LANGUAGE CXX)
 

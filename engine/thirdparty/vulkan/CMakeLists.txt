@@ -7,3 +7,4 @@ target_include_directories(vulkan
         INTERFACE
         "${VULKAN_DIR}/include"
 )
+set_target_properties(vulkan PROPERTIES FOLDER "/engine/thirdparty" LINKER_LANGUAGE CXX)

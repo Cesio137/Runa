@@ -8,16 +8,40 @@ add_subdirectory(${ENGINE_DIR}/src)
 
 add_executable(${CMAKE_PROJECT_NAME} ${RUNA_HEADERS} ${RUNA_SOURCES})
 
-target_include_directories(${CMAKE_PROJECT_NAME} 
-    PUBLIC
-    ${ENGINE_DIR}/include
+target_include_directories(${CMAKE_PROJECT_NAME}
+        PUBLIC
+        ${ENGINE_DIR}/include
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} 
-    PUBLIC
-    config
-    SDL3-static
-    imgui
-    asio
-    sol
+target_link_libraries(${CMAKE_PROJECT_NAME}
+        PUBLIC
+        config
+        #GRAPHICS LIBRARY
+        SDL3::SDL3-static
+        glm
+        #USER INTERFACE LIBRARY
+        imgui
+        #SCRIPT LANGUAGE LIBRARY
+        Luau.VM
+        Luau.Compiler
+        #CRYPTO LIBRARY
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        #NETWORKING/DATA LIBRARY
+        asio
+        simdjson
+        #COMPRESSION LIBRARY
+        zstd::libzstd
+        #IMAGE LIBRARY
+        stb
+        unofficial::tinyexr::tinyexr
+        basisu::basisu_encoder
+        #MEDIA LIBRARY
+        OpenAL::OpenAL
+        Ogg::ogg
+        Vorbis::vorbis
+        #PHYSICS LIBRARY
+        Jolt::Jolt
+        #OBJ LIBRARY
+        unoffical::openfbx::openfbx
 )

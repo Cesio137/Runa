@@ -1,7 +1,31 @@
 {
   "dependencies": [
     {
+      "name": "zstd"
+    },
+    {
+      "name": "basisu"
+    },
+    {
       "name": "openssl"
+    },
+    {
+      "name": "openal-soft"
+    },
+    {
+      "name": "libogg"
+    },
+    {
+      "name": "libvorbis"
+    },
+    {
+      "name": "openfbx"
+    },
+    {
+      "name": "tinyexr"
+    },
+    {
+      "name": "joltphysics"
     }
   ]
 }

@@ -2,7 +2,7 @@ set(THIRDPARTY_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 #VCPKG
 find_package(basisu CONFIG REQUIRED)
-find_package(OpenSSL REQUIRED)
+#find_package(OpenSSL REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
 find_package(unofficial-openfbx CONFIG REQUIRED)
 find_package(Vorbis CONFIG REQUIRED)
@@ -19,6 +19,7 @@ set(FETCHCONTENT_QUIET OFF)
 #GRAPHICS LIBRARY
 add_subdirectory(${THIRDPARTY_DIR}/vulkan)
 add_subdirectory(${THIRDPARTY_DIR}/sdl)
+add_subdirectory(${THIRDPARTY_DIR}/glad)
 add_subdirectory(${THIRDPARTY_DIR}/glm)
 
 #USER INTERFACE LIBRARY
@@ -35,4 +36,4 @@ add_subdirectory(${THIRDPARTY_DIR}/simdjson)
 add_subdirectory(${THIRDPARTY_DIR}/stb)
 
 #PHYSICS LIBRARY
-add_subdirectory(${THIRDPARTY_DIR}/box2d)
+#add_subdirectory(${THIRDPARTY_DIR}/box2d)

@@ -17,8 +17,8 @@ set(IMGUI_SOURCES
 
         ${IMGUI_SOURCE_DIR}/include/imgui_impl_sdl3.h
         ${IMGUI_SOURCE_DIR}/src/imgui_impl_sdl3.cpp
-        ${IMGUI_SOURCE_DIR}/include/imgui_impl_sdlrenderer3.h
-        ${IMGUI_SOURCE_DIR}/src/imgui_impl_sdlrenderer3.cpp
+        ${IMGUI_SOURCE_DIR}/include/imgui_impl_opengl3.h
+        ${IMGUI_SOURCE_DIR}/src/imgui_impl_opengl3.cpp
     )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -57,6 +57,7 @@ target_include_directories(imgui PUBLIC "${IMGUI_SOURCE_DIR}/include")
 target_link_libraries(imgui
         PUBLIC
         SDL3-static
+        glad
         vulkan
 )
 set_target_properties(imgui PROPERTIES FOLDER "/engine/thirdparty" LINKER_LANGUAGE CXX)

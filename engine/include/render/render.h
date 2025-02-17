@@ -38,7 +38,7 @@ namespace Runa
         int GetFrameRateLimit();
 
         /*Backend*/
-        const FSDL_Backend *GetBackend();
+        const FSDL_Backend &GetBackend();
 
         /*Events*/
         std::function<void(ImGuiIO &)> OnPreInitialize;

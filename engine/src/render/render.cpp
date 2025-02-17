@@ -23,11 +23,11 @@ namespace Runa {
     }
 
     bool RenderInterface::SetVSync(int vsync) {
-        return SDL_SetRenderVSync(m_Backend.renderer_ptr, vsync);
+        return SDL_GL_SetSwapInterval(vsync);
     }
 
     bool RenderInterface::GetVSync(int &vsync) {
-        return SDL_GetRenderVSync(m_Backend.renderer_ptr, &vsync);
+        return SDL_GL_GetSwapInterval(&vsync);
     }
 
     void RenderInterface::SetFrameRateLimit(int fps) {
@@ -39,11 +39,12 @@ namespace Runa {
         return m_FrameRateLimit;
     }
 
-    const FSDL_Backend *RenderInterface::GetBackend() {
-        return &m_Backend;
+    const FSDL_Backend &RenderInterface::GetBackend() {
+        return m_Backend;
     }
 
     void RenderInterface::m_Renderer() {
+        glViewport(0, 0, 1024, 576);
         SDL_ImGuiInit(m_Backend);
         PreInitialize(ImGui::GetIO());
         // Framerate limit
@@ -63,23 +64,30 @@ namespace Runa {
                 ImGui_ImplSDL3_ProcessEvent(&event);
                 if (event.type == SDL_EVENT_QUIT)
                     m_WindowShouldClose = true;
-
+                if (event.type == SDL_EVENT_WINDOW_RESIZED) {
+                    int w = 0, h = 0;
+                    SDL_GetWindowSizeInPixels(m_Backend.window_ptr, &w, &h);
+                    glViewport(0, 0, w, h);
+                }
                 EventHandle(event);
             }
+
             // Render imgui
-            ImGui_ImplSDLRenderer3_NewFrame();
+            ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
-            RenderImgui(ImGui::GetIO());
-            ImGui::Render();
 
             // Render behind imgui
-            SDL_RenderClear(m_Backend.renderer_ptr);
-            SDL_SetRenderDrawColor(m_Backend.renderer_ptr, 32, 32, 32, 255);
+            glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		    glClear(GL_COLOR_BUFFER_BIT);
             Render(ImGui::GetIO().DeltaTime);
+
+            RenderImgui(ImGui::GetIO());
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            
+            SDL_GL_SwapWindow(m_Backend.window_ptr);
             // Finish render
-            ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_Backend.renderer_ptr);
-            SDL_RenderPresent(m_Backend.renderer_ptr);
             elapsed = SDL_GetTicksNS() - start;
             if (frame_time > 0 && frame_time > elapsed) {
                 SDL_DelayPrecise(frame_time - elapsed);

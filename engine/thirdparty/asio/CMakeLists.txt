@@ -7,9 +7,9 @@ target_include_directories(asio
         INTERFACE
         "${ASIO_DIR}/include"
 )
-target_link_libraries(asio
+#[[target_link_libraries(asio
         INTERFACE
         $<TARGET_NAME_IF_EXISTS:OpenSSL::SSL>
         $<TARGET_NAME_IF_EXISTS:OpenSSL::Crypto>
-)
+)]]
 set_target_properties(asio PROPERTIES FOLDER "/engine/thirdparty" LINKER_LANGUAGE CXX)

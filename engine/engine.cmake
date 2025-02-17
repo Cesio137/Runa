@@ -18,6 +18,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         config
         #GRAPHICS LIBRARY
         SDL3::SDL3-static
+        glad
         glm
         #USER INTERFACE LIBRARY
         imgui
@@ -25,8 +26,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         Luau.VM
         Luau.Compiler
         #CRYPTO LIBRARY
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        
         #NETWORKING/DATA LIBRARY
         asio
         simdjson

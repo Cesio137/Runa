@@ -10,7 +10,6 @@ target_include_directories(glad
 )
 target_link_libraries(glad
         PUBLIC
-        SDL3-static
         vulkan
 )
 set_target_properties(glad PROPERTIES FOLDER "/engine/thirdparty")

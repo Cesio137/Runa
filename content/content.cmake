@@ -1,0 +1,13 @@
+set(CONTENT_DIR ${CMAKE_CURRENT_LIST_DIR})
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    set(RESOURCES_DEST_DIR "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/resources")
+else()
+    set(RESOURCES_DEST_DIR "${CMAKE_BINARY_DIR}/resources")
+endif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+
+
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CONTENT_DIR}/resources ${RESOURCES_DEST_DIR}
+)

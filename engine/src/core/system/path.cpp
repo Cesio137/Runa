@@ -2,9 +2,8 @@
 #include "core/system/enviroment.h"
 #include <filesystem>
 
-namespace Runa {
-    std::string Path::nativeSeparator(std::string dir)
-    {
+namespace Runa::System {
+    std::string NativeSeparator(const std::string &dir) {
         if (dir.empty())
             return "";
 
@@ -13,84 +12,77 @@ namespace Runa {
         return directory.make_preferred().string();
     }
 
-    std::string Path::HomeLocation()
-    {
+    std::string HomeDir() {
         std::string path;
 
 #ifdef _WIN64
-        if (!Enviroment::GetVariable("USERPROFILE").empty())
-        {
-            path = Enviroment::GetVariable("USERPROFILE");
+        if (!GetVariable("USERPROFILE").empty()) {
+            path = GetVariable("USERPROFILE");
         }
 #else
-        if (!Enviroment::GetVariable("HOME").empty())
+        if (!GetVariable("HOME").empty())
         {
-            path = Enviroment::GetVariable("HOME");
+            path = GetVariable("HOME");
         }
 #endif
 
-        return  path;
+        return path;
     }
 
-    std::string Path::AppDataLocation()
-    {
+    std::string AppDataDir() {
         std::string path;
 
-#ifdef _WIN32
-        if (!Enviroment::GetVariable("APPDATA").empty())
-        {
-            path = Enviroment::GetVariable("APPDATA");
+#ifdef _WIN64
+        if (!GetVariable("APPDATA").empty()) {
+            path = GetVariable("APPDATA");
         }
 #else
         if (!HomeLocation().empty())
         {
-            path = HomeLocation() + nativeSeparator("/.local/share");
+            path = HomeLocation() + NativeSeparator("/.local/share");
         }
 #endif
 
-        return  path;
+        return path;
     }
 
-    std::string Path::DesktopLocation()
-    {
-        if (!HomeLocation().empty())
-        {
-            return HomeLocation() + nativeSeparator("/Desktop");
+    std::string DesktopDir() {
+        if (!HomeDir().empty()) {
+            return HomeDir() + NativeSeparator("/Desktop");
         }
         return "";
     }
 
-    std::string Path::DownloadLocation()
-    {
-        if (!HomeLocation().empty())
-        {
-            return HomeLocation() + nativeSeparator("/Downloads");
+    std::string DownloadDir() {
+        if (!HomeDir().empty()) {
+            return HomeDir() + NativeSeparator("/Downloads");
         }
         return "";
     }
 
-    std::string Path::DocumentsLocation()
-    {
-        if (!HomeLocation().empty())
-        {
-            return HomeLocation() + nativeSeparator("/Documents");
+    std::string DocumentsDir() {
+        if (!HomeDir().empty()) {
+            return HomeDir() + NativeSeparator("/Documents");
         }
         return "";
     }
 
-    std::string Path::GameContentLocation()
-    {
-        return std::filesystem::current_path().string() + nativeSeparator("Game/Content");
+    std::string GameContentDir() {
+        return std::filesystem::current_path().string() + NativeSeparator("Game/Content");
     }
 
-    std::string Path::GetAsset(std::string dir)
+    std::string CurrentDir()
     {
-        std::string asset = GameContentLocation();
-        if (!dir.starts_with("/") || !dir.starts_with("\\"))
-        {
-            asset.append(nativeSeparator("/"));
+        return std::filesystem::current_path().string();
+    }
+
+    std::string GetAsset(const std::string &dir)
+    {
+        std::string asset = GameContentDir();
+        if (!dir.starts_with("/") || !dir.starts_with("\\")) {
+            asset.append(NativeSeparator("/"));
         }
-        asset.append(nativeSeparator(dir));
+        asset.append(NativeSeparator(dir));
         return asset;
     }
 } // Nanometro

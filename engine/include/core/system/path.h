@@ -2,18 +2,22 @@
 
 #include <string>
 
-namespace Runa {
+namespace Runa::System {
+    std::string NativeSeparator(const std::string &dir);
 
-    class Path {
-    public:
-        static std::string nativeSeparator(std::string dir);
-        static std::string HomeLocation();
-        static std::string AppDataLocation();
-        static std::string DesktopLocation();
-        static std::string DownloadLocation();
-        static std::string DocumentsLocation();
-        static std::string GameContentLocation();
-        static std::string GetAsset(std::string dir);
-    };
+    std::string HomeDir();
 
-} // Nanometro
+    std::string AppDataDir();
+
+    std::string DesktopDir();
+
+    std::string DownloadDir();
+
+    std::string DocumentsDir();
+
+    std::string GameContentDir();
+
+    std::string CurrentDir();
+
+    std::string GetAsset(const std::string &dir);
+}

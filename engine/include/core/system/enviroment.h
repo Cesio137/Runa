@@ -2,12 +2,8 @@
 
 #include <string>
 
-namespace Runa {
+namespace Runa::System {
+    std::string GetVariable(const std::string &varname);
 
-    class Enviroment {
-    public:
-        static std::string GetVariable(std::string varname);
-        static std::string GetUserName();
-    };
-
-} // Nanometro
+    std::string GetUserName();
+}

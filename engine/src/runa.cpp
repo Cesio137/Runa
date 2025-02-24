@@ -1,76 +1,74 @@
+
 #include <array>
 #include <iostream>
-#include "render/render.h"
+#include <cmath>
+#include <filesystem>
+#ifndef _WIN64
+#include <memory>
+#endif
+#include "core/system/path.h"
+#include "render/glrender.h"
+#include "opengl/element_buffer.h"
+#include "opengl/vertex_array.h"
+#include "opengl/vertex_buffer.h"
+#include "opengl/element_count.h"
+#include "opengl/texture.h"
 #include "glm/vec4.hpp"
+#include "core/system/file.h"
+#include "shaders/glshaders.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 using namespace Runa;
 
-// Vertex Shader source code
-const char* vertexShaderSource = "#version 460 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-//Fragment Shader source code
-const char* fragmentShaderSource = "#version 460 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
-"}\n\0";
-
-int main(int argc, char *argv[])
-{
-    RenderInterface rhi(ESDL_Driver::CORE_460);
-
-    GLuint vertex_shader;
-    GLuint fragment_shader;
-	GLuint shader_program;
+int main() {
+    stbi_set_flip_vertically_on_load(true);
+    Render::OpenglInterface rhi(Render::CORE_460);
+    std::unique_ptr<Shaders::GLShader> shader;
     GLfloat vertices[] =
-	{
-		-0.25f, -0.25f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
-		0.25f, -0.25f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
-		0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f // Upper corner
-	};
-    GLuint VAO, VBO;
+    {  /*   COORDENATES   */    /*    COLOR    */
+        -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,       0.0f, 0.0f,// Lower left corner
+        -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,       0.0f, 1.0f,// Upper left corner
+         0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,       1.0f, 1.0f,// Upper right corner
+         0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,       1.0f, 0.0f,// Lower right corner
+    };
+    GLuint indices[] = {
+        0, 2, 1, // Lower triangle
+        0, 3, 2, // Upper triangle
+    };
+    std::unique_ptr<Opengl::ElementBuffer> EBO;
+    std::unique_ptr<Opengl::VertexArray> VAO;
+    std::unique_ptr<Opengl::VertexBuffer> VBO;
+    std::unique_ptr<Opengl::Texture> Tex;
+
+    GLuint uniID;
 
     rhi.OnPreInitialize = [&](ImGuiIO &io) {
-
     };
     rhi.OnReady = [&]() {
-        vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertex_shader, 1, &vertexShaderSource, NULL);
-        glCompileShader(vertex_shader);
+        rhi.SetVSync(0);
+        rhi.SetFrameRateLimit(60);
 
-        fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-	    glShaderSource(fragment_shader, 1, &fragmentShaderSource, NULL);
-	    glCompileShader(fragment_shader);
+        shader = std::make_unique<Shaders::GLShader>(System::CurrentDir() + "/resources/shaders/default.vert", System::CurrentDir() + "/resources/shaders/default.frag");
+        VAO = std::make_unique<Opengl::VertexArray>();
+        VAO->Bind();
+        VBO = std::make_unique<Opengl::VertexBuffer>(vertices, sizeof(vertices));
+        EBO = std::make_unique<Opengl::ElementBuffer>(indices, sizeof(indices));
+        VAO->EnableVertexAttribArray(*VBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void *) 0);
+        VAO->EnableVertexAttribArray(*VBO, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+        VAO->EnableVertexAttribArray(*VBO, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
-        shader_program = glCreateProgram();
-        glAttachShader(shader_program, vertex_shader);
-        glAttachShader(shader_program, fragment_shader);
-        glLinkProgram(shader_program);
-
-        glDeleteShader(vertex_shader);
-        glDeleteShader(fragment_shader);
-
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-
-        glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
+        VAO->Unbind();
+        VBO->Unbind();
+        EBO->Unbind(); 
+        
+        uniID = glGetUniformLocation(shader->GetProgramID(), "scale");
+        std::string workdir = System::CurrentDir() + "/resources/textures/albedo.jpg";
+        workdir = System::NativeSeparator(workdir);
+        Tex = std::make_unique<Opengl::Texture>(workdir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+        Tex->SetUniformLocation(*shader, "tex0", 0);
     };
     rhi.OnEventHandle = [&](SDL_Event event) {
-        
     };
     rhi.OnRenderImgui = [&](ImGuiIO &io) {
         ImGui::Begin("teste");
@@ -78,16 +76,14 @@ int main(int argc, char *argv[])
         ImGui::End();
     };
     rhi.OnRender = [&](float delta) {
-        glUseProgram(shader_program);
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+        shader->UseProgram();
+        glUniform1f(uniID, 0.5f);
+        Tex->Bind();
+        VAO->Bind();
+        glDrawElements(GL_TRIANGLES, Opengl::Elements::Count, GL_UNSIGNED_INT, 0);
     };
     int code = rhi.Exec();
-    glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteProgram(shader_program);
-    if (code)
-    {
+    if (code) {
         std::cerr << SDL_GetError() << std::endl;
         return code;
     }

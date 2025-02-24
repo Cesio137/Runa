@@ -1,22 +1,18 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include <glad/gl.h>
+#include <glad/glad.h>
 #include <utility>
 #include <config.h>
 
-namespace Runa {
-    enum ESDL_Driver : uint8_t {
-        ES_320 = 0,
-        CORE_330 = 1,
-        CORE_460 = 2,
-        VULKAN = 3,
-        D3D11 = 4,
-        D3D12 = 5,
+namespace Runa::Render {
+    enum ESDL_GL_Driver : uint8_t {
+        CORE_320_ES = 0,
+        CORE_460 = 1,
     };
 
-    struct FSDL_Backend {
-        ~FSDL_Backend() {
+    struct FSDL_GL_Backend {
+        ~FSDL_GL_Backend() {
             if (gl_context)
                 SDL_GL_DestroyContext(gl_context);
             if (window_ptr)
@@ -25,8 +21,8 @@ namespace Runa {
 
         SDL_Window *window_ptr = nullptr;
         SDL_GLContext gl_context = nullptr;
+        const char *glsl_version = "";
     };
 
-    int InitDriver(FSDL_Backend &backend, ESDL_Driver driver = ESDL_Driver::CORE_330);
-    std::pair<uint8_t, uint8_t> GetLatestOpenglVersionSupported();
+    int InitGLDriver(FSDL_GL_Backend &backend, ESDL_GL_Driver driver = ESDL_GL_Driver::CORE_460);
 }

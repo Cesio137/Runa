@@ -1,21 +1,19 @@
-#pragma once
-
 #include "render/backend/sdl_imgui.h"
 
-namespace Runa {
-    void SDL_ImGuiInit(FSDL_Backend &backend) {
+namespace Runa::Render {
+    void SDL_GL_ImGuiInit(FSDL_GL_Backend &backend) {
         if (!backend.window_ptr || !backend.gl_context)
             return;
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
-        (void)io;
+        (void) io;
         ImGui_ImplSDL3_InitForOpenGL(backend.window_ptr, backend.gl_context);
-        ImGui_ImplOpenGL3_Init("#version 460");
+        ImGui_ImplOpenGL3_Init(backend.glsl_version);
     }
 
-    void SDL_ImGuiDestroy() {
+    void SDL_GL_ImGuiDestroy() {
         ImGui_ImplSDL3_Shutdown();
         ImGui_ImplOpenGL3_Shutdown();
         ImGui::DestroyContext();

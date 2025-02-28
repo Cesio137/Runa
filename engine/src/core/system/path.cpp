@@ -37,9 +37,9 @@ namespace Runa::System {
             path = GetVariable("APPDATA");
         }
 #else
-        if (!HomeLocation().empty())
+        if (!HomeDir().empty())
         {
-            path = HomeLocation() + NativeSeparator("/.local/share");
+            path = HomeDir() + NativeSeparator("/.local/share");
         }
 #endif
 

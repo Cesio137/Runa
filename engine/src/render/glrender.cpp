@@ -60,7 +60,7 @@ namespace Runa::Render {
             start = SDL_GetTicksNS();
             GetVSync(vsync);
             frame_time = FrameRateLimit > 0 && vsync == 0 ? 1000000000 / FrameRateLimit : 0;
-            if (SDL_PollEvent(&event)) {
+            while (SDL_PollEvent(&event)) {
                 ImGui_ImplSDL3_ProcessEvent(&event);
                 if (event.type == SDL_EVENT_QUIT)
                     WindowShouldClose = true;

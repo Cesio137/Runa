@@ -46,8 +46,7 @@ int main() {
     rhi.OnPreInitialize = [&](ImGuiIO &io) {
     };
     rhi.OnReady = [&]() {
-        rhi.SetVSync(0);
-        rhi.SetFrameRateLimit(60);
+        rhi.SetVSync(1);
 
         shader = std::make_unique<Shaders::GLShader>(System::CurrentDir() + "/resources/shaders/default.vert", System::CurrentDir() + "/resources/shaders/default.frag");
         VAO = std::make_unique<Opengl::VertexArray>();

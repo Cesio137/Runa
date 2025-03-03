@@ -1,6 +1,6 @@
 FetchContent_Declare(
     SDL3
-    URL https://github.com/libsdl-org/SDL/releases/download/release-3.2.4/SDL3-3.2.4.tar.gz
+    URL https://github.com/libsdl-org/SDL/releases/download/release-3.2.6/SDL3-3.2.6.tar.gz
 )
 
 if (NOT SDL3_POPULATED)

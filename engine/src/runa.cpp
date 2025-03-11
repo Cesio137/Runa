@@ -47,7 +47,6 @@ int main() {
     };
     rhi.OnReady = [&]() {
         rhi.SetVSync(1);
-
         shader = std::make_unique<Shaders::GLShader>(System::CurrentDir() + "/resources/shaders/default.vert", System::CurrentDir() + "/resources/shaders/default.frag");
         VAO = std::make_unique<Opengl::VertexArray>();
         VAO->Bind();

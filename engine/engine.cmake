@@ -38,8 +38,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         basisu::basisu_encoder
         #MEDIA LIBRARY
         OpenAL::OpenAL
-        Ogg::ogg
-        Vorbis::vorbis
         #PHYSICS LIBRARY
         Jolt::Jolt
         #OBJ LIBRARY

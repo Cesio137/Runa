@@ -1,6 +1,7 @@
 FetchContent_Declare(
         BOX2D
-        URL https://github.com/erincatto/box2d/archive/refs/tags/v3.0.0.tar.gz
+        GIT_REPOSITORY https://github.com/erincatto/box2d.git
+        TAG v3.1.0
 )
 
 if (NOT BOX2D_POPULATED)

@@ -1,7 +1,6 @@
 FetchContent_Declare(
         BOX2D
-        GIT_REPOSITORY https://github.com/erincatto/box2d.git
-        TAG v3.1.0
+        URL https://github.com/erincatto/box2d/archive/refs/tags/v3.1.0.tar.gz
 )
 
 if (NOT BOX2D_POPULATED)
@@ -15,4 +14,3 @@ endif ()
 FetchContent_MakeAvailable(BOX2D)
 
 set_target_properties(box2d PROPERTIES FOLDER "/engine/thirdparty/box2d")
-set_target_properties(simde PROPERTIES FOLDER "/engine/thirdparty/box2d")

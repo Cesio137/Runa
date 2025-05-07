@@ -42,4 +42,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         Jolt::Jolt
         #OBJ LIBRARY
         unoffical::openfbx::openfbx
+        #STL
+        EASTL
 )

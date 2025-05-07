@@ -34,4 +34,7 @@ add_subdirectory(${THIRDPARTY_DIR}/simdjson)
 add_subdirectory(${THIRDPARTY_DIR}/stb)
 
 #PHYSICS LIBRARY
-#add_subdirectory(${THIRDPARTY_DIR}/box2d)
+add_subdirectory(${THIRDPARTY_DIR}/box2d)
+
+#STL
+add_subdirectory(${THIRDPARTY_DIR}/eastl)

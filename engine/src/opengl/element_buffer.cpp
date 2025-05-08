@@ -6,15 +6,15 @@ namespace Runa::Opengl {
         glGenBuffers(1, &BufferID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
-        Opengl::Elements::Count += size / sizeof(GLuint);
+        Elements::Count += size / sizeof(GLuint);
     }
 
     ElementBuffer::~ElementBuffer() {
-        if (Opengl::Elements::Count - ElementSize < 0) {
-            Opengl::Elements::Count = 0;
+        if (Elements::Count - ElementSize < 0) {
+            Elements::Count = 0;
         }
         else {
-            Opengl::Elements::Count -= ElementSize;
+            Elements::Count -= ElementSize;
         }
         glDeleteBuffers(1, &BufferID);
     }

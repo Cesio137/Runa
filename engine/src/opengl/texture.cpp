@@ -1,8 +1,9 @@
 #include "opengl/texture.h"
+#include <stb_image.h>
 
 namespace Runa::Opengl
 {
-    Texture::Texture(const std::string &texdir, const GLenum textype, const GLenum slot, const GLenum format, GLenum pixeltype) {
+    Texture::Texture(const eastl::string &texdir, const GLenum textype, const GLenum slot, const GLenum format, GLenum pixeltype) {
         // Assigns the type of the texture ot the texture object
         TextureType = textype;
 

@@ -7,7 +7,7 @@
 namespace Runa::Render {
     class OpenglInterface {
     public:
-        OpenglInterface(ESDL_GL_Driver driver = ESDL_GL_Driver::CORE_460);
+        OpenglInterface(ESDL_GL_Driver driver = CORE_460);
         ~OpenglInterface();
 
         virtual void PreInitialize(ImGuiIO &io) {

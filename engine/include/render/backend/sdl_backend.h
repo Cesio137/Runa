@@ -24,5 +24,5 @@ namespace Runa::Render {
         const char *glsl_version = "";
     };
 
-    int InitGLDriver(FSDL_GL_Backend &backend, ESDL_GL_Driver driver = ESDL_GL_Driver::CORE_460);
+    int InitGLDriver(FSDL_GL_Backend &backend, ESDL_GL_Driver driver = CORE_460);
 }

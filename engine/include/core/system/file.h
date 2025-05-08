@@ -1,15 +1,15 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include <eastl/string.h>
+#include <eastl/vector.h>
 #ifndef _WIN64
 #include <cstdint>
 #endif
 
 namespace Runa::System {
-    std::vector<uint8_t> LoadFileToBuffer(const std::string &filepath);
+    eastl::vector<uint8_t> LoadFileToBuffer(const char *filepath);
 
-    std::string LoadFileToString(const std::string &filepath);
+    eastl::string LoadFileToString(const char *filepath);
 
-    bool FileExists(const std::string &filepath);
+    bool FileExists(const char *filepath);
 }

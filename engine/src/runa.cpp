@@ -1,8 +1,5 @@
-
-#include <array>
+#include "core/ea/eamalloc.h"
 #include <iostream>
-#include <cmath>
-#include <filesystem>
 #ifndef _WIN64
 #include <memory>
 #endif
@@ -18,13 +15,15 @@
 #include "shaders/glshaders.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include <EASTL/string.h>
+#include <EASTL/unique_ptr.h>
 
 using namespace Runa;
 
 int main() {
     stbi_set_flip_vertically_on_load(true);
     Render::OpenglInterface rhi(Render::CORE_460);
-    std::unique_ptr<Shaders::GLShader> shader;
+    eastl::unique_ptr<Shaders::GLShader> shader;
     GLfloat vertices[] =
     {  /*   COORDENATES   */    /*    COLOR    */
         -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,       0.0f, 0.0f,// Lower left corner
@@ -36,10 +35,10 @@ int main() {
         0, 2, 1, // Lower triangle
         0, 3, 2, // Upper triangle
     };
-    std::unique_ptr<Opengl::ElementBuffer> EBO;
-    std::unique_ptr<Opengl::VertexArray> VAO;
-    std::unique_ptr<Opengl::VertexBuffer> VBO;
-    std::unique_ptr<Opengl::Texture> Tex;
+    eastl::unique_ptr<Opengl::ElementBuffer> EBO;
+    eastl::unique_ptr<Opengl::VertexArray> VAO;
+    eastl::unique_ptr<Opengl::VertexBuffer> VBO;
+    eastl::unique_ptr<Opengl::Texture> Tex;
 
     GLuint uniID;
 
@@ -47,11 +46,14 @@ int main() {
     };
     rhi.OnReady = [&]() {
         rhi.SetVSync(1);
-        shader = std::make_unique<Shaders::GLShader>(System::CurrentDir() + "/resources/shaders/default.vert", System::CurrentDir() + "/resources/shaders/default.frag");
-        VAO = std::make_unique<Opengl::VertexArray>();
+        const eastl::string currentDir = System::CurrentDir();
+        const eastl::string vert_shader = currentDir + "/resources/shaders/default.vert";
+        const eastl::string frag_shader = currentDir + "/resources/shaders/default.frag";
+        shader = eastl::make_unique<Shaders::GLShader>(vert_shader.c_str(), frag_shader.c_str());
+        VAO = eastl::make_unique<Opengl::VertexArray>();
         VAO->Bind();
-        VBO = std::make_unique<Opengl::VertexBuffer>(vertices, sizeof(vertices));
-        EBO = std::make_unique<Opengl::ElementBuffer>(indices, sizeof(indices));
+        VBO = eastl::make_unique<Opengl::VertexBuffer>(vertices, sizeof(vertices));
+        EBO = eastl::make_unique<Opengl::ElementBuffer>(indices, sizeof(indices));
         VAO->EnableVertexAttribArray(*VBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void *) 0);
         VAO->EnableVertexAttribArray(*VBO, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
         VAO->EnableVertexAttribArray(*VBO, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
@@ -61,12 +63,13 @@ int main() {
         EBO->Unbind(); 
         
         uniID = glGetUniformLocation(shader->GetProgramID(), "scale");
-        std::string workdir = System::CurrentDir() + "/resources/textures/albedo.jpg";
-        workdir = System::NativeSeparator(workdir);
-        Tex = std::make_unique<Opengl::Texture>(workdir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+        eastl::string workdir = currentDir + "/resources/textures/albedo.jpg";
+        workdir = System::NativeSeparator(workdir.c_str());
+        Tex = eastl::make_unique<Opengl::Texture>(workdir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
         Tex->SetUniformLocation(*shader, "tex0", 0);
     };
     rhi.OnEventHandle = [&](SDL_Event event) {
+
     };
     rhi.OnRenderImgui = [&](ImGuiIO &io) {
         ImGui::Begin("teste");
@@ -82,7 +85,7 @@ int main() {
     };
     int code = rhi.Exec();
     if (code) {
-        std::cerr << SDL_GetError() << std::endl;
+        SDL_Log("%s", SDL_GetError());
         return code;
     }
 

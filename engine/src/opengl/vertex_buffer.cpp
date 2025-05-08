@@ -6,7 +6,6 @@ namespace Runa::Opengl {
         glGenBuffers(1, &BufferID);
         glBindBuffer(GL_ARRAY_BUFFER, BufferID);
         glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-        
     }
 
     VertexBuffer::~VertexBuffer() {

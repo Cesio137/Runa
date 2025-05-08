@@ -40,6 +40,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         OpenAL::OpenAL
         #PHYSICS LIBRARY
         Jolt::Jolt
+        box2d::box2d
         #OBJ LIBRARY
         unoffical::openfbx::openfbx
         #STL

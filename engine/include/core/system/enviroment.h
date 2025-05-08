@@ -1,9 +1,9 @@
 #pragma once
 
-#include <string>
+#include <EASTL/string.h>
 
 namespace Runa::System {
-    std::string GetVariable(const std::string &varname);
+    eastl::string GetVariable(const char *varname);
 
-    std::string GetUserName();
+    eastl::string GetUserName();
 }

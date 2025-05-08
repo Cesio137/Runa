@@ -1,12 +1,12 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <string>
+#include <eastl/string.h>
 
 namespace Runa::Shaders {
     class GLShader {
     public:
-        GLShader(const std::string &vertexfile, const std::string &fragmentfile);
+        GLShader(const char *vertexfile, const char *fragmentfile);
         ~GLShader();
 
         void UseProgram() const;

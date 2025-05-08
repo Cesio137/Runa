@@ -1,5 +1,6 @@
 #include "render/backend/sdl_backend.h"
 #include <iostream>
+#include <EASTL/unique_ptr.h>
 
 namespace Runa::Render {
     int InitGLDriver(FSDL_GL_Backend &backend, ESDL_GL_Driver driver) {
@@ -30,18 +31,22 @@ namespace Runa::Render {
 
         // Create a SDL window
         backend.window_ptr = SDL_CreateWindow(ENGINE_NAME, 1024, 576, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-        if (!backend.window_ptr)
+        if (!backend.window_ptr) {
+            SDL_Log("Failed to create window");
             return 1;
+        }
 
         // Create a SDL renderer
         backend.gl_context = SDL_GL_CreateContext(backend.window_ptr);
         if (!backend.gl_context) {
             SDL_DestroyWindow(backend.window_ptr);
+            SDL_Log("Failed to create context");
             return 1;
         }
 
-        if (driver == ESDL_GL_Driver::CORE_320_ES) {
+        if (driver == CORE_320_ES) {
             if (!gladLoadGLES2Loader((GLADloadproc) SDL_GL_GetProcAddress)) {
+                SDL_Log("Failed to initialize GLAD");
                 SDL_DestroyWindow(backend.window_ptr);
                 SDL_GL_DestroyContext(backend.gl_context);
                 return 1;
@@ -49,6 +54,7 @@ namespace Runa::Render {
         }
         else {
             if (!gladLoadGLLoader((GLADloadproc) SDL_GL_GetProcAddress)) {
+                SDL_Log("Failed to initialize GLAD");
                 SDL_DestroyWindow(backend.window_ptr);
                 SDL_GL_DestroyContext(backend.gl_context);
                 return 1;

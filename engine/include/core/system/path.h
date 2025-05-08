@@ -1,23 +1,23 @@
 #pragma once
 
-#include <string>
+#include <EASTL/string.h>
 
 namespace Runa::System {
-    std::string NativeSeparator(const std::string &dir);
+    eastl::string NativeSeparator(const char *dir);
 
-    std::string HomeDir();
+    eastl::string HomeDir();
 
-    std::string AppDataDir();
+    eastl::string AppDataDir();
 
-    std::string DesktopDir();
+    eastl::string DesktopDir();
 
-    std::string DownloadDir();
+    eastl::string DownloadDir();
 
-    std::string DocumentsDir();
+    eastl::string DocumentsDir();
 
-    std::string GameContentDir();
+    eastl::string GameContentDir();
 
-    std::string CurrentDir();
+    eastl::string CurrentDir();
 
-    std::string GetAsset(const std::string &dir);
+    eastl::string GetAsset(const char *dir);
 }

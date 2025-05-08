@@ -4,10 +4,10 @@
 using namespace Runa::System;
 
 namespace Runa::Shaders {
-    GLShader::GLShader(const std::string &vertexfile, const std::string &fragmentfile) {
+    GLShader::GLShader(const char *vertexfile, const char *fragmentfile) {
         // Read vertexFile and fragmentFile and store the strings
-        const std::string vertexCode = LoadFileToString(vertexfile);
-        const std::string fragmentCode = LoadFileToString(fragmentfile);
+        const eastl::string vertexCode = LoadFileToString(vertexfile);
+        const eastl::string fragmentCode = LoadFileToString(fragmentfile);
 
         // Convert the shader source strings into character arrays
         const char *vertex_source = vertexCode.c_str();

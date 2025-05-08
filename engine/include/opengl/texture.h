@@ -2,13 +2,12 @@
 
 #include "shaders/glshaders.h"
 #include <glad/glad.h>
-#include <stb_image.h>
-#include <string>
+#include <eastl/string.h>
 
 namespace Runa::Opengl {
     class Texture {
     public:
-        Texture(const std::string &texdir, const GLenum textype, const GLenum slot, const GLenum format, GLenum pixeltype);
+        Texture(const eastl::string &texdir, const GLenum textype, const GLenum slot, const GLenum format, GLenum pixeltype);
         ~Texture();
 
         void Bind() const;

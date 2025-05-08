@@ -6,6 +6,7 @@ find_package(basisu CONFIG REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
 find_package(unofficial-openfbx CONFIG REQUIRED)
 find_package(Jolt CONFIG REQUIRED)
+find_package(box2d CONFIG REQUIRED)
 find_package(tinyexr CONFIG REQUIRED)
 find_package(zstd CONFIG REQUIRED)
 
@@ -32,9 +33,6 @@ add_subdirectory(${THIRDPARTY_DIR}/simdjson)
 
 #IMAGE LIBRARY
 add_subdirectory(${THIRDPARTY_DIR}/stb)
-
-#PHYSICS LIBRARY
-add_subdirectory(${THIRDPARTY_DIR}/box2d)
 
 #STL
 add_subdirectory(${THIRDPARTY_DIR}/eastl)

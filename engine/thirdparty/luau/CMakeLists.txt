@@ -1,7 +1,7 @@
 FetchContent_Declare(
         LUAU
         GIT_REPOSITORY https://github.com/luau-lang/luau.git
-        TAG 0.672
+        TAG 0.673
 )
 
 if (NOT LUAU_POPULATED)

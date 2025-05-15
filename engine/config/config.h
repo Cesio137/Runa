@@ -1,6 +1,6 @@
 /* Build Data */
-/* #undef ENGINE_BUILD_DEBUG */
-#define ENGINE_BUILD_RELEASE
+#define ENGINE_BUILD_DEBUG
+/* #undef ENGINE_BUILD_RELEASE */
 
 /* Engine Data */
 #define ENGINE_NAME "Runa"

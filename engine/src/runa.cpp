@@ -1,8 +1,5 @@
 #include "core/ea/eamalloc.h"
-#include <iostream>/*
-#ifndef _WIN64
-#include <memory>
-#endif*/
+#include <iostream>
 #include "core/system/path.h"
 #include "render/glrender.h"
 #include "opengl/element_buffer.h"

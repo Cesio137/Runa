@@ -14,7 +14,7 @@ namespace Runa::System {
         }
 
 #else
-        value = std::getenv(varname.c_str());
+        value = std::getenv(varname);
         return value;
 #endif
 

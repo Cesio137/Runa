@@ -1,7 +1,7 @@
 #pragma once
 
-#include <eastl/string.h>
-#include <eastl/vector.h>
+#include <EASTL/string.h>
+#include <EASTL/vector.h>
 #ifndef _WIN64
 #include <cstdint>
 #endif

@@ -1,8 +1,8 @@
 #include "core/ea/eamalloc.h"
-#include <iostream>
+#include <iostream>/*
 #ifndef _WIN64
 #include <memory>
-#endif
+#endif*/
 #include "core/system/path.h"
 #include "render/glrender.h"
 #include "opengl/element_buffer.h"
@@ -63,9 +63,9 @@ int main() {
         EBO->Unbind(); 
         
         uniID = glGetUniformLocation(shader->GetProgramID(), "scale");
-        eastl::string workdir = currentDir + "/resources/textures/albedo.jpg";
-        workdir = System::NativeSeparator(workdir.c_str());
-        Tex = eastl::make_unique<Opengl::Texture>(workdir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+        eastl::string albedodir = currentDir + "/resources/textures/albedo.jpg";
+        albedodir = System::NativeSeparator(albedodir.c_str());
+        Tex = eastl::make_unique<Opengl::Texture>(albedodir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
         Tex->SetUniformLocation(*shader, "tex0", 0);
     };
     rhi.OnEventHandle = [&](SDL_Event event) {

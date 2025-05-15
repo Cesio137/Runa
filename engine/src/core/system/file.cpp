@@ -1,7 +1,7 @@
 #include "core/system/file.h"
 #include "core/system/path.h"
 #include <SDL3/SDL.h>
-#include <eastl/unique_ptr.h>
+#include <EASTL/unique_ptr.h>
 
 namespace Runa::System {
     eastl::vector<uint8_t> LoadFileToBuffer(const char *filepath) {

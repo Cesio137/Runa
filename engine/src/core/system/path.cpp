@@ -9,7 +9,7 @@
     constexpr const char* PATH_SEPARATOR_STR = "\\";
 #else
     constexpr char PATH_SEPARATOR = '/';
-    constexpr char PATH_SEPARATOR_OTHER = '\\'; /
+    constexpr char PATH_SEPARATOR_OTHER = '\\';
     constexpr const char* PATH_SEPARATOR_STR = "/";
 #endif
 

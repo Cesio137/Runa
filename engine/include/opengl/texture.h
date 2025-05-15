@@ -2,7 +2,7 @@
 
 #include "shaders/glshaders.h"
 #include <glad/glad.h>
-#include <eastl/string.h>
+#include <EASTL/string.h>
 
 namespace Runa::Opengl {
     class Texture {

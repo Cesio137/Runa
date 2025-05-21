@@ -7,7 +7,9 @@
 #include "opengl/vertex_buffer.h"
 #include "opengl/element_count.h"
 #include "opengl/texture.h"
-#include "glm/vec4.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "core/system/file.h"
 #include "shaders/glshaders.h"
 #define STB_IMAGE_IMPLEMENTATION
@@ -22,15 +24,23 @@ int main() {
     Render::OpenglInterface rhi(Render::CORE_460);
     eastl::unique_ptr<Shaders::GLShader> shader;
     GLfloat vertices[] =
-    {  /*   COORDENATES   */    /*    COLOR    */
-        -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,       0.0f, 0.0f,// Lower left corner
-        -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,       0.0f, 1.0f,// Upper left corner
-         0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,       1.0f, 1.0f,// Upper right corner
-         0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,       1.0f, 0.0f,// Lower right corner
+    { //     COORDINATES     /        COLORS      /   TexCoord  //
+        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+        -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
+        0.5f, 0.0f, -0.5f,      0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+        0.5f, 0.0f,  0.5f,      0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
+        0.0f, 0.8f,  0.0f,      0.92f, 0.86f, 0.76f,	2.5f, 5.0f
     };
-    GLuint indices[] = {
-        0, 2, 1, // Lower triangle
-        0, 3, 2, // Upper triangle
+
+    // Indices for vertices order
+    GLuint indices[] =
+    {
+        0, 1, 2,
+        0, 2, 3,
+        0, 1, 4,
+        1, 2, 4,
+        2, 3, 4,
+        3, 0, 4
     };
     eastl::unique_ptr<Opengl::ElementBuffer> EBO;
     eastl::unique_ptr<Opengl::VertexArray> VAO;
@@ -38,6 +48,9 @@ int main() {
     eastl::unique_ptr<Opengl::Texture> Tex;
 
     GLuint uniID;
+
+    int viewport_width = 1024; int viewport_height = 576;
+    float rotation = 0.0f;
 
     rhi.OnPreInitialize = [&](ImGuiIO &io) {
     };
@@ -60,13 +73,15 @@ int main() {
         EBO->Unbind(); 
         
         uniID = glGetUniformLocation(shader->GetProgramID(), "scale");
-        eastl::string albedodir = currentDir + "/resources/textures/albedo.jpg";
+        eastl::string albedodir = currentDir + "/resources/textures/brick.png";
         albedodir = System::NativeSeparator(albedodir.c_str());
         Tex = eastl::make_unique<Opengl::Texture>(albedodir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
         Tex->SetUniformLocation(*shader, "tex0", 0);
     };
     rhi.OnEventHandle = [&](SDL_Event event) {
-
+        if (event.type == SDL_EVENT_WINDOW_RESIZED) {
+            SDL_GetWindowSizeInPixels(rhi.GetBackend().window_ptr, &viewport_width, &viewport_height);
+        }
     };
     rhi.OnRenderImgui = [&](ImGuiIO &io) {
         ImGui::Begin("teste");
@@ -75,6 +90,24 @@ int main() {
     };
     rhi.OnRender = [&](float delta) {
         shader->UseProgram();
+
+        rotation += 10.0f * delta;
+
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 proj = glm::mat4(1.0f);
+
+        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
+        proj = glm::perspective(glm::radians(45.0f), (float)(viewport_width/viewport_height), 0.1f, 100.0f);
+
+        int modelLoc = glGetUniformLocation(shader->GetProgramID(), "model");
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        int viewLoc = glGetUniformLocation(shader->GetProgramID(), "view");
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        int projLoc = glGetUniformLocation(shader->GetProgramID(), "proj");
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
+
         glUniform1f(uniID, 0.5f);
         Tex->Bind();
         VAO->Bind();

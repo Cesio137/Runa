@@ -45,6 +45,7 @@ namespace Runa::Render {
 
     void OpenglInterface::Renderer() {
         glViewport(0, 0, 1024, 576);
+        glEnable(GL_DEPTH_TEST);
         SDL_GL_ImGuiInit(Backend);
         PreInitialize(ImGui::GetIO());
         // Framerate limit

@@ -1,2 +1,0 @@
-file(GLOB_RECURSE SRC "*.cpp")
-set(RUNA_SOURCES ${SRC} CACHE INTERNAL "")

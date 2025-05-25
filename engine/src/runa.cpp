@@ -49,7 +49,8 @@ int main() {
 
     GLuint uniID;
 
-    int viewport_width = 1024; int viewport_height = 576;
+    int viewport_width = 1024; 
+    int viewport_height = 576;
     float rotation = 0.0f;
 
     rhi.OnPreInitialize = [&](ImGuiIO &io) {
@@ -99,7 +100,8 @@ int main() {
 
         model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
         view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-        proj = glm::perspective(glm::radians(45.0f), (float)(viewport_width/viewport_height), 0.1f, 100.0f);
+        float aspect = viewport_width >= viewport_height ? (float)(viewport_width/viewport_height) : (float)(viewport_height/viewport_width);
+        proj = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
 
         int modelLoc = glGetUniformLocation(shader->GetProgramID(), "model");
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

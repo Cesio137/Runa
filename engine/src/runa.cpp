@@ -7,6 +7,7 @@
 #include "opengl/vertex_buffer.h"
 #include "opengl/element_count.h"
 #include "opengl/texture.h"
+#include "opengl/camera.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -48,10 +49,13 @@ int main() {
     eastl::unique_ptr<Opengl::Texture> Tex;
 
     GLuint uniID;
-
+    
     int viewport_width = 1024; 
     int viewport_height = 576;
-    float rotation = 0.0f;
+    //float rotation = 0.0f;
+
+    eastl::unique_ptr<Opengl::Camera> Camera = eastl::make_unique<Opengl::Camera>(viewport_width, viewport_height, glm::vec3(0.0f, 0.0f, 2.0f));
+    SDL_Event inputevent;
 
     rhi.OnPreInitialize = [&](ImGuiIO &io) {
     };
@@ -73,7 +77,7 @@ int main() {
         VBO->Unbind();
         EBO->Unbind(); 
         
-        uniID = glGetUniformLocation(shader->GetProgramID(), "scale");
+        //uniID = glGetUniformLocation(shader->GetProgramID(), "scale");
         eastl::string albedodir = currentDir + "/resources/textures/brick.png";
         albedodir = System::NativeSeparator(albedodir.c_str());
         Tex = eastl::make_unique<Opengl::Texture>(albedodir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
@@ -83,6 +87,7 @@ int main() {
         if (event.type == SDL_EVENT_WINDOW_RESIZED) {
             SDL_GetWindowSizeInPixels(rhi.GetBackend().window_ptr, &viewport_width, &viewport_height);
         }
+        Camera->Inputs(event);
     };
     rhi.OnRenderImgui = [&](ImGuiIO &io) {
         ImGui::Begin("teste");
@@ -92,23 +97,8 @@ int main() {
     rhi.OnRender = [&](float delta) {
         shader->UseProgram();
 
-        rotation += 10.0f * delta;
-
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 proj = glm::mat4(1.0f);
-
-        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-        float aspect = viewport_width >= viewport_height ? (float)(viewport_width/viewport_height) : (float)(viewport_height/viewport_width);
-        proj = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
-
-        int modelLoc = glGetUniformLocation(shader->GetProgramID(), "model");
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        int viewLoc = glGetUniformLocation(shader->GetProgramID(), "view");
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-        int projLoc = glGetUniformLocation(shader->GetProgramID(), "proj");
-        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
+        Camera->Tick(delta);
+        Camera->Matrix(60.0f, 0.1f, 100.0f, *shader, "camMatrix");
 
         glUniform1f(uniID, 0.5f);
         Tex->Bind();

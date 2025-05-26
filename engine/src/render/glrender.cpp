@@ -53,6 +53,7 @@ namespace Runa::Render {
         uint64_t start = 0;
         uint64_t elapsed = 0;
         uint64_t frame_time = 0;
+        float delta = 0.0f;
         // Ready
         Ready();
         // Main loop
@@ -81,7 +82,9 @@ namespace Runa::Render {
             // Render behind imgui
             glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            Render(ImGui::GetIO().DeltaTime);
+            elapsed = SDL_GetTicksNS() - start;
+            delta = (float)((double)(elapsed) / 1000000000.0);
+            Render(delta);
 
             RenderImgui(ImGui::GetIO());
             ImGui::Render();

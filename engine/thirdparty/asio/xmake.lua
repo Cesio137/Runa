@@ -1,0 +1,5 @@
+target("asio")
+    set_group("engine/thirdparty")
+    set_kind("headeronly")
+    add_includedirs("include")
+    add_headerfiles("include/**.hpp")

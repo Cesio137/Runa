@@ -1,0 +1,1 @@
+add_requires("imgui v1.91.9-docking", {configs = { sdl3 = true, opengl3 = true, sdl3_gpu = true }})

@@ -1,3 +1,10 @@
+# Xmake cache
+.xmake/
+build/
+
+# MacOS Cache
+.DS_Store
+
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
@@ -15,3 +22,4 @@ out/*
 .vscode/*
 .vs/*
 .cache/*
+

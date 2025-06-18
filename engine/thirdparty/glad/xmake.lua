@@ -1,0 +1,8 @@
+target("glad")
+    set_group("engine/thirdparty")
+    set_kind("static")
+    add_includedirs("include", {public = true})
+    add_includedirs("../vulkan/include")
+    add_headerfiles("include/**.h")
+    add_files("src/*.c")
+    add_deps("vulkan")

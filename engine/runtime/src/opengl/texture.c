@@ -1,7 +1,9 @@
 #include "opengl/texture.h"
 #include <stb_image.h>
 
-int runa_glGenTexture(gl_texture_t *gl_texture, const char *textdir, const GLenum textype, const GLenum slot, const GLenum format, GLenum pixeltype) {
+int runaGenTexture(gl_texture_t *gl_texture, const char *textdir, const GLenum textype, const GLenum slot,
+                   const GLenum format, GLenum pixeltype) {
+    gl_texture->id = 0;
     // Assigns the type of the texture ot the texture object
     gl_texture->type = textype;
 
@@ -45,15 +47,15 @@ int runa_glGenTexture(gl_texture_t *gl_texture, const char *textdir, const GLenu
     return 1;
 }
 
-void runa_glDeleteTexture(gl_texture_t *gl_texture) {
+void runaDeleteTexture(gl_texture_t *gl_texture) {
     glDeleteTextures(1, &gl_texture->id);
     gl_texture->type = 0;
 }
 
-void runa_glBindTexture(gl_texture_t *gl_texture) {
+void runaBindTexture(gl_texture_t *gl_texture) {
     glBindTexture(gl_texture->type, gl_texture->id);
 }
 
-void runa_glUnbindTexture(gl_texture_t *gl_texture) {
+void runaUnbindTexture(gl_texture_t *gl_texture) {
     glBindTexture(gl_texture->type, 0);
 }

@@ -3,12 +3,21 @@
 #include "opengl/vertex_buffer.h"
 #include <glad/glad.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct {
     GLuint id;
-}gl_vertex_array_t;
+} gl_vertex_array_t;
 
-void runa_glGenVertexArray(gl_vertex_array_t *vertex_array, const GLfloat *vertices, const GLsizeiptr size);
-void runa_glDeleteVertexArray(gl_vertex_array_t *vertex_array);
-void runa_glBindBuffer(gl_vertex_array_t *vertex_array);
-void runa_glUnbindBuffer();
-void runa_EnableVertexAttribArray(gl_vertex_array_t *vertex_array, gl_vertex_buffer_t *vertex_buffer, const GLuint layout, GLuint num, GLenum type, GLsizeiptr stride, void* offset);
+void runaGenVertexArray(gl_vertex_array_t *vertex_array, const GLfloat *vertices, const GLsizeiptr size);
+void runaDeleteVertexArray(gl_vertex_array_t *vertex_array);
+void runaBindVertexArray(gl_vertex_array_t *vertex_array);
+void runaUnbindVertexArray();
+void runaEnableVertexAttribArray(gl_vertex_buffer_t *vertex_buffer, const GLuint layout, GLuint num, GLenum type,
+                                 GLsizeiptr stride, void *offset);
+
+#ifdef __cplusplus
+}
+#endif

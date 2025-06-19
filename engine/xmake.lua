@@ -36,13 +36,26 @@ target("Runtime")
         "asio"
     )
 
-target("Runa")
-    set_group("engine")
+target("Editor")
+    set_group("editor")
     set_kind("binary")
     add_defines(
         "STB_IMAGE_IMPLEMENTATION"
     )
-    add_includedirs("engine/include")
-    add_headerfiles("engine/include/**.h")
-    add_files("main.cpp", "engine/src/**.cpp")
-    add_deps("Runtime")
+    add_includedirs("editor/include")
+    add_headerfiles("editor/include/**.h")
+    add_files("editor/src/**.cpp")
+    add_packages(
+        "libsdl3",
+        "glm",
+        "imgui",
+        "luau"
+    )
+    add_deps(
+         "Runtime",
+         "vulkan",
+         "glad",
+         "stb",
+         "simdjson",
+         "asio"
+    )

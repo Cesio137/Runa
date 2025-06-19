@@ -1,9 +1,5 @@
 add_rules("mode.debug", "mode.release")
-set_languages("c23", "c++23")
-
-if is_plat("windows") then 
-    set_toolchains("msvc", {vs = "2022"})
-end
+set_languages("c11", "c++20")
 
 includes("engine")
 

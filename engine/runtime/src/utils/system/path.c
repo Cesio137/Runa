@@ -21,27 +21,24 @@ cstr runaJoinPaths(const vec_cstr paths) {
 
     cstr joined_path = cstr_init();
 
-    const isize len = paths.size;
-    for (isize i = 0; i < len; i++) {
-        cstr src = paths.data[i];
-
+    c_foreach(p, vec_cstr, paths) {
+        const cstr src = *p.ref;
         if (cstr_is_empty(&src)) {
             cstr_drop(&src);
             continue;
         }
-
+        
         cstr dest = cstr_init();
-        const isize str_size = cstr_size(&src);
-        const char *raw_str = cstr_str(&src);
+        
+        const isize src_size = cstr_size(&src);
+        const char *raw_src = cstr_str(&src);
         int was_separator = 0;
-        for (isize j = 0; j < str_size; j++) {
-            const char c = raw_str[j];
-
-            if (j == 0 && (c == PATH_SEPARATOR || c == PATH_SEPARATOR_OTHER)) {
-                was_separator = 1;
-                continue;
+        for (isize i = 0; i < src_size; i++) {
+            const c = raw_src[i];
+            if (i == 0 && (c == PATH_SEPARATOR || c == PATH_SEPARATOR_OTHER)) {
+               was_separator = 1;
+               continue;
             }
-
             if (c == PATH_SEPARATOR || c == PATH_SEPARATOR_OTHER) {
                 if (was_separator) continue;
                 was_separator = 1;
@@ -56,9 +53,9 @@ cstr runaJoinPaths(const vec_cstr paths) {
             cstr_push(&dest, PATH_SEPARATOR_STR);
         }
         cstr_append_s(&joined_path, dest);
-        cstr_drop(&src);
         cstr_drop(&dest);
     }
+
     return joined_path;
 }
 

@@ -1,7 +1,5 @@
-#include "core/system/environment.h"
+#include "utils/system/environment.h"
 #include <SDL3/SDL.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 const char *runaGetEnvVar(const char *varname) {
     SDL_Environment *env = SDL_GetEnvironment();

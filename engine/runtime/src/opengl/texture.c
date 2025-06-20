@@ -1,7 +1,8 @@
 #include "opengl/texture.h"
+#include <stc/common.h>
 #include <stb_image.h>
 
-int runaGenTexture(gl_texture_t *gl_texture, const char *textdir, const GLenum textype, const GLenum slot,
+int runaGenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLenum textype, const GLenum slot,
                    const GLenum format, GLenum pixeltype) {
     gl_texture->id = 0;
     // Assigns the type of the texture ot the texture object
@@ -12,7 +13,7 @@ int runaGenTexture(gl_texture_t *gl_texture, const char *textdir, const GLenum t
     // Flips the image so it appears right side up
     stbi_set_flip_vertically_on_load_thread(1);
     // Reads the image from a file and stores it in bytes
-    unsigned char *bytes = stbi_load(textdir, &texwidth, &texheight, &numch, 0);
+    uint8 *bytes = stbi_load(texturefile, &texwidth, &texheight, &numch, 0);
     if (bytes == NULL) return 0;
 
     // Generates an OpenGL texture object

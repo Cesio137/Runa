@@ -11,9 +11,7 @@ typedef struct {
 } gl_shader_t;
 
 int runaCreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, const char *fragmentfile);
-
 void runaDeleteShaderProgram(gl_shader_t *gl_shader);
-
 void runaUseShaderProgram(gl_shader_t *gl_shader);
 
 #ifdef __cplusplus

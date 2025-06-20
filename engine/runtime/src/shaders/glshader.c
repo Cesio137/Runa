@@ -1,5 +1,5 @@
 #include "shaders/glshader.h"
-#include "core/system/file.h"
+#include "utils/system/file.h"
 #include <SDL3/SDL.h>
 
 
@@ -7,22 +7,23 @@ int runaCreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, cons
     gl_shader->id = 0;
 
     // Convert the shader source strings into character arrays
-    char *vertex_source = runaLoadFile(vertexfile);
-    char *fragment_source = runaLoadFile(fragmentfile);
+    cstr vertex_source = runaLoadTextFile(vertexfile);
+    cstr fragment_source = runaLoadTextFile(fragmentfile);
 
     // Create Vertex Shader Object and get its reference
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     // Attach Vertex Shader source to the Vertex Shader Object
-    glShaderSource(vertex_shader, 1, &vertex_source, NULL);
-    SDL_free(vertex_source);
+    glShaderSource(vertex_shader, 1, (const GLchar* const*)cstr_str(&vertex_source), NULL);
+    cstr_drop(&vertex_source);
     // Compile the Vertex Shader into machine code
     glCompileShader(vertex_shader);
 
     // Create Fragment Shader Object and get its reference
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     // Attach Fragment Shader source to the Fragment Shader Object
-    glShaderSource(fragment_shader, 1, &fragment_source, NULL);
-    SDL_free(vertex_source);
+
+    glShaderSource(fragment_shader, 1, (const GLchar* const*)cstr_str(&fragment_source), NULL);
+    cstr_drop(&fragment_source);
     // Compile the Vertex Shader into machine code
     glCompileShader(fragment_shader);
 

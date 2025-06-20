@@ -8,6 +8,7 @@ includes(
     "thirdparty/luau",
     "thirdparty/glm",
     "thirdparty/stb",
+    "thirdparty/stc",
     "thirdparty/simdjson",
     "thirdparty/asio"
 )
@@ -32,6 +33,7 @@ target("Runtime")
         "vulkan",
         "glad",
         "stb",
+        "stc",
         "simdjson",
         "asio"
     )
@@ -56,6 +58,7 @@ target("Editor")
          "vulkan",
          "glad",
          "stb",
+         "stc",
          "simdjson",
          "asio"
     )

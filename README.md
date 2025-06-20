@@ -18,13 +18,13 @@ Runa is a set of tools planned to be an open-source, real-time, cross-platform 2
 
 - [Git](https://git-scm.com)
 
-- [CMake 3.20 or above](https://cmake.org/download/)
+- [CMake 3.15 or above](https://cmake.org/download/)
 
-- [VCPKG](https://vcpkg.io/en/)
+- [Xmake](https://vcpkg.io/en/)
 
 - Windows only
-  - Build With Visual Studio 2019/2022
-    - [Visual Studio 2019/2022](https://visualstudio.microsoft.com/downloads/)
+  - Build With Visual Studio 2022
+    - [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/)
     - 👇 Install the following workloads:
     - Game Development with C++
     - MSVC v142 or above | x64/x86
@@ -55,20 +55,21 @@ git clone https://github.com/Cesio137/Runa.git
 
 ---
 
-#### Setup Enviroment Variables
-VCPKG_ROOT
-* Setup VCPKG  
-  * Create a variable called `VCPKG_ROOT` if do not exist:
-    * ```Path
-      <Path to VCPKG>/x.x.x/
-      ```
+#### Setup Project
+Configure and install all dependencies
+```shell
+xmake
+```
 
-#### Any OS
+#### Generate cmake/vs files
 
-* Setup Project.
-  * Create a `build` folder and open terminal inside.
-  * Commands to generate project
+* CMake
+  * Commands to generate cmake project
     * ```bash
-      cmake .. --preset=debug
-      cmake .. --preset=release
+      xmake project -k cmake
       ``` 
+* Visual Studio
+  * Commands to generate visual studio project
+    * ```bash
+      xmake project -k vsxmake
+      ```

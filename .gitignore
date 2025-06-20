@@ -5,6 +5,8 @@ build/
 # MacOS Cache
 .DS_Store
 
+# Xmake Projectscache
+vsxmake2022/
 CMakeLists.txt
 CMakeLists.txt.user
 CMakeCache.txt

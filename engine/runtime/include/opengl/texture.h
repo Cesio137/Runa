@@ -11,7 +11,7 @@ typedef struct {
     GLenum type;
 } gl_texture_t;
 
-int runaGenTexture(gl_texture_t *gl_texture, const char *textdir, const GLenum textype, const GLenum slot,
+int runaGenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLenum textype, const GLenum slot,
                    const GLenum format, GLenum pixeltype);
 void runaDeleteTexture(gl_texture_t *gl_texture);
 void runaBindTexture(gl_texture_t *gl_texture);

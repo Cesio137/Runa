@@ -38,15 +38,15 @@ target("Runtime")
         "asio"
     )
 
-target("Editor")
-    set_group("editor")
+target("Runa")
+    set_group("engine")
     set_kind("binary")
     add_defines(
         "STB_IMAGE_IMPLEMENTATION"
     )
-    add_includedirs("editor/include")
-    add_headerfiles("editor/include/**.h")
-    add_files("editor/src/**.cpp")
+    add_includedirs("runa/include")
+    add_headerfiles("runa/include/**.h")
+    add_files("runa/src/**.cpp")
     add_packages(
         "libsdl3",
         "glm",

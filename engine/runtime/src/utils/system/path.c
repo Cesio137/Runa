@@ -9,7 +9,7 @@ const char *PATH_SEPARATOR_STR = "\\";
 #else
 const char PATH_SEPARATOR = '/';
 const char PATH_SEPARATOR_OTHER = '\\';
-const const char* PATH_SEPARATOR_STR = "/";
+const char* PATH_SEPARATOR_STR = "/";
 #endif
 
 
@@ -22,7 +22,7 @@ cstr runaJoinPaths(const vec_cstr paths) {
     cstr joined_path = cstr_init();
 
     c_foreach(p, vec_cstr, paths) {
-        const cstr src = *p.ref;
+        cstr src = *p.ref;
         if (cstr_is_empty(&src)) {
             cstr_drop(&src);
             continue;
@@ -34,7 +34,7 @@ cstr runaJoinPaths(const vec_cstr paths) {
         const char *raw_src = cstr_str(&src);
         int was_separator = 0;
         for (isize i = 0; i < src_size; i++) {
-            const c = raw_src[i];
+            const char c = raw_src[i];
             if (i == 0 && (c == PATH_SEPARATOR || c == PATH_SEPARATOR_OTHER)) {
                was_separator = 1;
                continue;

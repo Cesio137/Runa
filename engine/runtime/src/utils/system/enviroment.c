@@ -19,7 +19,7 @@ const char *runaGetUserName() {
 #ifdef _WIN64
     return runaGetEnvVar("USERNAME");
 #else
-    return GetVariable("HOSTNAME");
+    return runaGetEnvVar("HOSTNAME");
 #endif
 
     return "";

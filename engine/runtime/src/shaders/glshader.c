@@ -13,7 +13,8 @@ int runaCreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, cons
     // Create Vertex Shader Object and get its reference
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     // Attach Vertex Shader source to the Vertex Shader Object
-    glShaderSource(vertex_shader, 1, (const GLchar* const*)cstr_str(&vertex_source), NULL);
+    const char *src = cstr_str(&vertex_source);
+    glShaderSource(vertex_shader, 1, &src, NULL);
     cstr_drop(&vertex_source);
     // Compile the Vertex Shader into machine code
     glCompileShader(vertex_shader);
@@ -21,8 +22,8 @@ int runaCreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, cons
     // Create Fragment Shader Object and get its reference
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     // Attach Fragment Shader source to the Fragment Shader Object
-
-    glShaderSource(fragment_shader, 1, (const GLchar* const*)cstr_str(&fragment_source), NULL);
+    src = cstr_str(&fragment_source);
+    glShaderSource(fragment_shader, 1, &src, NULL);
     cstr_drop(&fragment_source);
     // Compile the Vertex Shader into machine code
     glCompileShader(fragment_shader);
@@ -43,5 +44,9 @@ int runaCreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, cons
 }
 
 void runaDeleteShaderProgram(gl_shader_t *gl_shader) {
+    glDeleteProgram(gl_shader->id);
+}
+
+void runaUseShaderProgram(gl_shader_t *gl_shader) {
     glUseProgram(gl_shader->id);
 }

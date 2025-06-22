@@ -60,3 +60,12 @@ void runaBindTexture(gl_texture_t *gl_texture) {
 void runaUnbindTexture(gl_texture_t *gl_texture) {
     glBindTexture(gl_texture->type, 0);
 }
+
+void runaSetUniformLocation(gl_shader_t *shader, const char *uniform, const GLuint unit) {
+    // Gets the location of the uniform
+    GLuint texuni = glGetUniformLocation(shader->id, uniform);
+    // Shader needs to be activated before changing the value of a uniform
+    runaUseShaderProgram(shader);
+    // Sets the value of the uniform
+    glUniform1i(texuni, unit);
+}

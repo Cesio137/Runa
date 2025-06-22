@@ -1,5 +1,6 @@
 #pragma once
 
+#include "shaders/glshader.h"
 #include <glad/glad.h>
 
 #ifdef __cplusplus
@@ -16,6 +17,7 @@ int runaGenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLen
 void runaDeleteTexture(gl_texture_t *gl_texture);
 void runaBindTexture(gl_texture_t *gl_texture);
 void runaUnbindTexture(gl_texture_t *gl_texture);
+void runaSetUniformLocation(gl_shader_t *shader, const char *uniform, const GLuint unit);
 
 
 

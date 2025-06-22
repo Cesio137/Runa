@@ -106,6 +106,10 @@ cstr runaGetPrefPath(const char *org, const char *app) {
     return cstr_from(path);
 }
 
+const char *runaCurrentDir() {
+    return SDL_GetBasePath();
+}
+
 const char *CurrentDir() {
     return SDL_GetBasePath();
 }

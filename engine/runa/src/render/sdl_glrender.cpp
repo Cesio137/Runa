@@ -112,6 +112,10 @@ namespace runa::render {
         return SDL_GL_SetSwapInterval(value);
     }
 
+    bool sdl_glrender_c::get_vsync(int *value) const {
+        return SDL_GL_GetSwapInterval(value);
+    }
+
     void sdl_glrender_c::set_framerate_limit(int value) {
         if (value <= 0) value = 0;
         framerate_limit = value;
@@ -121,8 +125,8 @@ namespace runa::render {
         return framerate_limit;
     }
 
-    bool sdl_glrender_c::get_vsync(int *value) const {
-        return SDL_GL_GetSwapInterval(value);
+    sdl_glbackend_t *sdl_glrender_c::get_backend() {
+        return &backend;
     }
 
     void sdl_glrender_c::_render()

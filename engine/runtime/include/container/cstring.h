@@ -1,6 +1,9 @@
 #pragma once
 
-#ifndef i_implement
+#ifdef __cplusplus
 #define i_implement
-#include <stc/cstr.h>
 #endif
+
+#include <stc/cstr.h>
+
+

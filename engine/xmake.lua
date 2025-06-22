@@ -41,9 +41,6 @@ target("Runtime")
 target("Runa")
     set_group("engine")
     set_kind("binary")
-    add_defines(
-        "STB_IMAGE_IMPLEMENTATION"
-    )
     add_includedirs("runa/include")
     add_headerfiles("runa/include/**.h")
     add_files("runa/src/**.cpp")
@@ -62,3 +59,6 @@ target("Runa")
          "simdjson",
          "asio"
     )
+    after_build(function (target)
+        os.cp(path.absolute("content/resources"), path.join(target:targetdir(), "resources"))
+    end)

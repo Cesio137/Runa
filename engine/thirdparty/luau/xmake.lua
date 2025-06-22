@@ -38,9 +38,8 @@ package("luau")
         os.trycp(path.join(package:builddir(), "**.dll"), package:installdir("bin"))
         
         -- Fix Luau.CLI.lib.lib name
-        if is_plat("windows") then 
-            os.trymv(path.join(package:installdir("lib"), "Luau.CLI.lib.lib"), path.join(package:installdir("lib"), "Luau.CLI.lib"))
-        end
+        os.trymv(path.join(package:installdir("lib"), "Luau.CLI.lib.lib"), path.join(package:installdir("lib"), "Luau.CLI.lib"))
+        os.trycp(path.join(package:installdir("lib"), "libLuau.CLI.lib.a"), path.join(package:installdir("lib"), "Luau.CLI.a"))
     end)
 package_end()
 

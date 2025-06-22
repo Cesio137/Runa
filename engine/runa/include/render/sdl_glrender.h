@@ -27,7 +27,7 @@ namespace runa::render {
         GL_DRIVER_NONE = 0,
         GL_DRIVER_OPENGLCORE = 1,
         GL_DRIVER_OPENGLES = 2,
-    } sdl_gldriver_t;
+    }sdl_gldriver_t;
 
     typedef struct {
         SDL_Window *window_ptr;

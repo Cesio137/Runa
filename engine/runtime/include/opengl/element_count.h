@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-static GLsizeiptr GL_ELEMENT_COUNT = 0;
+extern GLsizeiptr GL_ELEMENT_COUNT;
 
 #ifdef __cplusplus
 }

@@ -11,7 +11,7 @@ typedef struct {
     GLuint id;
 } gl_vertex_array_t;
 
-void runaGenVertexArray(gl_vertex_array_t *vertex_array, const GLfloat *vertices, const GLsizeiptr size);
+void runaGenVertexArray(gl_vertex_array_t *vertex_array);
 void runaDeleteVertexArray(gl_vertex_array_t *vertex_array);
 void runaBindVertexArray(gl_vertex_array_t *vertex_array);
 void runaUnbindVertexArray();

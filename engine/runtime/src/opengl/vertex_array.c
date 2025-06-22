@@ -1,6 +1,6 @@
 #include "opengl/vertex_array.h"
 
-void runaGenVertexArray(gl_vertex_array_t *vertex_array, const GLfloat *vertices, const GLsizeiptr size) {
+void runaGenVertexArray(gl_vertex_array_t *vertex_array) {
     glGenVertexArrays(1, &vertex_array->id);
 }
 

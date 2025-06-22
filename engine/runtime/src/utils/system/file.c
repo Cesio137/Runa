@@ -96,13 +96,26 @@ cstr runaLoadTextFile(const char *filepath) {
         return text;
     }
 
-    if (!cstr_reserve(&text, filesize + 1)) {
+    unsigned char *buffer = SDL_malloc(filesize + 1);
+    if (!buffer) {
         SDL_Log("Error loading file to string: Out of memory for file '%s'", filepath);
         SDL_CloseIO(file);
         cstr_drop(&text);
         return text;
     }
 
+
+    size_t bytes_read = SDL_ReadIO(file, buffer, filesize);
+    SDL_CloseIO(file);
+
+    if (bytes_read != filesize) {
+        SDL_Log("Error loading file to string: Read only %zu bytes of %lld from file '%s': %s",
+                bytes_read, filesize, filepath, SDL_GetError());
+        SDL_free(buffer);
+        return text;
+    }
+
+    cstr_assign(&text, buffer);
     return text;
 }
 

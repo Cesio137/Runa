@@ -36,12 +36,7 @@ Runa is a set of tools planned to be an open-source, real-time, cross-platform 2
     - make 
     - m4 
     - autoconf 
-    - automake 
-    - libtool
-    - Perl
-  
-  - Python packages
-    - Jinja2 ``` pip install Jinja2 ```
+    - automake
   
 ## Setup Repository
 
@@ -58,18 +53,40 @@ git clone https://github.com/Cesio137/Runa.git
 #### Setup Project
 Configure and install all dependencies
 ```shell
-xmake
+xmake f --mode=debug
+```
+```shell
+xmake f --mode=release
 ```
 
 #### Generate cmake/vs files
 
 * CMake
   * Commands to generate cmake project
-    * ```bash
+    * ```shell
       xmake project -k cmake
       ``` 
 * Visual Studio
   * Commands to generate visual studio project
-    * ```bash
+    * ```shell
       xmake project -k vsxmake
       ```
+
+### Thirdparty libraries
+
+* Graphics
+  * [SDL 3](https://github.com/libsdl-org/SDL/releases)
+  * [Vulkan](https://github.com/KhronosGroup/Vulkan-Headers)
+  * [Glad](https://github.com/Dav1dde/glad)
+  * [GLM](https://github.com/g-truc/glm)
+* UI
+  * [ImGui](https://github.com/ocornut/imgui)
+* IO
+  * [ASIO non-boost](https://think-async.com/Asio/AsioAndBoostAsio)
+  * [stb](https://github.com/nothings/stb)
+* STL for C
+  * [stc](https://github.com/stclib/STC)
+* Script language
+  * [luau](https://luau.org/)
+* Json serd
+  * [simdjson](https://github.com/simdjson/simdjson)

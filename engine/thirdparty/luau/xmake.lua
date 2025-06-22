@@ -5,7 +5,7 @@ package("luau")
     set_homepage("https://luau.org/")
     set_description("Luau")
     add_urls("https://github.com/luau-lang/luau.git")
-    add_versions("0.678", "713ee2ff8b378441cde556dcea6f85054ffcf995")
+    add_versions("0.679", "0.679")
 
     on_install(function (package)
         -- Luau configs

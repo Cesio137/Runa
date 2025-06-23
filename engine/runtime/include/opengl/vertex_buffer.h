@@ -10,10 +10,10 @@ typedef struct {
     GLuint id;
 } gl_vertex_buffer_t;
 
-void runaGenBuffer(gl_vertex_buffer_t *vertex_buffer, const GLfloat *vertices, const GLsizeiptr size);
-void runaDeleteBuffer(gl_vertex_buffer_t *vertex_buffer);
-void runaBindBuffer(gl_vertex_buffer_t *vertex_buffer);
-void runaUnbindBuffer();
+void gl_GenVertexBuffer(gl_vertex_buffer_t *vertex_buffer, const GLfloat *vertices, const GLsizeiptr size);
+void gl_DeleteVertexBuffer(gl_vertex_buffer_t *vertex_buffer);
+void gl_BindVertexBuffer(gl_vertex_buffer_t *vertex_buffer);
+void gl_UnbindVertexBuffer();
 
 #ifdef __cplusplus
 }

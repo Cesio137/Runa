@@ -12,14 +12,11 @@ typedef struct {
     GLenum type;
 } gl_texture_t;
 
-int runaGenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLenum textype, const GLenum slot,
+int gl_GenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLenum textype, const GLenum slot,
                    const GLenum format, GLenum pixeltype);
-void runaDeleteTexture(gl_texture_t *gl_texture);
-void runaBindTexture(gl_texture_t *gl_texture);
-void runaUnbindTexture(gl_texture_t *gl_texture);
-void runaSetUniformLocation(gl_shader_t *shader, const char *uniform, const GLuint unit);
-
-
+void gl_DeleteTexture(gl_texture_t *gl_texture);
+void gl_BindTexture(gl_texture_t *gl_texture);
+void gl_UnbindTexture(gl_texture_t *gl_texture);
 
 #ifdef __cplusplus
 }

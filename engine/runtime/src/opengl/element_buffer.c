@@ -1,7 +1,7 @@
 #include "opengl/element_buffer.h"
 #include "opengl/element_count.h"
 
-void runaGenElementBuffer(gl_element_buffer_t *element_buffer, const GLuint *indices, const GLsizeiptr size) {
+void gl_GenElementBuffer(gl_element_buffer_t *element_buffer, const GLuint *indices, const GLsizeiptr size) {
     element_buffer->id = 0;
     element_buffer->size = 0;
     glGenBuffers(1, &element_buffer->id);
@@ -11,7 +11,7 @@ void runaGenElementBuffer(gl_element_buffer_t *element_buffer, const GLuint *ind
     GL_ELEMENT_COUNT += size / sizeof(GLuint);
 }
 
-void runaDeleteElementBuffer(gl_element_buffer_t *element_buffer) {
+void gl_DeleteElementBuffer(gl_element_buffer_t *element_buffer) {
     if (GL_ELEMENT_COUNT - element_buffer->size < 0) {
         GL_ELEMENT_COUNT = 0;
     } else {
@@ -20,10 +20,10 @@ void runaDeleteElementBuffer(gl_element_buffer_t *element_buffer) {
     glDeleteBuffers(1, &element_buffer->id);
 }
 
-void runaBindElementBuffer(gl_element_buffer_t *element_buffer) {
+void gl_BindElementBuffer(gl_element_buffer_t *element_buffer) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer->id);
 }
 
-void runaUnbindElementBuffer() {
+void gl_UnbindElementBuffer() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

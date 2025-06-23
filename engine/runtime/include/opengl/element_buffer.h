@@ -11,10 +11,10 @@ typedef struct {
     GLsizeiptr size;
 } gl_element_buffer_t;
 
-void runaGenElementBuffer(gl_element_buffer_t *element_buffer, const GLuint *indices, const GLsizeiptr size);
-void runaDeleteElementBuffer(gl_element_buffer_t *element_buffer);
-void runaBindElementBuffer(gl_element_buffer_t *element_buffer);
-void runaUnbindElementBuffer();
+void gl_GenElementBuffer(gl_element_buffer_t *element_buffer, const GLuint *indices, const GLsizeiptr size);
+void gl_DeleteElementBuffer(gl_element_buffer_t *element_buffer);
+void gl_BindElementBuffer(gl_element_buffer_t *element_buffer);
+void gl_UnbindElementBuffer();
 
 #ifdef __cplusplus
 }

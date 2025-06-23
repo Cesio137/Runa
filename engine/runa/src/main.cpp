@@ -54,26 +54,23 @@ int main(int argc, char** argv) {
         const std::string currentDir = runaCurrentDir();
         const std::string vert_shader = currentDir + "resources/shaders/default.vert";
         const std::string frag_shader = currentDir + "resources/shaders/default.frag";
-        runaCreateShaderProgram(&shader, vert_shader.c_str(), frag_shader.c_str());
-        runaGenVertexArray(&VAO);
-        runaBindVertexArray(&VAO);
-        runaGenBuffer(&VBO, vertices, sizeof(vertices));
-        runaGenElementBuffer(&EBO, indices, sizeof(indices));
-        runaEnableVertexAttribArray(&VBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)0);
-        runaEnableVertexAttribArray(&VBO, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-        runaEnableVertexAttribArray(&VBO, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        gl_CreateShaderProgram(&shader, vert_shader.c_str(), frag_shader.c_str());
+        gl_GenVertexArray(&VAO);
+        gl_BindVertexArray(&VAO);
+        gl_GenVertexBuffer(&VBO, vertices, sizeof(vertices));
+        gl_GenElementBuffer(&EBO, indices, sizeof(indices));
+        gl_EnableVertexAttribArray(&VBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)0);
+        gl_EnableVertexAttribArray(&VBO, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+        gl_EnableVertexAttribArray(&VBO, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
-        runaUnbindVertexArray();
-        runaUnbindBuffer();
-        runaUnbindElementBuffer();
+        gl_UnbindVertexArray();
+        gl_UnbindVertexBuffer();
+        gl_UnbindElementBuffer();
 
         uniID = glGetUniformLocation(shader.id, "scale");
         std::string albedodir = currentDir + "resources/textures/brick.png";
-        cstr native_path = runaNativeSeparator(albedodir.c_str());
-        albedodir = cstr_str(&native_path);
-        cstr_drop(&native_path);
-        runaGenTexture(&tex, albedodir.c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
-        runaSetUniformLocation(&shader, "tex0", 0);
+        gl_GenTexture(&tex, albedodir.c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+        gl_SetUniformLocation(&shader, "tex0", 0);
     };
     rhi.on_eventhandle = [&](SDL_Event event) {
         if (event.type == SDL_EVENT_WINDOW_RESIZED) {
@@ -87,24 +84,24 @@ int main(int argc, char** argv) {
         ImGui::End();
     };
     rhi.on_render = [&](float delta) {
-        runaUseShaderProgram(&shader);
+        gl_UseShaderProgram(&shader);
 
         camera.tick(delta);
         camera.matrix(60.0f, 0.1f, 100.0f, &shader, "camMatrix");
 
         glUniform1f(uniID, 0.5f);
-        runaBindTexture(&tex);
-        runaBindVertexArray(&VAO);
+        gl_BindTexture(&tex);
+        gl_BindVertexArray(&VAO);
         glDrawElements(GL_TRIANGLES, GL_ELEMENT_COUNT, GL_UNSIGNED_INT, 0);
     };
 
     int code = rhi.run(sdl_gldriver_t::GL_DRIVER_OPENGLCORE);
 
-    runaDeleteElementBuffer(&EBO);
-    runaDeleteBuffer(&VBO);
-    runaDeleteVertexArray(&VAO);
-    runaDeleteShaderProgram(&shader);
-    runaDeleteTexture(&tex);
+    gl_DeleteElementBuffer(&EBO);
+    gl_DeleteVertexBuffer(&VBO);
+    gl_DeleteVertexArray(&VAO);
+    gl_DeleteShaderProgram(&shader);
+    gl_DeleteTexture(&tex);
 
     if (code != 0) {
         SDL_Log("%s", SDL_GetError());

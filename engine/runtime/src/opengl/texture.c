@@ -2,7 +2,7 @@
 #include <stc/common.h>
 #include <stb_image.h>
 
-int runaGenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLenum textype, const GLenum slot,
+int gl_GenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLenum textype, const GLenum slot,
                    const GLenum format, GLenum pixeltype) {
     gl_texture->id = 0;
     // Assigns the type of the texture ot the texture object
@@ -11,7 +11,7 @@ int runaGenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLen
     // Stores the width, height, and the number of color channels of the image
     int texwidth, texheight, numch;
     // Flips the image so it appears right side up
-    stbi_set_flip_vertically_on_load_thread(1);
+    stbi_set_flip_vertically_on_load(1);
     // Reads the image from a file and stores it in bytes
     uint8 *bytes = stbi_load(texturefile, &texwidth, &texheight, &numch, 0);
     if (bytes == NULL) return 0;
@@ -48,24 +48,15 @@ int runaGenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLen
     return 1;
 }
 
-void runaDeleteTexture(gl_texture_t *gl_texture) {
+void gl_DeleteTexture(gl_texture_t *gl_texture) {
     glDeleteTextures(1, &gl_texture->id);
     gl_texture->type = 0;
 }
 
-void runaBindTexture(gl_texture_t *gl_texture) {
+void gl_BindTexture(gl_texture_t *gl_texture) {
     glBindTexture(gl_texture->type, gl_texture->id);
 }
 
-void runaUnbindTexture(gl_texture_t *gl_texture) {
+void gl_UnbindTexture(gl_texture_t *gl_texture) {
     glBindTexture(gl_texture->type, 0);
-}
-
-void runaSetUniformLocation(gl_shader_t *shader, const char *uniform, const GLuint unit) {
-    // Gets the location of the uniform
-    GLuint texuni = glGetUniformLocation(shader->id, uniform);
-    // Shader needs to be activated before changing the value of a uniform
-    runaUseShaderProgram(shader);
-    // Sets the value of the uniform
-    glUniform1i(texuni, unit);
 }

@@ -11,11 +11,11 @@ typedef struct {
     GLuint id;
 } gl_vertex_array_t;
 
-void runaGenVertexArray(gl_vertex_array_t *vertex_array);
-void runaDeleteVertexArray(gl_vertex_array_t *vertex_array);
-void runaBindVertexArray(gl_vertex_array_t *vertex_array);
-void runaUnbindVertexArray();
-void runaEnableVertexAttribArray(gl_vertex_buffer_t *vertex_buffer, const GLuint layout, GLuint num, GLenum type,
+void gl_GenVertexArray(gl_vertex_array_t *vertex_array);
+void gl_DeleteVertexArray(gl_vertex_array_t *vertex_array);
+void gl_BindVertexArray(gl_vertex_array_t *vertex_array);
+void gl_UnbindVertexArray();
+void gl_EnableVertexAttribArray(gl_vertex_buffer_t *vertex_buffer, const GLuint layout, GLuint num, GLenum type,
                                  GLsizeiptr stride, void *offset);
 
 #ifdef __cplusplus

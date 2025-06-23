@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 
 
-int runaCreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, const char *fragmentfile) {
+int gl_CreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, const char *fragmentfile) {
     gl_shader->id = 0;
 
     // Convert the shader source strings into character arrays
@@ -43,10 +43,19 @@ int runaCreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, cons
     return 0;
 }
 
-void runaDeleteShaderProgram(gl_shader_t *gl_shader) {
+void gl_DeleteShaderProgram(gl_shader_t *gl_shader) {
     glDeleteProgram(gl_shader->id);
 }
 
-void runaUseShaderProgram(gl_shader_t *gl_shader) {
+void gl_UseShaderProgram(gl_shader_t *gl_shader) {
     glUseProgram(gl_shader->id);
+}
+
+void gl_SetUniformLocation(gl_shader_t *shader, const char *uniform, const GLuint unit) {
+    // Gets the location of the uniform
+    GLuint texuni = glGetUniformLocation(shader->id, uniform);
+    // Shader needs to be activated before changing the value of a uniform
+    gl_UseShaderProgram(shader);
+    // Sets the value of the uniform
+    glUniform1i(texuni, unit);
 }

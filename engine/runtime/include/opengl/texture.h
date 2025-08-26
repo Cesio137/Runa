@@ -3,21 +3,19 @@
 #include "shaders/glshader.h"
 #include <glad/glad.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct {
-    GLuint id;
-    GLenum type;
-} gl_texture_t;
-
-int gl_GenTexture(gl_texture_t *gl_texture, const char *texturefile, const GLenum textype, const GLenum slot,
+namespace runa::opengl {
+    class texture_c {
+    public:
+        texture_c(const std::string &texturefile, const GLenum textype, const GLenum slot,
                    const GLenum format, GLenum pixeltype);
-void gl_DeleteTexture(gl_texture_t *gl_texture);
-void gl_BindTexture(gl_texture_t *gl_texture);
-void gl_UnbindTexture(gl_texture_t *gl_texture);
+        ~texture_c();
 
-#ifdef __cplusplus
+        void bind() const;
+        void unbind() const;
+        bool is_valid() const { return is_loaded; }
+    private:
+        GLuint id;
+        GLenum type;
+        bool is_loaded = false;
+    };
 }
-#endif

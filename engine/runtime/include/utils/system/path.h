@@ -1,21 +1,11 @@
 #pragma once
+#include <string>
+#include <vector>
 
-#include <container/cvector.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-cstr runaJoinPaths(const vec_cstr paths);
-cstr runaNativeSeparator(const char *path);
-const char *runaGetHomeDir();
-cstr runaGetPrefPath(const char *org, const char *app);
-const char* runaCurrentDir();
-
-#ifdef __cplusplus
+namespace runa::utils::path {
+    std::string join_paths(const std::vector<std::string> &paths);
+    void native_separator(std::string &path);
+    std::string get_home_dir();
+    std::string get_pref_path(const std::string &org, const std::string &app);
+    std::string current_dir();
 }
-#endif
-
-//eastl::string GameContentDir();
-
-//eastl::string GetAsset(const char *dir);

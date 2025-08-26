@@ -1,1 +1,1 @@
-add_requires("imgui v1.92.1-docking", {configs = { sdl3 = true, opengl3 = true, sdl3_gpu = true }})
+add_requires("imgui v1.92.2b-docking", {configs = { sdl3 = true, opengl3 = true, sdl3_gpu = true }})

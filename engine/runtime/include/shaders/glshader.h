@@ -1,20 +1,18 @@
 #pragma once
 
+#include <string>
 #include <glad/glad.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace runa::opengl {
+    class shader_c {
+    public:
+        shader_c(const std::string &vertexfile, const std::string &fragmentfile);
+        ~shader_c();
 
-typedef struct {
-    GLuint id;
-} gl_shader_t;
-
-int gl_CreateShaderProgram(gl_shader_t *gl_shader, const char *vertexfile, const char *fragmentfile);
-void gl_DeleteShaderProgram(gl_shader_t *gl_shader);
-void gl_UseShaderProgram(gl_shader_t *gl_shader);
-void gl_SetUniformLocation(gl_shader_t *shader, const char *uniform, const GLuint unit);
-
-#ifdef __cplusplus
+        void use() const;
+        void set_uniform_location(const char *uniform, const GLuint unit) const;
+        GLuint get_id() const { return id; }
+    private:
+        GLuint id;
+    };
 }
-#endif

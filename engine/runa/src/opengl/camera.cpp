@@ -11,7 +11,7 @@ namespace runa::opengl {
 
     }
 
-    void camera_c::matrix(float FOVdeg, float near_plane, float far_plane, gl_shader_t *shader, const char *uniform)
+    void camera_c::matrix(float FOVdeg, float near_plane, float far_plane, shader_c &shader, const char *uniform)
     {
         // Initializes matrices since otherwise they will be the null matrix
         glm::mat4 view = glm::mat4(1.0f);
@@ -23,7 +23,7 @@ namespace runa::opengl {
         projection = glm::perspective(glm::radians(FOVdeg), (float)width / height, near_plane, far_plane);
 
         // Exports the camera matrix to the Vertex Shader
-        glUniformMatrix4fv(glGetUniformLocation(shader->id, uniform), 1, GL_FALSE, glm::value_ptr(projection * view));
+        glUniformMatrix4fv(glGetUniformLocation(shader.get_id(), uniform), 1, GL_FALSE, glm::value_ptr(projection * view));
     }
 
     void camera_c::inputs(SDL_Event event)

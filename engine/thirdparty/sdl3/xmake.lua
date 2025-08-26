@@ -10,7 +10,7 @@ package("sdl3")
     set_homepage("https://github.com/libsdl-org/SDL")
     set_description("Simple DirectMedia Layer")
     add_urls("https://github.com/libsdl-org/SDL.git")
-    add_versions("release-3.2.16", "6340e58879b2d15830c8460d2f589a385c444d1faa2a4828a9626c7322562be8")
+    add_versions("release-3.2.20", "96292a5b464258a2b926e0a3d72f8b98c2a81aa6")
 
     on_install(function (package)
         -- SDL3 configs
@@ -42,4 +42,4 @@ package_end()
 ]]
 -- Requere SDL3 como dependência
 -- add_requires("sdl3", {alias = "SDL3", configs = {shared = true , debug = is_mode("debug")}})
-add_requires("libsdl3")
+add_requires("libsdl3 release-3.2.20")

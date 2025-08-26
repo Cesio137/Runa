@@ -37,11 +37,11 @@ int main(int argc, char** argv) {
         3, 0, 4
     };
 
-    gl_shader_t shader;
-    gl_element_buffer_t EBO;
-    gl_vertex_array_t VAO;
-    gl_vertex_buffer_t VBO;
-    gl_texture_t tex;
+    std::unique_ptr<shader_c> shader;
+    std::unique_ptr<element_buffer_c> EBO;
+    std::unique_ptr<vertex_array_c> VAO;
+    std::unique_ptr<vertex_buffer_c> VBO;
+    std::unique_ptr<texture_c> tex;
 
     GLuint uniID;
     int viewport_width = 1024;
@@ -51,26 +51,27 @@ int main(int argc, char** argv) {
 
     rhi.on_ready = [&]() {
         rhi.set_vsync(1);
-        const std::string currentDir = runaCurrentDir();
+        const std::string currentDir = runa::utils::path::current_dir();
         const std::string vert_shader = currentDir + "resources/shaders/default.vert";
         const std::string frag_shader = currentDir + "resources/shaders/default.frag";
-        gl_CreateShaderProgram(&shader, vert_shader.c_str(), frag_shader.c_str());
-        gl_GenVertexArray(&VAO);
-        gl_BindVertexArray(&VAO);
-        gl_GenVertexBuffer(&VBO, vertices, sizeof(vertices));
-        gl_GenElementBuffer(&EBO, indices, sizeof(indices));
-        gl_EnableVertexAttribArray(&VBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)0);
-        gl_EnableVertexAttribArray(&VBO, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-        gl_EnableVertexAttribArray(&VBO, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        shader = std::make_unique<shader_c>(vert_shader, frag_shader);
+        VAO = std::make_unique<vertex_array_c>();
+        VAO->bind();
+        VBO = std::make_unique<vertex_buffer_c>(vertices, sizeof(vertices));
+        EBO = std::make_unique<element_buffer_c>(indices, sizeof(indices));
+        VAO->enable_attrib(*VBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)0);
+        VAO->enable_attrib(*VBO, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+        VAO->enable_attrib(*VBO, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        VAO->unbind();
 
-        gl_UnbindVertexArray();
-        gl_UnbindVertexBuffer();
-        gl_UnbindElementBuffer();
+        VAO->unbind();
+        VBO->unbind();
+        EBO->unbind();
 
-        uniID = glGetUniformLocation(shader.id, "scale");
+        uniID = glGetUniformLocation(shader->get_id(), "scale");
         std::string albedodir = currentDir + "resources/textures/brick.png";
-        gl_GenTexture(&tex, albedodir.c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
-        gl_SetUniformLocation(&shader, "tex0", 0);
+        tex = std::make_unique<texture_c>(albedodir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+        shader->set_uniform_location("tex0", 0);
     };
     rhi.on_eventhandle = [&](SDL_Event event) {
         if (event.type == SDL_EVENT_WINDOW_RESIZED) {
@@ -84,24 +85,18 @@ int main(int argc, char** argv) {
         ImGui::End();
     };
     rhi.on_render = [&](float delta) {
-        gl_UseShaderProgram(&shader);
+        shader->use();
 
         camera.tick(delta);
-        camera.matrix(60.0f, 0.1f, 100.0f, &shader, "camMatrix");
+        camera.matrix(60.0f, 0.1f, 100.0f, *shader, "camMatrix");
 
         glUniform1f(uniID, 0.5f);
-        gl_BindTexture(&tex);
-        gl_BindVertexArray(&VAO);
+        tex->bind();
+        VAO->bind();
         glDrawElements(GL_TRIANGLES, GL_ELEMENT_COUNT, GL_UNSIGNED_INT, 0);
     };
 
-    int code = rhi.run(sdl_gldriver_t::GL_DRIVER_OPENGLCORE);
-
-    gl_DeleteElementBuffer(&EBO);
-    gl_DeleteVertexBuffer(&VBO);
-    gl_DeleteVertexArray(&VAO);
-    gl_DeleteShaderProgram(&shader);
-    gl_DeleteTexture(&tex);
+    int code = rhi.run(GL_DRIVER_OPENGLCORE);
 
     if (code != 0) {
         SDL_Log("%s", SDL_GetError());

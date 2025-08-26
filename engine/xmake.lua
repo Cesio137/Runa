@@ -22,7 +22,7 @@ target("Runtime")
     )
     add_includedirs("runtime/include", {public = true})
     add_headerfiles("runtime/include/**.h")
-    add_files("runtime/src/**.c")
+    add_files("runtime/src/**.cpp")
     add_packages(
         "libsdl3",
         "glm",

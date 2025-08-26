@@ -1,15 +1,10 @@
 #pragma once
 
-#include <container/cvector.h>
+#include <string>
+#include <vector>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-vec_uint8 runaLoadFile(const char *filepath);
-cstr runaLoadTextFile(const char *filepath);
-int runaFileExist(const char *filepath);
-
-#ifdef __cplusplus
+namespace runa::utils::file {
+    std::vector<uint8_t> load_file(const std::string &filepath);
+    std::string load_text_file(const std::string &filepath);
+    bool file_exist(const std::string &filepath);
 }
-#endif

@@ -1,12 +1,8 @@
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <string>
 
-const char *runaGetEnvVar(const char *varname);
-const char *runaGetUserName();
-
-#ifdef __cplusplus
+namespace runa::utils::environment {
+    std::string get_env_var(const char *varname);
+    std::string get_user_name();
 }
-#endif

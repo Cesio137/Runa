@@ -2,19 +2,15 @@
 
 #include <glad/glad.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace runa::opengl {
+    class vertex_buffer_c {
+    public:
+        vertex_buffer_c(const GLfloat *vertices, const GLsizeiptr size);
+        ~vertex_buffer_c();
 
-typedef struct {
-    GLuint id;
-} gl_vertex_buffer_t;
-
-void gl_GenVertexBuffer(gl_vertex_buffer_t *vertex_buffer, const GLfloat *vertices, const GLsizeiptr size);
-void gl_DeleteVertexBuffer(gl_vertex_buffer_t *vertex_buffer);
-void gl_BindVertexBuffer(gl_vertex_buffer_t *vertex_buffer);
-void gl_UnbindVertexBuffer();
-
-#ifdef __cplusplus
+        void bind() const;
+        void unbind() const;
+    private:
+        GLuint id;
+    };
 }
-#endif

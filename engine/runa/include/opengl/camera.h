@@ -32,7 +32,7 @@ namespace runa::opengl {
         float sensitivity = 100.0f;
 
         // Updates and exports the camera matrix to the Vertex Shader
-        void matrix(float FOVdeg, float nearPlane, float farPlane, gl_shader_t *shader, const char *uniform);
+        void matrix(float FOVdeg, float nearPlane, float farPlane, shader_c &shader, const char *uniform);
         // Handles camera inputs
         void inputs(SDL_Event event);
         void tick(float delta);

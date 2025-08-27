@@ -1,4 +1,6 @@
 #include "utils/system/file.h"
+
+#include <memory>
 #include <SDL3/SDL.h>
 
 namespace runa::utils::file{
@@ -35,7 +37,7 @@ namespace runa::utils::file{
         }
 
         //char *buffer = SDL_malloc(filesize + 1);
-        buffer.reserve(filesize);
+        buffer.resize(filesize);
 
         size_t bytes_read = SDL_ReadIO(file, buffer.data(), filesize);
         SDL_CloseIO(file);
@@ -58,6 +60,7 @@ namespace runa::utils::file{
         }
 
         SDL_IOStream *file = SDL_IOFromFile(filepath.c_str(), "rb");
+
         if (!file) {
             SDL_Log("Error loading file to string: Unable to open file '%s': %s", filepath.c_str(), SDL_GetError());
             return text;
@@ -83,7 +86,7 @@ namespace runa::utils::file{
         }
 
         std::vector<uint8_t> buffer_vec;
-        buffer_vec.reserve(filesize);
+        buffer_vec.resize(filesize);
 
         size_t bytes_read = SDL_ReadIO(file, buffer_vec.data(), filesize);
         SDL_CloseIO(file);

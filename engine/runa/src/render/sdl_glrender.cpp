@@ -1,7 +1,7 @@
 #include "render/sdl_glrender.h"
 
 namespace runa::render {
-    int runaInitOpengl(sdl_glbackend_t *backend, const sdl_gldriver_t driver) {
+    int init_opengl(sdl_glbackend_t &backend, const sdl_gldriver_t driver) {
         /* Init SDL Video */
         if (!SDL_WasInit(SDL_INIT_VIDEO)) {
             if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
@@ -14,13 +14,13 @@ namespace runa::render {
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-                backend->glsl_version = "#version 320 es";
+                backend.glsl_version = "#version 320 es";
                 break;
             case sdl_gldriver_t::GL_DRIVER_OPENGLCORE:
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-                backend->glsl_version = "#version 460";
+                backend.glsl_version = "#version 460";
                 break;
             default:
                 SDL_Quit();
@@ -28,16 +28,16 @@ namespace runa::render {
         }
 
         // Create a SDL window
-        backend->window_ptr = SDL_CreateWindow("Runa", 1024, 576, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-        if (!backend->window_ptr) {
+        backend.window_ptr = SDL_CreateWindow("Runa", 1024, 576, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+        if (!backend.window_ptr) {
             SDL_Log("Failed to create window");
             return 1;
         }
 
         // Create a SDL renderer
-        backend->gl_context = SDL_GL_CreateContext(backend->window_ptr);
-        if (!backend->gl_context) {
-            SDL_DestroyWindow(backend->window_ptr);
+        backend.gl_context = SDL_GL_CreateContext(backend.window_ptr);
+        if (!backend.gl_context) {
+            SDL_DestroyWindow(backend.window_ptr);
             SDL_Log("Failed to create context");
             return 1;
         }
@@ -45,16 +45,16 @@ namespace runa::render {
         if (driver == GL_DRIVER_OPENGLES) {
             if (!gladLoadGLES2Loader((GLADloadproc)SDL_GL_GetProcAddress)) {
                 SDL_Log("Failed to initialize GLAD");
-                SDL_DestroyWindow(backend->window_ptr);
-                SDL_GL_DestroyContext(backend->gl_context);
+                SDL_DestroyWindow(backend.window_ptr);
+                SDL_GL_DestroyContext(backend.gl_context);
                 return 1;
             }
         }
         else {
             if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
                 SDL_Log("Failed to initialize GLAD");
-                SDL_DestroyWindow(backend->window_ptr);
-                SDL_GL_DestroyContext(backend->gl_context);
+                SDL_DestroyWindow(backend.window_ptr);
+                SDL_GL_DestroyContext(backend.gl_context);
                 return 1;
             }
         }
@@ -62,27 +62,27 @@ namespace runa::render {
         return 0;
     }
 
-    void runaDestroyOpenGl(sdl_glbackend_t *backend) {
-        if (backend->gl_context)
-            SDL_GL_DestroyContext(backend->gl_context);
-        if (backend->window_ptr)
-            SDL_DestroyWindow(backend->window_ptr);
-        backend->glsl_version.clear();
+    void destroy_opengl(sdl_glbackend_t &backend) {
+        if (backend.gl_context)
+            SDL_GL_DestroyContext(backend.gl_context);
+        if (backend.window_ptr)
+            SDL_DestroyWindow(backend.window_ptr);
+        backend.glsl_version.clear();
     }
 
-    void runaGLInitImGui(sdl_glbackend_t *backend) {
-        if (!backend->window_ptr || !backend->gl_context)
+    void gl_init_imgui(sdl_glbackend_t &backend) {
+        if (!backend.window_ptr || !backend.gl_context)
             return;
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
         (void) io;
-        ImGui_ImplSDL3_InitForOpenGL(backend->window_ptr, backend->gl_context);
-        ImGui_ImplOpenGL3_Init(backend->glsl_version.c_str());
+        ImGui_ImplSDL3_InitForOpenGL(backend.window_ptr, backend.gl_context);
+        ImGui_ImplOpenGL3_Init(backend.glsl_version.c_str());
     }
 
-    void runaGLDestroyImGui() {
+    void gl_destroy_imgui() {
         ImGui_ImplSDL3_Shutdown();
         ImGui_ImplOpenGL3_Shutdown();
         ImGui::DestroyContext();
@@ -98,7 +98,7 @@ namespace runa::render {
 
     int sdl_glrender_c::run(const sdl_gldriver_t driver) {
         int code = 0;
-        code = runaInitOpengl(&backend, driver);
+        code = init_opengl(backend, driver);
         if (code != 0) return code;
         _render();
         return code;
@@ -133,7 +133,7 @@ namespace runa::render {
     {
         glViewport(0, 0, 1024, 576);
         glEnable(GL_DEPTH_TEST);
-        runaGLInitImGui(&backend);
+        gl_init_imgui(backend);
         init(ImGui::GetIO());
         // Framerate limit
         int vsync = 0;

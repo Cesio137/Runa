@@ -54,6 +54,8 @@ int main(int argc, char** argv) {
         const std::string currentDir = runa::utils::path::current_dir();
         const std::string vert_shader = currentDir + "resources/shaders/default.vert";
         const std::string frag_shader = currentDir + "resources/shaders/default.frag";
+        const std::string src = runa::utils::file::load_text_file(frag_shader);
+        std::cout << "Shader: " << src << std::endl;
         shader = std::make_unique<shader_c>(vert_shader, frag_shader);
         VAO = std::make_unique<vertex_array_c>();
         VAO->bind();
@@ -71,6 +73,7 @@ int main(int argc, char** argv) {
         uniID = glGetUniformLocation(shader->get_id(), "scale");
         std::string albedodir = currentDir + "resources/textures/brick.png";
         tex = std::make_unique<texture_c>(albedodir, GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+        std::cout << tex->is_valid() << std::endl;
         shader->set_uniform_location("tex0", 0);
     };
     rhi.on_eventhandle = [&](SDL_Event event) {

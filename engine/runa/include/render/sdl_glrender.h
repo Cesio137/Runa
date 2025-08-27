@@ -35,11 +35,11 @@ namespace runa::render {
         std::string glsl_version;
     }sdl_glbackend_t;
 
-    int runaInitOpengl(sdl_glbackend_t *backend, const sdl_gldriver_t driver);
-    void runaDestroyOpenGl(sdl_glbackend_t *backend);
+    int init_opengl(sdl_glbackend_t &backend, const sdl_gldriver_t driver);
+    void destroy_opengl(sdl_glbackend_t &backend);
 
-    void runaGLInitImGui(sdl_glbackend_t *backend);
-    void runaGLDestroyImGui();
+    void gl_init_imgui(sdl_glbackend_t &backend);
+    void gl_destroy_imgui();
 
     class sdl_glrender_c {
     public:

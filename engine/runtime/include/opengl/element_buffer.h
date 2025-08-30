@@ -3,10 +3,10 @@
 #include <glad/glad.h>
 
 namespace runa::opengl {
-    class element_buffer_c {
+    class gl_element_buffer_c {
     public:
-        element_buffer_c(const GLuint *indices, const GLsizeiptr size);
-        ~element_buffer_c();
+        gl_element_buffer_c(const GLuint *indices, const GLsizeiptr size);
+        ~gl_element_buffer_c();
 
         void bind() const;
         void unbind() const;

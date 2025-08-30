@@ -4,10 +4,10 @@
 #include <glad/glad.h>
 
 namespace runa::opengl {
-    class shader_c {
+    class gl_shader_c {
     public:
-        shader_c(const std::string &vertexfile, const std::string &fragmentfile);
-        ~shader_c();
+        gl_shader_c(const std::string &vertexfile, const std::string &fragmentfile);
+        ~gl_shader_c();
 
         void use() const;
         void set_uniform_location(const char *uniform, const GLuint unit) const;

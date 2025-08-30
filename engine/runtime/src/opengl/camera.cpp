@@ -1,4 +1,4 @@
-#include "opengl/camera.h"
+#include "../../include/opengl/camera.h"
 
 namespace runa::opengl {
     camera_c::camera_c(int w, int h, glm::vec3 position) {
@@ -7,11 +7,11 @@ namespace runa::opengl {
         pos = position;
     }
 
-    runa::opengl::camera_c::~camera_c() {
+    camera_c::~camera_c() {
 
     }
 
-    void camera_c::matrix(float FOVdeg, float near_plane, float far_plane, shader_c &shader, const char *uniform)
+    void camera_c::matrix(float FOVdeg, float near_plane, float far_plane, gl_shader_c &shader, const char *uniform)
     {
         // Initializes matrices since otherwise they will be the null matrix
         glm::mat4 view = glm::mat4(1.0f);

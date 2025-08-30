@@ -1,9 +1,9 @@
-#include "shaders/glshader.h"
+#include "../../include/opengl/shader.h"
 #include "utils/system/file.h"
 #include <SDL3/SDL.h>
 
 namespace runa::opengl {
-    shader_c::shader_c(const std::string &vertexfile, const std::string &fragmentfile) {
+    gl_shader_c::gl_shader_c(const std::string &vertexfile, const std::string &fragmentfile) {
         id = 0;
 
         // Convert the shader source strings into character arrays
@@ -39,15 +39,15 @@ namespace runa::opengl {
         glDeleteShader(fragment_shader);
     }
 
-    shader_c::~shader_c() {
+    gl_shader_c::~gl_shader_c() {
         glDeleteProgram(id);
     }
 
-    void shader_c::use() const {
+    void gl_shader_c::use() const {
         glUseProgram(id);
     }
 
-    void shader_c::set_uniform_location(const char *uniform, const GLuint unit) const {
+    void gl_shader_c::set_uniform_location(const char *uniform, const GLuint unit) const {
         // Gets the location of the uniform
         GLuint texuni = glGetUniformLocation(id, uniform);
         // Shader needs to be activated before changing the value of a uniform

@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace runa::opengl {
-    texture_c::texture_c(const std::string &texturefile, const GLenum textype, const GLenum slot, const GLenum format,
+    gl_texture_c::gl_texture_c(const std::string &texturefile, const GLenum textype, const GLenum slot, const GLenum format,
         GLenum pixeltype) {
         id = 0;
         // Assigns the type of the texture ot the texture object
@@ -50,16 +50,16 @@ namespace runa::opengl {
         is_loaded = true;
     }
 
-    texture_c::~texture_c() {
+    gl_texture_c::~gl_texture_c() {
         glDeleteTextures(1, &id);
         type = 0;
     }
 
-    void texture_c::bind() const {
+    void gl_texture_c::bind() const {
         glBindTexture(type, id);
     }
 
-    void texture_c::unbind() const {
+    void gl_texture_c::unbind() const {
         glBindTexture(type, 0);
     }
 }

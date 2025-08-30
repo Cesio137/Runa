@@ -3,10 +3,10 @@
 #include <glad/glad.h>
 
 namespace runa::opengl {
-    class vertex_buffer_c {
+    class gl_vertex_buffer_c {
     public:
-        vertex_buffer_c(const GLfloat *vertices, const GLsizeiptr size);
-        ~vertex_buffer_c();
+        gl_vertex_buffer_c(const GLfloat *vertices, const GLsizeiptr size);
+        ~gl_vertex_buffer_c();
 
         void bind() const;
         void unbind() const;

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "shaders/glshader.h"
+#include "shader.h"
 #include <glad/glad.h>
 
 namespace runa::opengl {
-    class texture_c {
+    class gl_texture_c {
     public:
-        texture_c(const std::string &texturefile, const GLenum textype, const GLenum slot,
+        gl_texture_c(const std::string &texturefile, const GLenum textype, const GLenum slot,
                    const GLenum format, GLenum pixeltype);
-        ~texture_c();
+        ~gl_texture_c();
 
         void bind() const;
         void unbind() const;

@@ -1,7 +1,7 @@
 FetchContent_Declare(
     ocornutimgui
     GIT_REPOSITORY https://github.com/ocornut/imgui.git
-    TAG v1.91.9b-docking
+    TAG v1.92.2b-docking
 )
 
 FetchContent_MakeAvailable(ocornutImgui)
@@ -64,7 +64,7 @@ add_library(imgui STATIC ${IMGUI_SOURCES})
 target_include_directories(imgui PUBLIC ${IMGUI_SOURCE_DIR} ${ocornutimgui_SOURCE_DIR}/backends)
 target_link_libraries(imgui
         PUBLIC
-        SDL3-static
+        SDL3::SDL3
         glad
         vulkan
 )

@@ -1,25 +1,31 @@
 {
+  "name": "runa",
+  "version": "0.0.1",
   "dependencies": [
+    "openssl",
     {
-      "name": "zstd"
+      "name": "sdl3",
+      "features": [
+        "vulkan",
+        "wayland"
+      ],
+      "platform": "linux"
     },
     {
-      "name": "basisu"
+      "name": "sdl3",
+      "features": [
+        "vulkan"
+      ],
+      "platform": "!linux"
     },
     {
-      "name": "openal-soft"
+      "name": "sdl3-image",
+      "features": [
+        "jpeg",
+        "png",
+        "tiff"
+      ]
     },
-    {
-      "name": "openfbx"
-    },
-    {
-      "name": "tinyexr"
-    },
-    {
-      "name": "joltphysics"
-    },
-    {
-      "name": "box2d"
-    }
+    "zlib"
   ]
 }

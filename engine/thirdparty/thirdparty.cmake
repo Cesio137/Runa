@@ -1,14 +1,10 @@
 set(THIRDPARTY_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 #VCPKG
-find_package(basisu CONFIG REQUIRED)
-#find_package(OpenSSL REQUIRED)
-find_package(OpenAL CONFIG REQUIRED)
-find_package(unofficial-openfbx CONFIG REQUIRED)
-find_package(Jolt CONFIG REQUIRED)
-find_package(box2d CONFIG REQUIRED)
-find_package(tinyexr CONFIG REQUIRED)
-find_package(zstd CONFIG REQUIRED)
+find_package(SDL3 CONFIG REQUIRED)
+find_package(SDL3_image CONFIG REQUIRED)
+find_package(ZLIB CONFIG)
+find_package(OpenSSL REQUIRED)
 
 # Dependencies
 include(FetchContent)
@@ -17,7 +13,7 @@ set(FETCHCONTENT_QUIET OFF)
 
 #GRAPHICS LIBRARY
 add_subdirectory(${THIRDPARTY_DIR}/vulkan)
-add_subdirectory(${THIRDPARTY_DIR}/sdl)
+#add_subdirectory(${THIRDPARTY_DIR}/sdl)
 add_subdirectory(${THIRDPARTY_DIR}/glad)
 add_subdirectory(${THIRDPARTY_DIR}/glm)
 
@@ -33,6 +29,3 @@ add_subdirectory(${THIRDPARTY_DIR}/simdjson)
 
 #IMAGE LIBRARY
 add_subdirectory(${THIRDPARTY_DIR}/stb)
-
-#STL
-add_subdirectory(${THIRDPARTY_DIR}/eastl)
